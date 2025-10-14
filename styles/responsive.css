@@ -1,0 +1,24 @@
+@media only screen and (max-width: 1200px) {
+    .nav-searchbar-cont{
+      display: none;
+    }
+    .nav-free-skin-assessment-cont{
+        margin-right: 20px;
+    }
+    .name-arrow
+}
+
+  @media only screen and (max-width: 928px){
+    .nav-free-skin-assessment-cont{
+        display: none;
+    }
+  }
+
+  @media only screen and (max-width: 678px){
+    .concern-cont{
+        width: 100%;
+    }
+    .name-arrow{
+        font-size: 10px;
+    }
+}

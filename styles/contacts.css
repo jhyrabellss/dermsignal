@@ -1,0 +1,141 @@
+input{
+    margin-bottom: 16px;
+}
+
+.email{
+    display: block;
+}
+
+form input{
+    width: 90%;
+    height: 43px;
+    padding: 12px;
+    
+}
+
+input:active{
+    outline: none;
+}
+
+
+input:hover{
+    border: 1.8px solid black;
+}
+
+h4{
+    font-size: 34px;
+    font-weight: 600;
+    text-align: center;  
+    width: 90%;    
+  }
+
+p{
+    font-size: 13px;
+    margin: 15px 0 50px;
+    color: #9e918f;
+}
+
+.acc{
+    margin: 20px 0 35px ;
+    font-size: 18px;
+}
+
+button{
+    font-size: 15px;
+    border: none;
+    background-color: white;
+    border-bottom: 1px solid rgb(189, 184, 184);
+    transition: all 0.6s ease;
+}
+
+.read:hover{
+
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+ 
+
+.sign{
+    text-decoration: none;
+    background-color: var(--background-color);
+    border: none;
+    padding: 15px 50px 15px 50px;
+    width: 230px;
+    color: whitesmoke;
+    margin-right: 40px;
+    transition: all 1s;
+    
+}
+
+.sign:hover{
+    background-image: linear-gradient(35deg, var(--background-color), #c1ded3);
+    background-position: 230px
+}
+
+
+
+.phone{
+    display: block;
+}
+
+.comment{
+    display: block;
+    padding-bottom: 80px;
+    padding-top: 20px;
+  
+}
+
+
+
+.fill{
+    width: 60%;
+}
+
+.cont{
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+.name{
+    margin-top: 30px;
+}
+
+.container-maps{
+    display: flex;
+    background-color: #c0e1d5;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 100px;
+    height: 70vh;
+    margin-top: 10px;
+}
+
+.box{
+    height: 360px;
+    background-color: white;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.15);
+    padding: 25px;
+    
+}
+
+.box h3{
+    font-size: 30px;
+    font-weight: 600;
+    color: #60504d;
+}
+
+.box p{
+    color: #60504d;
+}
+
+.box button{
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.box button:hover{
+    background-image: linear-gradient(35deg, #8cd7bb, #c1ded3);
+    background-position: 297px; 
+}

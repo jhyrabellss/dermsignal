@@ -1,0 +1,252 @@
+footer {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  padding: 0px 80px;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom: 50px;
+ 
+}
+
+.footer-options{
+  display: flex;
+  gap: 100px;
+  line-height: 30px;
+  justify-content: space-between;
+ 
+}
+
+.footer-details{
+  display: flex;
+  gap: 100px;
+}
+
+
+.contact-us p{
+  
+}
+.help-support{
+
+}
+
+.call-us{
+
+}
+
+.shop a{
+  text-decoration: none;
+}
+
+.learn a{
+  text-decoration: none;
+}
+
+.help a{
+  text-decoration: none;
+}
+
+.help p{
+  color: #60504d;
+  font-size: 12.5px;
+}
+
+.learn p{
+  color: #60504d;
+  font-size: 12.5px;
+}
+
+.shop p{
+  color: #60504d;
+  font-size: 12.5px;
+}
+
+.catchphrase{
+  color: gray;
+}
+
+h5{
+  margin-bottom: 20px;
+  font-weight: 400;
+  color: gray;
+}
+
+.footer-logo{
+  width: 200px;
+}
+
+
+.footer-logo img{
+  width: 100%;
+}
+.footer-icons img {
+  width: 22px;
+  height: 22px;
+  display: inline-block;
+}
+.footer-icons div{
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer .facebook::after, .pinterest::after, .twitter::after, .instagram::after, .shopee::after, .youtube::after{
+  content: "";
+  background-color: var(--background-color);
+  position: absolute;
+  border-radius: 50%;
+  width: 0px;
+  height: 0px;
+  z-index: 0;
+  transition: all 0.5s ease;
+ 
+}
+
+footer .facebook:hover::after{
+  width: 100%;
+  height: 100%;
+}
+footer .facebook:hover  .white{
+  z-index: 6;
+}
+
+
+.pinterest:hover::after{
+  width: 100%;
+  height: 100%;
+}
+.pinterest:hover .white{
+  z-index: 6;
+}
+
+
+
+.twitter:hover::after{
+  width: 100%;
+  height: 100%;
+}
+.twitter:hover .white{
+  z-index: 6;
+}
+
+.instagram img{
+  height: 26px;
+  width: 26px;
+}
+
+
+.instagram:hover::after{
+  width: 100%;
+  height: 100%;
+}
+.instagram:hover .white{
+  z-index: 6;
+}
+
+
+
+.shopee:hover::after{
+  width: 100%;
+  height: 100%;
+}
+.shopee:hover .white{
+  z-index: 6;
+}
+
+
+.youtube img{
+  height: 26px;
+  width: 26px;
+}
+
+.youtube:hover::after{
+  width: 100%;
+  height: 100%;
+}
+.youtube:hover .white{
+  z-index: 6;
+}
+
+
+.footer-icons div img:nth-last-of-type(2){
+  position: absolute;
+  transition: z-index 0.5s ease;
+}
+
+.footer-icons{
+  display: flex;
+}
+
+
+.combined{
+ width: 200px;
+ 
+}
+
+.catchphrase{
+ text-align: center;
+ font-size: 12px;
+}
+
+.footer-main-details{
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-components{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-components div:nth-child(1){
+  color: var(--background-color);
+  font-weight: 500;
+}
+
+.components-img{
+  height: 60px;
+  width: 60px;
+}
+
+.components-img img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+
+.footer-components-cont{
+  display: flex;
+  gap: 20px;
+}
+
+
+.footer-choices{
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.footer-queries{
+
+}
+
+.footer-queries a div{
+  margin-top: 10px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 5px;
+  border: 2px solid var(--background-color);
+  color: var(--background-color);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.footer-queries a div:hover{
+  color: white;
+  background-color: var(--background-color);
+}

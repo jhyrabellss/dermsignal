@@ -1,0 +1,87 @@
+.shop-by-concern{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    margin-top: 60px;
+    z-index: -2;
+}
+
+.shop-by-concern h1{
+    font-weight: 500;
+    font-size: 25px;
+}
+h1{
+    font-size: 20px;
+}
+
+.concern-main-cont{
+    display: flex;
+    justify-content: center;
+    
+
+}
+
+.concern{
+    display: grid;
+    padding: 20px;
+    width: 45%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 25px;
+}
+
+.concern-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: all .5s ease;
+
+}
+
+.concern-cont .img-cont {
+    display: flex;
+    width: 100%; /* Adjust this value to set the desired width */
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    min-width: 80px;
+    
+  }
+  
+  .concern-cont .img-cont img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+.concern-cont:hover  img{
+    transform: scale(1.2)
+}
+.concern-cont:hover .name-arrow svg{
+    display: block;
+    transition: all .5s ease;
+}
+
+.name-arrow{
+    display: flex;
+    justify-content: center;
+    margin: none;
+    white-space: nowrap ;
+    align-items: center;
+    font-size: 1vw;
+}
+
+.name-arrow p{
+    margin: 0;
+}
+
+.name-arrow svg{
+    display: none;
+    
+}

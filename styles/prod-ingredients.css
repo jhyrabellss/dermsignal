@@ -1,0 +1,141 @@
+.individual-prod-main-cont{
+    margin-top: 70px;
+    padding: 0px 200px 0px 200px;
+    margin-bottom: 80px;
+}
+.individual-prod-main-cont > div{
+    font-size: 12px;
+}
+
+h3{
+    font-weight: 400;
+}
+
+.sort-div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sort-div .ingredients{
+    padding: 10px;
+    border: 1px solid  var(--background-color);
+}
+
+
+
+select{
+    width: 100%;
+    padding: 8px;
+    border-color: var(--background-color);
+    color: var(--background-color);
+}
+
+
+
+.ingredient-cont{
+    margin-top: 20px;
+    display: flex;
+    font-size: 15px;
+    flex-wrap: wrap;
+    gap: 20px;
+    display: none;
+}
+
+.ingredient-type{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ingredient-cont .ingredient-type::before{
+    content: '';
+    height: 8px;
+    width: 8px;
+    border: 1px solid var(--background-color);
+    cursor: pointer;
+}
+
+.ingredients{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color:var(--background-color);
+    background: url('../images/down-arrow.png');
+    background-repeat: no-repeat;
+    background-position: 98%;
+    width: 100px;
+}
+
+.ingredients-arrow{
+    background: url('../images/up-arrow.png');
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+
+.ingredient-type.style::before {
+    background-color: var(--background-color);
+}
+
+.nav-logo{
+    height: 40px;
+}
+
+.nav-logo img{
+    height: 100%;
+}
+
+.product-list-items-cont{
+    display: grid ;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+.product-list-items{
+    min-width: calc(100%/4);
+}
+
+.ingredient-cont{
+    margin-top: 20px;
+    display: flex;
+    font-size: 15px;
+    flex-wrap: wrap;
+    gap: 20px;
+    display: flex;
+}
+
+.ingredient-type{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ingredient-cont .ingredient-type::before{
+    content: '';
+    height: 8px;
+    width: 8px;
+    border: 1px solid var(--background-color);
+    cursor: pointer;
+}
+
+.ingredients{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color:var(--background-color);
+    background: url('../images/down-arrow.png');
+    background-repeat: no-repeat;
+    background-position: 98%;
+    width: 100px;
+}
+
+.ingredients-arrow{
+    background: url('../images/up-arrow.png');
+    background-repeat: no-repeat;
+    background-position: 98%;
+}
+
+.ingredient-type.style::before {
+    background-color: var(--background-color);
+}

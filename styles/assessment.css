@@ -1,0 +1,362 @@
+h1{
+    font-size: 17px;
+    font-weight: normal;
+    width: 100%;
+  }
+
+
+  
+
+  h2{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: light;
+    color: var(--background-color);
+  }
+
+  h3{
+    font-weight: 400;
+    font-size: 15px;
+
+  }
+
+  h4{
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 300;
+    font-size: 12px;
+  }
+  
+  .assessment-bar{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 60px 60px;
+  }
+
+  .assessment-main-cont {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    font-size: 15px;
+  }
+
+  .assessment-cont{
+    background-color: rgb(245, 245, 245);
+    padding: 20px;
+    width: 100%;
+  }
+
+
+
+  .image-type .skin-type-img{
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+
+  .container-info{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .container-info:hover{
+    background-color: rgb(236, 230, 230);
+    border-radius: 10px;
+  }
+
+  .container-info:active .checkbox{
+    background: url(../images/icons8-check-30.png);
+    background-position: 3px 2px;
+    background-color: var(--background-color);
+    background-size: 14px;
+    background-repeat: no-repeat;
+  }
+
+
+  .image-type   img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .image-type{
+      display: flex;
+      align-items: center;
+  }
+
+  input [type=radio]{
+    display: none
+  }
+
+  .checkbox{
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--background-color);
+    border-radius: 50%;
+ 
+  }
+
+  .checkbox-active{
+    background: url(../images/icons8-check-30.png);
+    background-position: 3px 2px;
+    background-color: var(--background-color);
+    background-size: 14px;
+    background-repeat: no-repeat;
+  }
+
+  .whole-cont-assessment{
+    width: 38%;
+  }
+  
+
+  .issue-details{
+    font-size: 10px;
+    color: gray ;
+  }
+
+  .summary h1{
+    text-align: start !important;
+  }
+  .skin-type{
+    
+  }
+
+
+  .skin-analysis-cont{
+    width: 80%;
+    margin-top: 20px;
+    position: relative;
+
+  }
+
+  .skin-analysis{
+    padding: 20px;
+  }
+
+  .concern-analysis{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+
+
+  .issue-concerns{
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .skin-issue{
+    font-size: 12px;
+  }
+
+  .skin-texture-issue{
+    text-align: center;
+  }
+
+  .retake-button{
+    display: flex;
+    position: absolute;
+    font-size: 12px;
+    align-items: center;
+    right: 20px;
+    top: 20px;
+  } 
+
+  .regimen-title{
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: var(--background-color);
+  }
+
+
+
+  .product-items{
+    border: 1px solid var(--background-color);
+  }
+  .prod-img-cont{
+    width: 100%;
+  }
+
+  .prod-img-cont img{
+    width: 100%;
+    object-fit: cover;
+    height: 300px;
+  }
+
+
+  .faqs-main-cont{
+    display: flex;
+    justify-content: center;
+  }
+
+
+  .faqs-cont{
+    display: flex;
+    flex-direction: column;
+    width: 78%;
+  }
+
+  details{
+    width: 100%;
+    font-size: 14px;
+    border-top: 1px solid var(--background-color);
+    padding-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  summary{
+    margin-bottom: 10px;
+    display: flex;
+    width: 100%;
+    font-size: 17px;
+    background: url('../images/down-arrow.png');
+    background-repeat: no-repeat;
+    background-position: 98%;
+    cursor: pointer;
+  }
+
+  .summary-left-arrow{
+    background: url('../images/left-arrow.png');
+    background-repeat: no-repeat;
+    background-position: 98%;
+  }
+
+  .previous-button{
+    position: absolute;
+    top: 58px;
+    left: 300px ;
+  }
+   
+  details p{
+    color: var(--background-color);
+   
+  }
+
+  .skin-analysis-title h3{
+    font-size: 30px;
+  }
+
+  .issue-concerns-cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .concern-issue, .skin-texture-issue, .skin-type-issue{
+    color: var(--background-color);
+  }
+
+  .reco-product-main-cont{
+    display: flex;
+    justify-content: center;
+  }
+
+  .reco-product-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    width: 50%;
+    border-radius: 10px;
+    border: 1px solid var(--background-color);
+  }
+
+  .reco-product-cont h3{
+    font-size: 25px;
+    text-align: start;
+  }
+
+  .reco-product-cont .consumer-feedback{
+    border-left: 10px solid var(--background-color);
+    padding: 10px 5px 10px 5px;
+    background-color: rgb(245, 244, 244);
+  }
+
+
+
+  .product-reco-main-cont{
+    margin-top: 20px;
+    border: 1px solid black;
+    background-color: rgb(250, 247, 247);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .product-reco-cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .benefits-cont{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .benefits-cont div{
+    display: inline-block;
+    justify-self: center;
+    width: 80%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 5px;
+  }
+
+
+  .product-image{
+    width: 200px;
+    height: 200px;
+  }
+
+  .product-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+  }
+
+  .product-details div{
+    margin: 10px 0px 10px 0px;
+  }
+
+  .product-details div:nth-of-type(1), .product-details div:nth-of-type(3){
+    font-size: 22px;
+  }
+
+  .product-details div:nth-of-type(2){
+    color: var(--background-color);
+    font-size: 18px;
+  }
+
+  .price-cont{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .discount-off{
+    padding: 5px;
+    color: white;
+    background-color: var(--background-color);
+    font-size: 15px !important;
+    border-radius: 3px;
+  }

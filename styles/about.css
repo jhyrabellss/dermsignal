@@ -1,0 +1,127 @@
+/* Base font size */
+html {
+    font-size: 14px;
+  }
+  
+  /* Use rem units */
+  body {
+    margin-top: 4.5625rem; /* 73px */
+    margin-bottom: 3.75rem; /* 60px */
+  }
+  
+  main .con-grid {
+    display: flex;
+    flex-wrap: wrap; /* Ensure items wrap on smaller screens */
+  }
+  
+  main .reverse {
+    flex-direction: row-reverse;
+  }
+  
+  main .img-con {
+    overflow: hidden;
+    height: 31.25rem; /* 500px */
+    flex: 1;
+  }
+  
+  main .img-con img {
+    object-fit: cover;
+    object-position: center;
+    width: 100%; /* Ensure image fills its container */
+  }
+  
+  main .con-grid .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  main .con-grid .center .desc {
+    max-width: 37.5rem; /* 600px */
+  }
+  
+  main .con-grid .center .desc h1 {
+    margin-bottom: 1.25rem; /* 20px */
+    font-weight: 500;
+    color: rgb(94, 94, 94);
+    font-size: 30px; /* 30px */
+    text-align: left;
+  }
+  
+  main .con-grid .center .desc .flex-col {
+    font-weight: 300;
+    color: rgb(118, 118, 118);
+    font-size: 18px; /* 14px */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* 12px */
+    line-height: 1.5; /* 24px */
+  }
+  
+  main .con-grid .center .desc .btn {
+    background: rgb(183, 205, 183);
+    letter-spacing: 0.125rem; /* 2px */
+    font-size: 0.8125rem; /* 13px */
+    color: white;
+    border: none;
+    height: 3.125rem; /* 50px */
+    width: 15.625rem; /* 250px */
+    font-weight: 300;
+    margin-top: 0.75rem; /* 12px */
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    html {
+      font-size: 14px;
+    }
+  
+    body {
+      margin-top: 3.375rem; /* 54px */
+      margin-bottom: 2.8125rem; /* 45px */
+    }
+  
+    main .img-con {
+      height: 21.875rem; /* 350px */
+    }
+  
+    main .con-grid .center .desc {
+      max-width: 31.25rem; /* 500px */
+    }
+  }
+  
+  /* Mobile view adjustments */
+  @media screen and (max-width: 480px) {
+    html {
+      font-size: 12px;
+    }
+  
+    body {
+      margin-top: 2.25rem; /* 36px */
+      margin-bottom: 1.875rem; /* 30px */
+    }
+  
+    main .img-con {
+      height: 15.625rem; /* 250px */
+    }
+  
+    main .con-grid .center .desc {
+      max-width: 25rem; /* 400px */
+    }
+  
+    main .con-grid .center .desc h1 {
+      font-size: 1.5625rem; /* 25px */
+    }
+  
+    main .con-grid .center .desc .flex-col {
+      font-size: 0.75rem; /* 12px */
+      line-height: 1.25; /* 20px */
+    }
+  
+    main .con-grid .center .desc .btn {
+      height: 2.5rem; /* 40px */
+      width: 12.5rem; /* 200px */
+    }
+  }
+  
