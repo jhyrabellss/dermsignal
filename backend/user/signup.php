@@ -39,6 +39,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "SQL Error: " . $stmt2->error;
             }
 
+            $account_id = $stmt2->insert_id;
+
             $query3 = "INSERT INTO tbl_account_details (ac_id, first_name, middle_name, last_name)
             VALUES(?, ?, ?, ?)";
             $stmt3 = $conn->prepare($query3);
