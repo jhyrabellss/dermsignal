@@ -63,7 +63,7 @@ $(document).ready(() => {
 
           if (password === confirmPass) {
               $.ajax({
-                  url: "../backend/user/signup.php",
+                  url: "./backend/user/signup.php",
                   method: "post",
                   data: {
                       email,
