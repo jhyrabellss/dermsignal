@@ -33,7 +33,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt2->bind_param("sssi", $user, $email, $hashed_password, $role_id);
 
             if ($stmt2->execute()) {
-                
+                echo "Account created successfully!";
             } else {
                 error_log("SQL Error: " . $stmt2->error);
                 echo "SQL Error: " . $stmt2->error;
