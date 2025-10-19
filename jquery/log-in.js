@@ -7,7 +7,7 @@ $(document).ready(() => {
 
     if (username && password) {
       $.ajax({
-        url: "../backend/user/login.php",
+        url: "./backend/user/login.php",
         method: "post",
         data: {
           username,

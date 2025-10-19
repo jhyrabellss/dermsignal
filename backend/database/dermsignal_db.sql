@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 11, 2024 at 02:41 PM
+-- Generation Time: Oct 18, 2025 at 08:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,7 +46,7 @@ INSERT INTO `tbl_account` (`ac_id`, `ac_username`, `ac_email`, `ac_password`, `r
 (3, 'uniform1', 'uniform@gmail.com', '$2y$10$6X5caxJ7hgH2jHJTVSMhVer80umvvkjZlKnYvhko6dTOdt.duBZIK', 1, 2),
 (4, 'lelouch1', 'lelouch@gmail.com', '$2y$10$4tGORYUvKk4PmBJY8WNqdOgZgDTqq6/rUgmKv7UStyv06XX1wQy36', 1, 1),
 (5, 'kiko1', 'kiko@gmail.com', '$2y$10$d69zFFkiMBnrYJyVixN.ieoydzdc/bsOiH7Nppy1mdwFSmFyCsTwS', 1, 1),
-(6, 'admin', 'admin@gmail.com', '$2y$10$egNxXzs.VSGfoHHq23iaR.mUC5za/vs3UwOF2OvSHHtIPooXIxl1i', 2, 1);
+(6, 'admin', 'admin@gmail.com', 'admin@123', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -378,9 +378,7 @@ INSERT INTO `tbl_products` (`prod_id`, `prod_name`, `prod_price`, `prod-short-de
 (12, '[Rx] TREVISO Isotretinoin 10mg (Box of 30s)', 1500, 'Clear Skin Treatment | Reduces Severe Acne', 'An established prescription acne medication that deactivates hyperactive oil glands: the center of acne pathology. Correct dosing and treatment protocols may give an 80% chance of cure. Ideal for patients who have recurring acne and do not respond to diff', 1, 4, 50, 20, 'prod-12-iso.webp', 'prod-12-iso-hover.webp'),
 (13, '[Rx] ACRESIL Clindamycin Capsule 300mg (28s)', 560, 'Bacterial Infection Treatment | Effective Antibiotic', '\r\n[Rx] ACRESIL Clindamycin 300mg (28s) is an antibiotic for treating bacterial infections, including skin, respiratory, and bone infections. Use as prescribed by your healthcare provider.', 1, 4, 50, 10, 'prod-13-acresil.jpg', 'prod-13-acre-hover.webp'),
 (14, '[Rx] Betamethasone Valerate 1mg/g 0.1% (w/w) Topical Cream 15g', 380, 'Inflammation Relief | Reduces Skin Redness & Itching', '[Rx] Betamethasone Valerate 0.1% Topical Cream (15g) is a corticosteroid used to relieve inflammation, redness, and itching associated with skin conditions like eczema and psoriasis. Apply as directed by your healthcare provider.', 4, 3, 50, 10, 'prod-14-beta.webp', 'prod-14-beta-hover.webp'),
-(15, '[Rx] PIDCLIN Doxycycline Capsule 100mg', 720, 'Broad-Spectrum Antibiotic | Treats Bacterial Infections', '[Rx] PIDCLIN Doxycycline 100mg Capsule is an antibiotic used to treat various bacterial infections, including respiratory, skin, and urinary tract infections. It also treats acne and certain sexually transmitted infections. Use as prescribed by your healt', 1, 4, 50, 10, 'prod-15-doxy.webp', 'prod-15-doxy-hover.webp'),
-(16, 'BatongBakalHydrocloride', 200, '', '', 4, 2, 50, 0, '6757fddbe5dfb.jpeg', ''),
-(17, 'BatongBakalHydrocloride', 200, '', '', 2, 3, 50, 0, '675955629fb47.jpeg', '');
+(15, '[Rx] PIDCLIN Doxycycline Capsule 100mg', 720, 'Broad-Spectrum Antibiotic | Treats Bacterial Infections', '[Rx] PIDCLIN Doxycycline 100mg Capsule is an antibiotic used to treat various bacterial infections, including respiratory, skin, and urinary tract infections. It also treats acne and certain sexually transmitted infections. Use as prescribed by your healt', 1, 4, 50, 10, 'prod-15-doxy.webp', 'prod-15-doxy-hover.webp');
 
 -- --------------------------------------------------------
 
