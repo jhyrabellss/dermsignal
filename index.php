@@ -217,7 +217,7 @@
 
     <div class="main-cont" id="main-cont">
     <div class="form-popup" id="myFormLogIn">
-            <form class="form-container" action="./backend/user/login.php" method="POST">
+            <form class="form-container"  method="POST">
                 <div class="close-popup-cont">
                     <div class="close-popup" onclick="closeForm('myFormLogIn')">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="15px" width="15px" version="1.1" id="Capa_1" viewBox="0 0 460.775 460.775" xml:space="preserve">
@@ -237,7 +237,7 @@
             </form>
     </div>
     <div class="form-popup" id="myFormSignUp">
-                    <form class="form-container" action="./backend/user/signup.php" method="POST">
+                    <form class="form-container"  method="POST">
                         <div class="close-popup-cont">
                             <div class="close-popup" onclick="closeForm('myFormSignUp')">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="10px" width="10px" version="1.1" id="Capa_1" viewBox="0 0 460.775 460.775" xml:space="preserve">
