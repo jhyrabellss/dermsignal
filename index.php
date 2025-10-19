@@ -169,8 +169,8 @@
                     <div style="display: flex; gap: 10px; align-items:center;">
                         <i class="fa-regular fa-user"></i>
                         <div class="dropdown" id="dropdownMenu">
-                            <a href="../components/profile.php"><div>Profile</div></a>
-                            <a href="../components/orders.php"><div>Orders</div></a>
+                            <a href="./components/profile.php"><div>Profile</div></a>
+                            <a href="./components/orders.php"><div>Orders</div></a>
                             <div id="logoutButton"> Log Out</div>
                         </div>
                     </div>
@@ -763,7 +763,7 @@
                     ?>
                         <div class="item-cont-flex">
                             <div class="item-img-cont">
-                                      <img src="../images/products/<?= $data['prod_img']; ?>" alt="img" >
+                                      <img src="./images/products/<?= $data['prod_img']; ?>" alt="img" >
                             </div>
                             <div class="item-details">
                                 <p class="item-name"> <?= $data['prod_name']?> </p>
@@ -847,7 +847,7 @@
 
             <div class="empty-cont" id="empty-cont">
                 <div class="empty-cont-img">
-                    <img src="../images/icons/cart-empty.png" alt="">
+                    <img src="./images/icons/cart-empty.png" alt="">
                 </div>
                 <div class="empty-cart-text">
                     Your Cart is empty !
@@ -856,7 +856,7 @@
                     It's a good day to buy the items you saved for later
                 </div>
                 <div class="shop-now-cont">
-                    <a href="../components/all-products.php">
+                    <a href="./components/all-products.php">
                         <button class="shop-now">Shop Now</button>
                     </a>
                 </div>
