@@ -2,45 +2,68 @@
 require_once("../config/config.php");
 session_start();
 
-date_default_timezone_set('UTC');  // Ensure timezone is set
+header('Content-Type: application/json');
 
-// Debugging: check if date() is working
-$current_date = date("Y-m-d");
-echo "Current Date: " . $current_date . "<br>";  // Should print something like 2024-12-10
-
-// Check if user is logged in and required POST variables are set
 if (isset($_SESSION["user_id"]) && isset($_POST["review"]) && isset($_POST["prod_id"]) && isset($_POST["rating"])) {
-    $review = $_POST["review"];
     $account_id = $_SESSION["user_id"];
-    $prod_id = $_POST["prod_id"];
+    $review = trim($_POST["review"]);
+    $prod_id = intval($_POST["prod_id"]);
     $rating = intval($_POST["rating"]);
 
-    // Debugging: print all variables
-    echo "Review: " . htmlspecialchars($review) . "<br>";
-    var_dump($prod_id, $review, $rating, $account_id, $current_date);
-
-    // Validate rating value
-    if ($rating < 0) {
-        echo "Please rate the product.";
+    // Validate rating
+    if ($rating < 1 || $rating > 5) {
+        echo json_encode(['status' => 'error', 'message' => 'Invalid rating value']);
         exit;
     }
 
-    // Raw SQL for debugging
-    $query = "INSERT INTO tbl_item_reviews (prod_id, rv_comment, rating, ac_id, rv_date) 
-              VALUES ('$prod_id', '$review', '$rating', '$account_id', '$current_date')";
-    
-    echo "Executing Query: " . $query . "<br>";  // Debugging: Output the query to check it
-    
-    if ($conn->query($query)) {
-        echo "Review submitted!";
-    } else {
-        echo "Error: " . $conn->error;
+    // Check if user has purchased the product
+    $purchase_query = "SELECT COUNT(*) as purchase_count 
+                      FROM tbl_cart 
+                      WHERE account_id = ? 
+                      AND prod_id = ? 
+                      AND status_id = 5";
+    $purchase_stmt = $conn->prepare($purchase_query);
+    $purchase_stmt->bind_param("ii", $account_id, $prod_id);
+    $purchase_stmt->execute();
+    $purchase_result = $purchase_stmt->get_result();
+    $purchase_data = $purchase_result->fetch_assoc();
+    $purchase_stmt->close();
+
+    if ($purchase_data['purchase_count'] == 0) {
+        echo json_encode(['status' => 'error', 'message' => 'You must purchase this product to leave a review']);
+        exit;
     }
+
+    // Check if user has already rated this product
+    $check_query = "SELECT rv_id FROM tbl_item_reviews WHERE ac_id = ? AND prod_id = ?";
+    $check_stmt = $conn->prepare($check_query);
+    $check_stmt->bind_param("ii", $account_id, $prod_id);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
+    $check_stmt->close();
+
+    if ($check_result->num_rows > 0) {
+        echo json_encode(['status' => 'error', 'message' => 'You have already reviewed this product']);
+        exit;
+    }
+
+    // Insert the review
+    $insert_query = "INSERT INTO tbl_item_reviews (prod_id, rv_comment, rating, ac_id, rv_date) 
+                     VALUES (?, ?, ?, ?, CURDATE())";
+    $insert_stmt = $conn->prepare($insert_query);
+    $insert_stmt->bind_param("isii", $prod_id, $review, $rating, $account_id);
+
+    if ($insert_stmt->execute()) {
+        echo json_encode(['status' => 'success', 'message' => 'Review submitted successfully']);
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Failed to submit review: ' . $conn->error]);
+    }
+
+    $insert_stmt->close();
+
 } else {
-    echo "Invalid request. Please ensure all required fields are provided.";
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
 }
 
-// Close the database connection
 $conn->close();
-
 ?>

@@ -5,6 +5,8 @@ session_start();
 <?php
 
     $current_user = $_SESSION['user_id'];
+    
+    // Get products in cart
     $query = "SELECT tc.*, tp.*
     FROM tbl_cart tc
     JOIN tbl_products tp ON tc.prod_id = tp.prod_id
@@ -13,6 +15,16 @@ session_start();
     $stmt->bind_param("i", $current_user);
     $stmt->execute();
     $result = $stmt->get_result();
+    
+    // Get vouchers in cart
+    $queryVouchers = "SELECT cv.*, v.*
+        FROM tbl_cart_vouchers cv
+        JOIN tbl_vouchers v ON cv.voucher_id = v.voucher_id
+        WHERE cv.account_id = ? AND cv.status_id = 1";
+    $stmtVouchers = $conn->prepare($queryVouchers);
+    $stmtVouchers->bind_param("i", $current_user);
+    $stmtVouchers->execute();
+    $resultVouchers = $stmtVouchers->get_result();
 ?>
 
 <?php
@@ -44,7 +56,7 @@ session_start();
 <html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Checkout - DermSignal</title>
   <link rel="stylesheet" href="../styles/checkout.css">
   <link rel="stylesheet" href="../styles/general-styles.css">
   <link rel="stylesheet" href="../styles/footer.css">
@@ -55,6 +67,25 @@ session_start();
   <style>
     .modal-body form{
         width: 90% !important;
+    }
+    .voucher-checkout-item {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-left: 4px solid #4a9f20ff;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+    .voucher-checkout-item .item-name {
+        color: #4a9f20ff;
+        font-weight: bold;
+    }
+    .voucher-code-badge {
+        background: #4a9f20ff;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        margin-left: 5px;
     }
   </style>
 </head>
@@ -186,7 +217,7 @@ session_start();
                 </svg>
             </div>
             <div>
-                <div>After clicking “Pay now”, you will be redirected to GCash to complete your purchase securely.</div>
+                <div>After clicking "Pay now", you will be redirected to GCash to complete your purchase securely.</div>
             </div>
         </div>
     </div>
@@ -201,21 +232,72 @@ session_start();
   <div class="checkout-item-cont">
     <div class="checkout-overall">
          <?php 
-                if ($result->num_rows > 0) {
+                if ($result->num_rows > 0 || $resultVouchers->num_rows > 0) {
                     $total = 0;
                     $subtotalOnly = 0;
-                    $itemDisc = 100;
-                    $shippingDisc = 40;
-                while ($data = $result->fetch_assoc()) {
-                $subtotal = round($data["prod_qnty"] * $data["prod_price"], 2);
-                $total += $subtotal;
-                $subtotalOnly += round($data["prod_price"], 2);
-                $origprice = $data['prod_price'] + 100; // Adjusted original price
-                $proddiscount = $data['prod_discount'] / 100;
-                $prodprice = $origprice - ($origprice * $proddiscount); // Calculate discounted price
-                $discprice = $data['prod_discount']; // Convert to percentage for display  
-                $onlineDisc = $total * 0.05; 
-                $grandTotal = $total - $onlineDisc;
+                    $voucherDiscount = 0;
+                    
+                    // Store all cart items for voucher calculation
+                    $cartItems = [];
+                    mysqli_data_seek($result, 0);
+                    while ($data = $result->fetch_assoc()) {
+                        $origprice = $data['prod_price'] + 100;
+                        $proddiscount = $data['prod_discount'] / 100;
+                        $prodprice = $origprice - ($origprice * $proddiscount);
+                        $subtotal = $data["prod_qnty"] * $prodprice;
+                        $total += $subtotal;
+                        
+                        $cartItems[] = [
+                            'prod_id' => $data['prod_id'],
+                            'subtotal' => $subtotal
+                        ];
+                    }
+                    
+                    // Calculate voucher discounts
+                    if ($resultVouchers->num_rows > 0) {
+                        mysqli_data_seek($resultVouchers, 0);
+                        while ($voucher = $resultVouchers->fetch_assoc()) {
+                            $targetItems = json_decode($voucher['target_items'], true);
+                            $eligibleProductIds = [];
+                            
+                            if ($targetItems) {
+                                foreach ($targetItems as $item) {
+                                    if ($item['type'] == 'product') {
+                                        $eligibleProductIds[] = $item['id'];
+                                    }
+                                }
+                            }
+                            
+                            $voucherSubtotal = 0;
+                            foreach ($cartItems as $cartItem) {
+                                if (in_array($cartItem['prod_id'], $eligibleProductIds)) {
+                                    $voucherSubtotal += $cartItem['subtotal'];
+                                }
+                            }
+                            
+                            if ($voucher['discount_type'] == 'percentage') {
+                                $currentDiscount = ($voucherSubtotal * $voucher['discount_value']) / 100;
+                                if ($voucher['max_discount'] > 0 && $currentDiscount > $voucher['max_discount']) {
+                                    $currentDiscount = $voucher['max_discount'];
+                                }
+                            } else {
+                                $currentDiscount = $voucher['discount_value'];
+                            }
+                            
+                            $meetsMinimum = ($total >= $voucher['min_purchase']);
+                            if ($meetsMinimum) {
+                                $voucherDiscount += $currentDiscount;
+                            }
+                        }
+                    }
+                    
+                    // Display products
+                    mysqli_data_seek($result, 0);
+                    while ($data = $result->fetch_assoc()) {
+                        $origprice = $data['prod_price'] + 100;
+                        $proddiscount = $data['prod_discount'] / 100;
+                        $prodprice = $origprice - ($origprice * $proddiscount);
+                        $discprice = $data['prod_discount'];
           ?>    
             <div class="checkout-item-details">
                 <div class="item-img-cont">
@@ -226,24 +308,102 @@ session_start();
                 <div class="item-price"> ₱<?=  number_format($prodprice, 2)?></div>
             </div>
         <?php } ?>
-        <div style="display: flex; justify-content:center; font-weight:bold; font-size:15px">Discount Applied!</div>
+        
+        <?php 
+        // Display vouchers
+        if ($resultVouchers->num_rows > 0) {
+            mysqli_data_seek($resultVouchers, 0);
+            while ($voucher = $resultVouchers->fetch_assoc()) {
+                $targetItems = json_decode($voucher['target_items'], true);
+                $eligibleProductIds = [];
+                
+                if ($targetItems) {
+                    foreach ($targetItems as $item) {
+                        if ($item['type'] == 'product') {
+                            $eligibleProductIds[] = $item['id'];
+                        }
+                    }
+                }
+                
+                $voucherSubtotal = 0;
+                foreach ($cartItems as $cartItem) {
+                    if (in_array($cartItem['prod_id'], $eligibleProductIds)) {
+                        $voucherSubtotal += $cartItem['subtotal'];
+                    }
+                }
+                
+                if ($voucher['discount_type'] == 'percentage') {
+                    $currentDiscount = ($voucherSubtotal * $voucher['discount_value']) / 100;
+                    if ($voucher['max_discount'] > 0 && $currentDiscount > $voucher['max_discount']) {
+                        $currentDiscount = $voucher['max_discount'];
+                    }
+                } else {
+                    $currentDiscount = $voucher['discount_value'];
+                }
+                
+                $meetsMinimum = ($total >= $voucher['min_purchase']);
+        ?>
+            <div class="checkout-item-details voucher-checkout-item">
+                <div class="item-img-cont" style="background: #4a9f20ff; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-solid fa-ticket-simple" style="color: white; font-size: 24px;"></i>
+                </div>
+                <div class="item-name">
+                    <i class="fa-solid fa-tag"></i> <?= htmlspecialchars($voucher['voucher_name']) ?>
+                    <span class="voucher-code-badge"><?= htmlspecialchars($voucher['voucher_code']) ?></span>
+                    <?php if (!$meetsMinimum) { ?>
+                        <div style="font-size: 10px; color: #856404; margin-top: 3px;">
+                            <i class="fa-solid fa-exclamation-triangle"></i> Min purchase not met
+                        </div>
+                    <?php } ?>
+                </div>
+                <div class="item-price" style="color: #dc3545;">
+                    <?php if ($meetsMinimum) { ?>
+                        -₱<?= number_format($currentDiscount, 2) ?>
+                    <?php } else { ?>
+                        ₱0.00
+                    <?php } ?>
+                </div>
+            </div>
+        <?php 
+            }
+        }
+        
+        // Calculate final totals
+        $onlineDisc = $total * 0.05; 
+        $grandTotal = $total - $onlineDisc - $voucherDiscount;
+        if ($grandTotal < 0) $grandTotal = 0;
+        ?>
+        
+        <div style="display: flex; justify-content:center; font-weight:bold; font-size:15px; margin-top: 15px;">Discount Applied!</div>
     </div>
     <div class="checkout-subtotal">
     <?php if(!empty($_SESSION["user_id"])){ 
-                $query = "SELECT COUNT(*) AS CountItems FROM tbl_cart WHERE status_id = 1 and account_id = ?;";
-                $stmt = $conn->prepare($query);
-                $stmt->bind_param("i", $_SESSION["user_id"]);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $data = $result->fetch_assoc();
+                $queryCount = "SELECT COUNT(*) AS CountItems FROM tbl_cart WHERE status_id = 1 and account_id = ?;";
+                $stmtCount = $conn->prepare($queryCount);
+                $stmtCount->bind_param("i", $_SESSION["user_id"]);
+                $stmtCount->execute();
+                $resultCount = $stmtCount->get_result();
+                $dataCount = $resultCount->fetch_assoc();
             ?>
-        <div class="all-quantity"> Subtotal • <?= $data['CountItems'] ?> items</div>
+        <div class="all-quantity"> Subtotal • <?= $dataCount['CountItems'] ?> items</div>
     <?php }?>
-        <div class="total-price"> ₱<?= number_format($grandTotal, 2) ?></div>
+        <div class="total-price"> ₱<?= number_format($total, 2) ?></div>
     </div>
 
     <div class="checkout-shipping">
-        <div> Clinic checkout </div>
+        <div> 5% Online Payment Discount </div>
+        <div> -₱<?= number_format($onlineDisc, 2) ?> </div>
+    </div>
+    
+    <?php if ($voucherDiscount > 0) { ?>
+    <div class="checkout-shipping" style="color: #4a9f20ff; font-weight: bold;">
+        <div> <i class="fa-solid fa-ticket-simple"></i> Voucher Discount </div>
+        <div> -₱<?= number_format($voucherDiscount, 2) ?> </div>
+    </div>
+    <?php } ?>
+
+    <div class="checkout-shipping">
+        <div> Shipping </div>
         <div> Free </div>
     </div>
 

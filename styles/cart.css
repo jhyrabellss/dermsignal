@@ -336,7 +336,7 @@ body.showCart .cart-cont{
   
 }
 
-.nav-cart-icon{
+.nav-cart-icon, .nav-appointment-icon{
   position: relative;
 }
 
@@ -354,3 +354,54 @@ body.showCart .cart-cont{
 }
 
 
+.voucher-item {
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.voucher-item .item-img-cont {
+    border-radius: 8px;
+}
+
+.voucher-details span {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.remove-voucher-btn:hover {
+    background: #c82333 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(220, 53, 69, 0.3);
+    transition: all 0.3s ease;
+}
+
+.voucher-warning {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.voucher-applied {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.voucher-discount {
+    padding: 10px 0;
+    border-top: 1px dashed #dee2e6;
+    margin-top: 10px;
+}

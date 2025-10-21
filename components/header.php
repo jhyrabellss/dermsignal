@@ -123,6 +123,10 @@ session_start();
             <div class="nav-allprod-cont">
                 <a href="./all-products.php">All Product</a>
             </div>
+
+            <div class="nav-allprod-cont">
+                <a href="./services.php">Services</a>
+            </div>
             <a href="../components/assessment.php">
             <div class="nav-free-skin-assessment-cont">
                 <svg id="tabler-icon-clipboard-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path id="Path_116054" data-name="Path 116054" d="M0,0H24V24H0Z" fill="none"></path><path id="Path_116055" data-name="Path 116055" d="M9,5H7A2,2,0,0,0,5,7V19a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V7a2,2,0,0,0-2-2H15" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><rect id="Rectangle_7428" data-name="Rectangle 7428" width="6" height="4" rx="2" transform="translate(9 3)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></rect><path id="Path_116056" data-name="Path 116056" d="M9,14l2,2,4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
@@ -133,19 +137,46 @@ session_start();
             </a>
         </div>
         <div class="nav-right-icon" style="display:flex; gap: 20px;  ">
-            <?php if(!empty($_SESSION["user_id"])){ 
+             <?php if (!empty($_SESSION["user_id"])) {
+                // Count products in cart
                 $query = "SELECT COUNT(*) AS CountItems FROM tbl_cart WHERE status_id = 1 and account_id = ?;";
                 $stmt = $conn->prepare($query);
                 $stmt->bind_param("i", $_SESSION["user_id"]);
                 $stmt->execute();
                 $result = $stmt->get_result();
-                $data = $result->fetch_assoc();
+                $productCount = $result->fetch_assoc();
+
+                // Count vouchers in cart
+                $queryVouchers = "SELECT COUNT(*) AS CountVouchers FROM tbl_cart_vouchers WHERE status_id = 1 and account_id = ?;";
+                $stmtVouchers = $conn->prepare($queryVouchers);
+                $stmtVouchers->bind_param("i", $_SESSION["user_id"]);
+                $stmtVouchers->execute();
+                $resultVouchers = $stmtVouchers->get_result();
+                $voucherCount = $resultVouchers->fetch_assoc();
+
+                $totalCount = $productCount['CountItems'] + $voucherCount['CountVouchers'];
             ?>
-                
+
                 <div class="nav-cart-icon">
-                    <i class="fas fa-shopping-cart"  style="color: rgb(39,153,137); cursor:pointer "></i>
-                    <span class="cart-counter"> <?= $data['CountItems']?> </span>
+                    <i class="fas fa-shopping-cart" style="color: rgb(39,153,137); cursor:pointer "></i>
+                    <span class="cart-counter"> <?= $totalCount ?> </span>
                 </div>
+
+                <?php 
+                    $query_appointments = "SELECT COUNT(*) AS CountAppointments FROM tbl_appointments WHERE ac_id = ? AND appointment_status = 'Pending';";
+                    $stmt_appointments = $conn->prepare($query_appointments);
+                    $stmt_appointments->bind_param("i", $_SESSION["user_id"]);
+                    $stmt_appointments->execute();
+                    $result_appointments = $stmt_appointments->get_result();
+                    $data_appointments = $result_appointments->fetch_assoc();
+                ?>
+
+                 <a href="./my-appointments.php">
+                    <div class="nav-appointment-icon">
+                        <i class="fa-regular fa-calendar-days" style="color: rgb(39,153,137); cursor:pointer "></i>
+                        <span class="cart-counter"> <?= $data_appointments['CountAppointments']?> </span>
+                    </div>
+                 </a>
             
             <?php } ?>
          
@@ -160,7 +191,9 @@ session_start();
                         </div>
                     </div>
                 <?php } else { ?>
-                    <div onclick="openForm('myFormSignUp')" style="cursor: pointer;">Sign up </div>
+                    <div onclick="openForm('myFormSignUp')" style="cursor: pointer;">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </div>
                 <?php } ?>
             </div>
         </div>

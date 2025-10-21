@@ -107,7 +107,6 @@ hr{
       width: 100%;
   }
 
-
   .swiper-cont{
       width: 400px;
   }
@@ -202,33 +201,6 @@ hr{
     border-radius: 3px;
   }
 
-  .rating-bar .rating-bar-div{
-    width: 80%;
-    background-color: var(--background-color);
-    height: 100%;
-    margin: 0;
-  }
-
-
-  .rating-bar-5 .rating-bar-div{
-    width: 80%;
-  }
-
-  .rating-bar-4 .rating-bar-div{
-    width: 10%;
-  }
-
-  .rating-bar-3 .rating-bar-div{
-    width: 5%;
-  }
-
-  .rating-bar-2 .rating-bar-div{
-    width: 4%;
-  }
-
-  .rating-bar-1 .rating-bar-div{
-    width: 1%;
-  }
 
   .comments-cont{
     display: flex;
@@ -393,7 +365,6 @@ hr{
   }
 
 
-
   .product-list-items-cont{
     display: flex;
     flex-direction: column;
@@ -440,4 +411,43 @@ hr{
     padding: 3px;
   
   }
-  
+
+
+
+
+
+  .related-products-section {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.related-products-section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: var(--background-color);
+}
+
+.related-products-section .product-items {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.related-products-section .product-items:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Remove the hardcoded widths from CSS */
+.rating-bar-5 .rating-bar-div,
+.rating-bar-4 .rating-bar-div,
+.rating-bar-3 .rating-bar-div,
+.rating-bar-2 .rating-bar-div,
+.rating-bar-1 .rating-bar-div {
+  width: auto; /* This will be overridden by inline styles */
+}

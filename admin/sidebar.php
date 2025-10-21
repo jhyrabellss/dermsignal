@@ -38,6 +38,38 @@
               <a  class="nav-link" href="addprod.php">Add Product</a>
             </nav>
         </div>
+        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseServices" aria-expanded="false" aria-controls="collapseEmployeeProducts">
+          <div class="sb-nav-link-icon">
+            <i class="fa-solid fa-concierge-bell"></i>
+          </div>
+          Services
+          <div class="sb-sidenav-collapse-arrow">
+            <i class="fas fa-angle-down"></i>
+          </div>
+        </a>
+        <div class="collapse" id="collapseServices" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+            <?php
+                $query = "SELECT service_group FROM tbl_services GROUP BY service_group";
+                $stmt = $conn->prepare($query);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $index = 0;
+                while($data = $result->fetch_assoc()){
+                    $index += 1;
+                    $serviceName = $data["service_group"];
+            ?>
+            <nav class="sb-sidenav-menu-nested nav" data-type-id="<?php echo $index; ?>"
+            data-service-name="<?php echo $serviceName; ?>"
+            >
+                <a class="nav-link service-type" data-type-id="<?php echo $index; ?>"
+                data-service-name="<?php echo $serviceName; ?>"
+                href="#"><?php echo $serviceName; ?></a>
+            </nav>
+            <?php } ?>
+            <nav class="sb-sidenav-menu-nested nav">
+              <a  class="nav-link" href="addService.php">Add Services</a>
+            </nav>
+        </div>
         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseEmployeeAccounts" aria-expanded="false" aria-controls="collapseEmployeeAccounts">
           <div class="sb-nav-link-icon">
             <i class="fa-solid fa-user"></i>
@@ -54,6 +86,9 @@
           <nav class="sb-sidenav-menu-nested nav">
             <a class="nav-link" href="deactivated.php">Deactivated</a>
           </nav>
+          <nav class="sb-sidenav-menu-nested nav">
+            <a class="nav-link" href="addAccount.php">Add Account</a>
+          </nav>
         </div>
         <a class="nav-link" href="reports.php">
           <div class="sb-nav-link-icon">
@@ -61,6 +96,13 @@
           </div>
           Feedbacks
         </a>
+        <a class="nav-link" href="./voucher.php">
+          <div class="sb-nav-link-icon">
+            <i class="fa-solid fa-ticket-simple"></i>
+          </div>
+          Vouchers
+        </a>
+
 
         <div class="sb-sidenav-menu-heading">Report </div>
         <a class="nav-link" href="auditLogs.php">

@@ -42,6 +42,8 @@
                     $_SESSION["user_id"] = $data["ac_id"];
                 }else if($role_id == 2){
                     $_SESSION["admin_id"] = $data["ac_id"];
+                }else if($role_id == 3){
+                    $_SESSION["derm_id"] = $data["ac_id"];
                 }
                 echo json_encode($sessionData);
             }else{

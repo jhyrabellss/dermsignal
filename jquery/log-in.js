@@ -42,8 +42,8 @@ $(document).ready(() => {
                 localStorage.setItem("adminDetails", response);
                 window.location.href = "../admin/index.php";
               } else if (data.role_id == 3) {
-                localStorage.setItem("cashierDetails", response);
-                window.location.href = "../cashier1/index.php";
+                localStorage.setItem("dermDetails", response);
+                window.location.href = "../dermatologist/derm-index.php";
               }
             });
           }

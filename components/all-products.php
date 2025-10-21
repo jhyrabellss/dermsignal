@@ -12,6 +12,7 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'high'; // Default to 'high' if s
     <link rel="stylesheet" href="../styles/general-styles.css">
     <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/prod-ingredients.css">
+    <link rel="stylesheet" href="../styles/voucher-banner.css">
     <link rel="stylesheet" href="../styles/product-lists.css">
     <style>
      
