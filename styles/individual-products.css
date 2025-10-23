@@ -449,5 +449,29 @@ hr{
 .rating-bar-3 .rating-bar-div,
 .rating-bar-2 .rating-bar-div,
 .rating-bar-1 .rating-bar-div {
-  width: auto; /* This will be overridden by inline styles */
+  width: auto;
+}
+
+.rating-bar{
+  border: 1px solid var(--background-color);
+  width: 100px;
+  height: 8px;
+  border-radius: 3px;
+  overflow: hidden; /* Important: prevents inner div from overflowing */
+  background-color: #f0f0f0; /* Light gray background for empty bar */
+}
+
+.rating-bar-div {
+  height: 100%; /* This is crucial - makes it fill the parent height */
+  transition: width 0.3s ease; /* Smooth animation */
+}
+
+.bar-rating{
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px; /* Add some spacing between bars */
+}
+
+.bar-rating > div{
+  margin-right: 5px;
 }

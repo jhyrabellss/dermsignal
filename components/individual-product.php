@@ -195,52 +195,52 @@
       </div>
 
       <div class="bar-rating-cont">
-        <div class="bar-rating" id="5">
-          <div>5</div>
-          <div class="rating-bar">
-            <div class="rating-bar-div" style="width: <?= $rating_5_percent ?>%;"></div>
-          </div>
-          <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-              <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
-            </svg></div>
-        </div>
-        <div class="bar-rating" id="4">
-          <div>4</div>
-          <div class="rating-bar">
-            <div class="rating-bar-div" style="width: <?= $rating_4_percent ?>%;"></div>
-          </div>
-          <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-              <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
-            </svg></div>
-        </div>
-        <div class="bar-rating" id="3">
-          <div>3</div>
-          <div class="rating-bar">
-            <div class="rating-bar-div" style="width: <?= $rating_3_percent ?>%;"></div>
-          </div>
-          <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-              <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
-            </svg></div>
-        </div>
-        <div class="bar-rating" id="2">
-          <div>2</div>
-          <div class="rating-bar">
-            <div class="rating-bar-div" style="width: <?= $rating_2_percent ?>%;"></div>
-          </div>
-          <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-              <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
-            </svg></div>
-        </div>
-        <div class="bar-rating" id="1">
-          <div>1</div>
-          <div class="rating-bar">
-            <div class="rating-bar-div" style="width: <?= $rating_1_percent ?>%;"></div>
-          </div>
-          <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-              <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
-            </svg></div>
-        </div>
-      </div>
+  <div class="bar-rating" id="5">
+    <div>5</div>
+    <div class="rating-bar">
+      <div class="rating-bar-div" style="width: <?= $rating_5_percent ?>%; background-color: #4CAF50;"></div>
+    </div>
+    <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+        <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
+      </svg></div>
+  </div>
+  <div class="bar-rating" id="4">
+    <div>4</div>
+    <div class="rating-bar">
+      <div class="rating-bar-div" style="width: <?= $rating_4_percent ?>%; background-color: #8BC34A;"></div>
+    </div>
+    <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+        <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
+      </svg></div>
+  </div>
+  <div class="bar-rating" id="3">
+    <div>3</div>
+    <div class="rating-bar">
+      <div class="rating-bar-div" style="width: <?= $rating_3_percent ?>%; background-color: #FFC107;"></div>
+    </div>
+    <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+        <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
+      </svg></div>
+  </div>
+  <div class="bar-rating" id="2">
+    <div>2</div>
+    <div class="rating-bar">
+      <div class="rating-bar-div" style="width: <?= $rating_2_percent ?>%; background-color: #FF9800;"></div>
+    </div>
+    <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+        <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
+      </svg></div>
+  </div>
+  <div class="bar-rating" id="1">
+    <div>1</div>
+    <div class="rating-bar">
+      <div class="rating-bar-div" style="width: <?= $rating_1_percent ?>%; background-color: #F44336;"></div>
+    </div>
+    <div><svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+        <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"></path>
+      </svg></div>
+  </div>
+</div>
 
     </div>
 
