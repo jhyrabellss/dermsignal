@@ -70,6 +70,220 @@ require_once("./derm-select.php");
         color: rgba(55, 55, 55, 1);
       }
       
+
+      .payment-modal .modal-content {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .payment-modal .modal-header {
+    background: linear-gradient(135deg, rgb(39,153,137) 0%, rgb(28,127,114) 100%);
+    border: none;
+    padding: 1.5rem 2rem;
+  }
+
+  .payment-modal .modal-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .payment-modal .modal-body {
+    padding: 2rem;
+    background-color: #f8f9fa;
+  }
+
+  .info-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+  }
+
+  .info-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .info-card-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgb(28,127,114);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .info-row:last-child {
+    border-bottom: none;
+  }
+
+  .info-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .info-value {
+    color: #212529;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .amount-highlight {
+    font-size: 1.5rem;
+    color: rgb(39,153,137);
+  }
+
+  .payment-proof-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+
+  .payment-proof-container img {
+    border-radius: 8px;
+    max-height: 350px;
+    width: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .action-buttons .btn {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s;
+  }
+
+  .btn-verify {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: none;
+    color: white;
+  }
+
+  .btn-verify:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  }
+
+  .btn-reject {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border: none;
+    color: white;
+  }
+
+  .btn-reject:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+  }
+
+  .modal-footer {
+    background-color: white;
+    border-top: 1px solid #e9ecef;
+    padding: 1rem 2rem;
+  }
+
+  .badge-custom {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .badge-verified {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+  }
+
+  .badge-pending {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+  }
+
+  .badge-rejected {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+  }
+
+  .badge-confirmed {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+  }
+
+  .badge-completed {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+  }
+
+  .badge-cancelled {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    color: white;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: #9ca3af;
+  }
+
+  .empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .btn-verify{
+    background-color: rgb(16,185,129);
+    border: none;
+    color: white;
+    font-weight: 600;
+  }
+
+  .btn-verify:hover{
+    background-color: rgb(5,150,105);
+    color: white;
+  }
+
+  .btn-reject{
+    background-color: rgb(239,68,68);
+    border: none;
+    color: white;
+    font-weight: 600;
+  }
+
+  .btn-reject:hover{
+    background-color: rgb(220,38,38);
+    color: white;
+  }
+
     </style>
   </head>
   <body class="sb-nav-fixed">
@@ -198,7 +412,8 @@ require_once("./derm-select.php");
                               <th>Service</th>
                               <th>Status</th>
                               <th>Contact</th>
-                              <th>Notes</th>
+                              <th>Payment Status</th>
+                              <th>Actions</th>
                             </tr>
                           </thead>
                           <tbody id="appointmentsTableBody">
@@ -216,6 +431,104 @@ require_once("./derm-select.php");
                 </div>
               </div>
 
+              <!-- Payment Details Modal -->
+<!-- Modal HTML -->
+<div class="modal fade payment-modal" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="paymentModalLabel" style="color: white !important;">
+          <i class="fas fa-receipt"></i>
+          Payment Details
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <!-- Left Column -->
+          <div class="col-lg-6">
+            <!-- Payment Information Card -->
+            <div class="info-card">
+              <div class="info-card-title">
+                <i class="fas fa-credit-card"></i>
+                Payment Information
+              </div>
+              
+              <div class="info-row">
+                <span class="info-label">GCash Reference</span>
+                <span class="info-value" id="modal_gcash_ref">-</span>
+              </div>
+              
+              <div class="info-row">
+                <span class="info-label">Downpayment Amount</span>
+                <span class="info-value amount-highlight" id="modal_amount">₱0.00</span>
+              </div>
+              
+              <div class="info-row">
+                <span class="info-label">Payment Status</span>
+                <span class="info-value" id="modal_payment_status">-</span>
+              </div>
+              
+              <div class="info-row">
+                <span class="info-label">Appointment Status</span>
+                <span class="info-value" id="modal_appointment_status">-</span>
+              </div>
+            </div>
+
+            <!-- Patient Information Card -->
+            <div class="info-card">
+              <div class="info-card-title">
+                <i class="fas fa-user"></i>
+                Patient Information
+              </div>
+              
+              <div class="info-row">
+                <span class="info-label">Patient Name</span>
+                <span class="info-value" id="modal_patient_name">-</span>
+              </div>
+              
+              <div class="info-row">
+                <span class="info-label">Service</span>
+                <span class="info-value" id="modal_service">-</span>
+              </div>
+              
+              <div class="info-row">
+                <span class="info-label">Appointment Date & Time</span>
+                <span class="info-value" id="modal_datetime">-</span>
+              </div>
+              
+              <div class="info-row">
+                <span class="info-label">Additional Notes</span>
+                <span class="info-value" id="modal_notes">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="col-lg-6">
+            <!-- Payment Proof Card -->
+            <div class="payment-proof-container">
+              <div class="info-card-title">
+                <i class="fas fa-image"></i>
+                Payment Proof
+              </div>
+              <img id="modal_payment_proof" src="" alt="Payment Proof" class="img-fluid">
+              
+              <!-- Action Buttons -->
+              <div id="payment_actions"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="border-radius: 8px; padding: 0.5rem 1.5rem;">
+          <i class="fas fa-times"></i> Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
             </div>
         </main>
       </div>
@@ -227,73 +540,217 @@ require_once("./derm-select.php");
     <script src="../scripts/toggle.js"></script>
     
     <script>
-      let currentFilter = 'today';
-      let currentOffset = 0;
-      const limit = 10;
+  let currentFilter = 'today';
+  let currentOffset = 0;
+  const limit = 10;
 
-      $(document).ready(function() {
-        // Load initial data
-        loadAppointments(currentFilter, 0);
+  $(document).ready(function() {
+    // Load initial data
+    loadAppointments(currentFilter, 0);
 
-        // Filter button click handler
-        $('.filter-btn').click(function() {
-          $('.filter-btn').removeClass('active');
-          $(this).addClass('active');
-          currentFilter = $(this).data('filter');
-          currentOffset = 0;
-          loadAppointments(currentFilter, 0, true);
+    // Filter button click handler
+    $('.filter-btn').click(function() {
+      $('.filter-btn').removeClass('active');
+      $(this).addClass('active');
+      currentFilter = $(this).data('filter');
+      currentOffset = 0;
+      loadAppointments(currentFilter, 0, true);
+    });
+
+    // Load more button click handler
+    $('#loadMoreBtn').click(function() {
+      currentOffset += limit;
+      loadAppointments(currentFilter, currentOffset, false);
+    });
+  });
+
+  function loadAppointments(filter, offset, replace = true) {
+    $.ajax({
+      url: '../backend/derm/get_appointments.php',
+      type: 'POST',
+      data: {
+        filter: filter,
+        offset: offset,
+        limit: limit
+      },
+      beforeSend: function() {
+        if (replace) {
+          $('#appointmentsTableBody').html('<tr><td colspan="8" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>');
+        }
+      },
+      success: function(response) {
+        const data = JSON.parse(response);
+        
+        if (data.status === 'success') {
+          if (replace) {
+            $('#appointmentsTableBody').html(data.html);
+          } else {
+            $('#appointmentsTableBody').append(data.html);
+          }
+          
+          // Show/hide load more button
+          if (data.has_more) {
+            $('#loadMoreBtn').show();
+          } else {
+            $('#loadMoreBtn').hide();
+          }
+        } else {
+          if (replace) {
+            $('#appointmentsTableBody').html('<tr><td colspan="8" class="text-center text-muted">No appointments found</td></tr>');
+          }
+          $('#loadMoreBtn').hide();
+        }
+      },
+      error: function() {
+        $('#appointmentsTableBody').html('<tr><td colspan="8" class="text-center text-danger">Error loading appointments</td></tr>');
+        $('#loadMoreBtn').hide();
+      }
+    });
+  }
+
+  function viewPayment(appointmentId) {
+    $.ajax({
+      url: '../backend/derm/get_payment_details.php',
+      type: 'POST',
+      data: { appointment_id: appointmentId },
+      success: function(response) {
+        const data = JSON.parse(response);
+        
+        if (data.status === 'success') {
+          const appointment = data.appointment;
+          
+          // Populate modal with data
+          $('#modal_gcash_ref').text(appointment.gcash_reference || 'N/A');
+          $('#modal_amount').html('<strong>₱' + parseFloat(appointment.downpayment_amount).toFixed(2) + '</strong>');
+          
+          // Payment status badge
+          let paymentStatusBadge = '';
+          switch(appointment.payment_status) {
+            case 'Verified':
+              paymentStatusBadge = '<span class="badge bg-success">Verified</span>';
+              break;
+            case 'Pending':
+              paymentStatusBadge = '<span class="badge bg-warning">Pending</span>';
+              break;
+            case 'Rejected':
+              paymentStatusBadge = '<span class="badge bg-danger">Rejected</span>';
+              break;
+          }
+          $('#modal_payment_status').html(paymentStatusBadge);
+          
+          // Appointment status badge
+          let appointmentStatusBadge = '';
+          switch(appointment.appointment_status) {
+            case 'Confirmed':
+              appointmentStatusBadge = '<span class="badge bg-success">Confirmed</span>';
+              break;
+            case 'Pending':
+              appointmentStatusBadge = '<span class="badge bg-warning">Pending</span>';
+              break;
+            case 'Completed':
+              appointmentStatusBadge = '<span class="badge bg-info">Completed</span>';
+              break;
+            case 'Cancelled':
+              appointmentStatusBadge = '<span class="badge bg-danger">Cancelled</span>';
+              break;
+          }
+          $('#modal_appointment_status').html(appointmentStatusBadge);
+          
+          // Patient info
+          $('#modal_patient_name').text(appointment.patient_name);
+          $('#modal_service').text(appointment.service_name);
+          $('#modal_datetime').text(appointment.appointment_date + ' at ' + appointment.appointment_time);
+          $('#modal_notes').text(appointment.notes || 'N/A');
+          
+          // Payment proof image
+          if (appointment.payment_proof) {
+            $('#modal_payment_proof').attr('src', '../backend/images/payment_proofs/' + appointment.payment_proof);
+          }
+          
+          // Show verification buttons if payment is pending
+          if (appointment.payment_status === 'Pending') {
+            $('#payment_actions').html(`
+              <div class="d-grid gap-2 mt-2">
+                <button class="btn btn-verify" onclick="verifyPayment(${appointmentId}, 'Verified')">
+                  <i class="fas fa-check"></i> Verify Payment
+                </button>
+                <button class="btn btn-reject" onclick="verifyPayment(${appointmentId}, 'Rejected')">
+                  <i class="fas fa-times"></i> Reject Payment
+                </button>
+              </div>
+            `);
+          } else {
+            $('#payment_actions').html('');
+          }
+          
+          // Show modal
+          $('#paymentModal').modal('show');
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Failed to load payment details'
+          });
+        }
+      },
+      error: function() {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'An error occurred while loading payment details'
         });
+      }
+    });
+  }
 
-        // Load more button click handler
-        $('#loadMoreBtn').click(function() {
-          currentOffset += limit;
-          loadAppointments(currentFilter, currentOffset, false);
-        });
-      });
-
-      function loadAppointments(filter, offset, replace = true) {
+  function verifyPayment(appointmentId, status) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You are about to ${status.toLowerCase()} this payment.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(39,153,137)',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed!'
+    }).then((result) => {
+      if (result.isConfirmed) {
         $.ajax({
-          url: '../backend/derm/get_appointments.php',
+          url: '../backend/derm/verify_payment.php',
           type: 'POST',
           data: {
-            filter: filter,
-            offset: offset,
-            limit: limit
-          },
-          beforeSend: function() {
-            if (replace) {
-              $('#appointmentsTableBody').html('<tr><td colspan="7" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>');
-            }
+            appointment_id: appointmentId,
+            payment_status: status
           },
           success: function(response) {
-            const data = JSON.parse(response);
-            
-            if (data.status === 'success') {
-              if (replace) {
-                $('#appointmentsTableBody').html(data.html);
-              } else {
-                $('#appointmentsTableBody').append(data.html);
-              }
-              
-              // Show/hide load more button
-              if (data.has_more) {
-                $('#loadMoreBtn').show();
-              } else {
-                $('#loadMoreBtn').hide();
-              }
+            if (response === 'success') {
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: `Payment has been ${status.toLowerCase()}`,
+                confirmButtonColor: 'rgb(39,153,137)'
+              }).then(() => {
+                $('#paymentModal').modal('hide');
+                loadAppointments(currentFilter, currentOffset, true);
+              });
             } else {
-              if (replace) {
-                $('#appointmentsTableBody').html('<tr><td colspan="7" class="text-center text-muted">No appointments found</td></tr>');
-              }
-              $('#loadMoreBtn').hide();
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to update payment status'
+              });
             }
           },
           error: function() {
-            $('#appointmentsTableBody').html('<tr><td colspan="7" class="text-center text-danger">Error loading appointments</td></tr>');
-            $('#loadMoreBtn').hide();
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'An error occurred'
+            });
           }
         });
       }
-    </script>
+    });
+  }
+</script>
   </body>
 </html>

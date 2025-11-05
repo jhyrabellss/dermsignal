@@ -7,7 +7,6 @@ if (!isset($_SESSION["derm_id"])) {
     exit();
 }
 
-
 require_once("../../dermatologist/derm-select.php");
 
 $filter = $_POST['filter'] ?? 'today';
@@ -62,6 +61,8 @@ $query = "SELECT
             a.appointment_time,
             a.appointment_status,
             a.notes,
+            a.payment_status,
+            a.downpayment_amount,
             s.service_name,
             ad.first_name,
             ad.last_name,
@@ -75,7 +76,7 @@ $query = "SELECT
           ORDER BY {$order_by}
           LIMIT ? OFFSET ?";
 
-$params[] = $limit + 1; // Get one extra to check if there are more
+$params[] = $limit + 1;
 $params[] = $offset;
 $types .= "ii";
 
@@ -92,17 +93,15 @@ if ($result->num_rows > 0) {
     while ($appointment = $result->fetch_assoc()) {
         $count++;
         
-        // Check if we have more records
         if ($count > $limit) {
             $has_more = true;
             break;
         }
         
-        // Format date and time
         $date_formatted = date('M d, Y', strtotime($appointment['appointment_date']));
         $time_formatted = date('g:i A', strtotime($appointment['appointment_time']));
         
-        // Determine status badge color
+        // Appointment status badge
         $status_class = '';
         switch ($appointment['appointment_status']) {
             case 'Confirmed':
@@ -119,6 +118,20 @@ if ($result->num_rows > 0) {
                 break;
         }
         
+        // Payment status badge
+        $payment_status_class = '';
+        switch ($appointment['payment_status']) {
+            case 'Verified':
+                $payment_status_class = 'success';
+                break;
+            case 'Pending':
+                $payment_status_class = 'warning';
+                break;
+            case 'Rejected':
+                $payment_status_class = 'danger';
+                break;
+        }
+        
         $html .= '<tr>';
         $html .= '<td>' . htmlspecialchars($date_formatted) . '</td>';
         $html .= '<td>' . htmlspecialchars($time_formatted) . '</td>';
@@ -126,7 +139,15 @@ if ($result->num_rows > 0) {
         $html .= '<td>' . htmlspecialchars($appointment['service_name']) . '</td>';
         $html .= '<td><span class="badge bg-' . $status_class . '">' . htmlspecialchars($appointment['appointment_status']) . '</span></td>';
         $html .= '<td>' . htmlspecialchars($appointment['contact'] ?: $appointment['ac_email']) . '</td>';
-        $html .= '<td>' . htmlspecialchars($appointment['notes'] ?: 'N/A') . '</td>';
+        $html .= '<td>';
+        $html .= '<span class="badge bg-' . $payment_status_class . '">' . htmlspecialchars($appointment['payment_status']) . '</span><br>';
+        $html .= '<small class="text-muted">₱' . number_format($appointment['downpayment_amount'], 2) . '</small>';
+        $html .= '</td>';
+        $html .= '<td>';
+        $html .= '<button class="btn btn-sm btn-info" onclick="viewPayment(' . $appointment['appointment_id'] . ')" title="View Payment">';
+        $html .= '<i class="fas fa-eye"></i>';
+        $html .= '</button>';
+        $html .= '</td>';
         $html .= '</tr>';
     }
     
@@ -138,7 +159,7 @@ if ($result->num_rows > 0) {
 } else {
     echo json_encode([
         'status' => 'empty',
-        'html' => '<tr><td colspan="7" class="text-center text-muted">No appointments found</td></tr>',
+        'html' => '<tr><td colspan="8" class="text-center text-muted">No appointments found</td></tr>',
         'has_more' => false
     ]);
 }

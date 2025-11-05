@@ -822,5 +822,7 @@ $low_services = $conn->query($low_services_query);
       });
     }
   </script>
+
+  <script src="../jquery/sideBarProd.js"></script> 
 </body>
 </html>

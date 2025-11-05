@@ -7,7 +7,6 @@ $(document).ready(() => {
         // Try to get userDetails from localStorage
         const userDetails = localStorage.getItem("userDetails");
   
-        console.log(userDetails); // Check userDetails in console for debugging
   
         if (userDetails) {
             // Proceed with adding the product to the cart if user is logged in
@@ -49,21 +48,14 @@ $(document).ready(() => {
                 }
             });
         } else {
-            Swal.fire({
-                title: "Log in first!",
-                text: "You need to log in first before you order!",
+           Swal.fire({
+                icon: 'warning',
+                title: 'Please Login',
+                text: 'You need to be logged in to add items to your cart',
+                confirmButtonColor: 'rgb(39,153,137)'
             });
         }
     });
   
-    // Check the login status on page load (after the page is refreshed)
-    const userDetails = localStorage.getItem("userDetails");
-    if (!userDetails) {
-        // Display a login prompt or make sure UI reflects the user is logged out
-        Swal.fire({
-            title: "Log in first!",
-            text: "You need to log in first before you order!",
-        });
-    }
   });
   

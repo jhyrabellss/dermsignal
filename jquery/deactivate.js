@@ -5,11 +5,11 @@ $(document).ready(()=>{
         if(account_id){
             Swal.fire({
                 title: "Are you sure?",
-                text: "This account will be activated.",
+                text: "This account will be updated.",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, deactivate it!"
+                confirmButtonText: "Yes, update it!"
               }).then((result) => {
                 if (result.isConfirmed) {
                   $.ajax({
@@ -21,8 +21,8 @@ $(document).ready(()=>{
                     success: function(response){
                         if(response === "success"){
                             Swal.fire({
-                                title: "Account Deactivated!",
-                                text: "Account has been deactivated successfully!",
+                                title: "Account Updated!",
+                                text: "Account has been updated successfully!",
                             }).then((result)=>{
                                 if(result.isConfirmed){
                                     window.location.reload();

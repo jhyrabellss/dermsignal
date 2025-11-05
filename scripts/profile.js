@@ -23,8 +23,6 @@ $(document).ready(function() {
     });
 });
 
-const userDetails = localStorage.getItem('userDetails')
-console.log(userDetails)
 if(userDetails){
 const userIcon = document.querySelector('.fa-user');
 const dropdownMenu = document.getElementById('dropdownMenu');

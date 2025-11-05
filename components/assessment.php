@@ -197,70 +197,116 @@
 
                 <div class="product-reco-cont-parent">
                 <?php
-                       if (isset($_GET['concern_id'])) {
-                        $concern_id = isset($_GET['concern_id']) ? intval($_GET['concern_id']) : 1;
-                   
-            
-            
+                  if (isset($_GET['concern_id'])) {
+                      $concern_id = isset($_GET['concern_id']) ? intval($_GET['concern_id']) : 1;
+
                       $sql = "SELECT tbl_products.*
                       FROM tbl_products
                       JOIN tbl_concern ON tbl_products.concern_id = tbl_concern.concern_id
                       WHERE tbl_concern.concern_id = ? LIMIT 2";
-            
-            
+
                       $stmt = $conn->prepare($sql);
                       $stmt->bind_param("i", $concern_id);
                       $stmt->execute();
-                      $result =  $stmt->get_result();
+                      $result = $stmt->get_result();
+                      
                       if($result->num_rows){
-                        while($row = $result->fetch_assoc()){
-                        $origprice = $row['prod_price'] + 100; // Adjusted original price
-                        $proddiscount = $row['prod_discount'] / 100;
-                        $prodprice = $origprice - ($origprice * $proddiscount); // Calculate discounted price
-                        $discprice = $row['prod_discount']; // Convert to percentage for display  
-                ?>   
-                    <div class="product-reco-cont">
-                        <div class="product-image img-con-click"  data-item-id="<?= $row['prod_id']?>"><img src="../images/products/<?= $row['prod_img']?>" alt=""></div>
-                        <div class="product-details">
-                          <div class="product-name"><?= $row['prod_name']?></div>
-                          <div class="product-description"><?= $row['prod-short-desc'] ?> </div>
-                          <div class="price-cont">
-                            <div class="product-price">₱<?= number_format($origprice, 2) ?></div>
-                            <div style="text-decoration: line-through; color: gray;"></div>
-                            <div class="discount-off"> <?= $discprice ?>% off</div>
+                          while($row = $result->fetch_assoc()){
+                              $prodprice = $row['prod_price'];
+                              
+                              // Check if there's an active voucher that applies to this product
+                              $voucher_sql = "SELECT v.*, cv.cart_voucher_id 
+                                            FROM tbl_cart_vouchers cv
+                                            JOIN tbl_vouchers v ON cv.voucher_id = v.voucher_id
+                                            WHERE cv.account_id = ? 
+                                            AND cv.status_id = 1
+                                            AND v.is_active = 1
+                                            AND v.start_date <= CURDATE()
+                                            AND v.end_date >= CURDATE()
+                                            AND (v.voucher_type = 'product' OR v.voucher_type = 'both')
+                                            ORDER BY cv.added_date DESC
+                                            LIMIT 1";
+                              
+                              $voucher_stmt = $conn->prepare($voucher_sql);
+                              $voucher_stmt->bind_param("i", $_SESSION['user_id']);
+                              $voucher_stmt->execute();
+                              $voucher_result = $voucher_stmt->get_result();
+                              
+                              $discount_amount = 0;
+                              $has_voucher = false;
+                              
+                              if($voucher_result->num_rows > 0) {
+                                  $voucher = $voucher_result->fetch_assoc();
+                                  
+                                  // Check if this product is in target_items
+                                  $target_items = json_decode($voucher['target_items'], true);
+                                  $product_in_voucher = false;
+                                  
+                                  if($target_items) {
+                                      foreach($target_items as $item) {
+                                          if($item['type'] == 'product' && $item['id'] == $row['prod_id']) {
+                                              $product_in_voucher = true;
+                                              break;
+                                          }
+                                      }
+                                  }
+                                  
+                                  if($product_in_voucher) {
+                                      $has_voucher = true;
+                                      if($voucher['discount_type'] == 'percentage') {
+                                          $discount_amount = ($prodprice * $voucher['discount_value']) / 100;
+                                          if($voucher['max_discount'] && $discount_amount > $voucher['max_discount']) {
+                                              $discount_amount = $voucher['max_discount'];
+                                          }
+                                      } else {
+                                          $discount_amount = $voucher['discount_value'];
+                                      }
+                                  }
+                              }
+                              
+                              $final_price = $prodprice - $discount_amount;
+                  ?>   
+                      <div class="product-reco-cont">
+                          <div class="product-image img-con-click" data-item-id="<?= $row['prod_id']?>">
+                              <img src="../images/products/<?= $row['prod_img']?>" alt="">
                           </div>
-                          
-                        </div>
-                    </div>
-                    <div class="benefits-cont">
-                    <?php
+                          <div class="product-details">
+                              <div class="product-name"><?= $row['prod_name']?></div>
+                              <div class="product-description"><?= $row['prod-short-desc'] ?></div>
+                              <div class="price-cont">
+                                  <?php if($has_voucher && $discount_amount > 0): ?>
+                                      <div class="product-price">₱<?= number_format($final_price, 2) ?></div>
+                                      <div style="text-decoration: line-through; color: gray;">₱<?= number_format($prodprice, 2) ?></div>
+                                      <div class="discount-off"><?= number_format(($discount_amount / $prodprice) * 100, 0) ?>% off</div>
+                                  <?php else: ?>
+                                      <div class="product-price">₱<?= number_format($prodprice, 2) ?></div>
+                                  <?php endif; ?>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="benefits-cont">
+                      <?php
                           if (!function_exists('getFirstTwoSentences')) {
-                            function getFirstTwoSentences($text) {
-                                // Use regular expression to split the text by sentence-ending punctuation (period, exclamation mark, question mark)
-                                $sentences = preg_split('/(?<=[.!?])\s+/', $text);
-                    
-                                // Get only the first two sentences
-                                $firstTwoSentences = array_slice($sentences, 0, 2);
-                    
-                                // Join the first two sentences back into a string
-                                $shortText = implode(' ', $firstTwoSentences);
-                    
-                                // Limit to 50 characters and append "..." if necessary
-                                if (strlen($shortText) > 50) {
-                                    $shortText = substr($shortText, 0, 120) . '...';
-                                }
-                    
-                                return $shortText;
-                            }
-                        }
-                    
-                        // Now you can use the function
-                        $text = $row['prod_description'];
-                        $shorthandText = getFirstTwoSentences($text);
-                    ?>
-                      <div><?= $shorthandText ?></div>
-                    </div>
-                <?php } } }?>
+                              function getFirstTwoSentences($text) {
+                                  $sentences = preg_split('/(?<=[.!?])\s+/', $text);
+                                  $firstTwoSentences = array_slice($sentences, 0, 2);
+                                  $shortText = implode(' ', $firstTwoSentences);
+                                  if (strlen($shortText) > 120) {
+                                      $shortText = substr($shortText, 0, 120) . '...';
+                                  }
+                                  return $shortText;
+                              }
+                          }
+                          $text = $row['prod_description'];
+                          $shorthandText = getFirstTwoSentences($text);
+                      ?>
+                          <div><?= $shorthandText ?></div>
+                      </div>
+                  <?php 
+                          } 
+                      } 
+                  }
+                  ?>
                 </div>
                 </div>
               </div>
@@ -268,7 +314,8 @@
             </div>
           
 
-            <h2>FAQs</h2>
+          <h2 class="faq-title">Frequently Asked Questions</h2>
+          <p class="faq-subtitle">Find answers to common questions about our skin assessment and products</p>
           <div class="faqs-main-cont">
               <div class="faqs-cont">
                   <details> 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 21, 2025 at 04:56 PM
+-- Generation Time: Nov 05, 2025 at 03:41 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -121,6 +121,10 @@ CREATE TABLE `tbl_appointments` (
   `appointment_time` time NOT NULL,
   `appointment_status` enum('Pending','Confirmed','Completed','Cancelled') DEFAULT 'Pending',
   `notes` text DEFAULT NULL,
+  `gcash_reference` varchar(100) DEFAULT NULL,
+  `downpayment_amount` decimal(10,2) DEFAULT NULL,
+  `payment_proof` varchar(255) DEFAULT NULL,
+  `payment_status` enum('Pending','Verified','Rejected') DEFAULT 'Pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -128,9 +132,8 @@ CREATE TABLE `tbl_appointments` (
 -- Dumping data for table `tbl_appointments`
 --
 
-INSERT INTO `tbl_appointments` (`appointment_id`, `ac_id`, `service_id`, `derm_id`, `appointment_date`, `appointment_time`, `appointment_status`, `notes`, `created_at`) VALUES
-(1, 12, 1, 1, '2025-10-23', '09:00:00', 'Completed', 'asdas', '2025-10-19 16:29:15'),
-(2, 12, 30, 2, '2025-10-23', '10:00:00', 'Cancelled', 'asd', '2025-10-19 16:29:41');
+INSERT INTO `tbl_appointments` (`appointment_id`, `ac_id`, `service_id`, `derm_id`, `appointment_date`, `appointment_time`, `appointment_status`, `notes`, `gcash_reference`, `downpayment_amount`, `payment_proof`, `payment_status`, `created_at`) VALUES
+(3, 12, 21, 1, '2025-11-13', '10:00:00', 'Confirmed', '', '2132313', 50.00, '690a113f4672f.jpeg', 'Verified', '2025-11-04 14:44:15');
 
 -- --------------------------------------------------------
 
@@ -193,7 +196,26 @@ INSERT INTO `tbl_audit_log` (`log_user_id`, `log_username`, `log_user_type`, `lo
 (12, 'jcdavid123c', '1', '2025-10-21 14:07:30'),
 (12, 'jcdavid123c', '1', '2025-10-21 14:11:34'),
 (8, 'jcdavid123', '2', '2025-10-21 14:12:01'),
-(12, 'jcdavid123c', '1', '2025-10-21 14:16:11');
+(12, 'jcdavid123c', '1', '2025-10-21 14:16:11'),
+(13, 'santos', '3', '2025-10-23 14:53:55'),
+(13, 'santos', '3', '2025-10-23 15:18:30'),
+(13, 'santos', '3', '2025-10-23 15:19:15'),
+(13, 'santos', '3', '2025-10-23 15:19:53'),
+(12, 'jcdavid123c', '1', '2025-10-23 15:21:20'),
+(12, 'jcdavid123c', '1', '2025-10-23 15:24:58'),
+(13, 'santos', '3', '2025-10-23 15:25:27'),
+(8, 'jcdavid123', '2', '2025-11-04 11:08:08'),
+(12, 'jcdavid123c', '1', '2025-11-04 11:08:22'),
+(8, 'jcdavid123', '2', '2025-11-04 11:58:56'),
+(12, 'jcdavid123c', '1', '2025-11-04 14:05:59'),
+(8, 'jcdavid123', '2', '2025-11-04 14:44:54'),
+(8, 'jcdavid123', '2', '2025-11-04 14:45:27'),
+(12, 'jcdavid123c', '1', '2025-11-04 14:45:43'),
+(13, 'santos', '3', '2025-11-04 14:46:02'),
+(8, 'jcdavid123', '2', '2025-11-04 15:00:16'),
+(12, 'jcdavid123c', '1', '2025-11-04 15:00:26'),
+(12, 'jcdavid123c', '1', '2025-11-05 12:17:59'),
+(8, 'jcdavid123', '2', '2025-11-05 12:18:18');
 
 -- --------------------------------------------------------
 
@@ -219,7 +241,14 @@ INSERT INTO `tbl_audit_trail` (`trail_user_id`, `trail_username`, `trail_activit
 (8, 'jcdavid123', 'Updated Service ID: 30', 'Admin', '2025-10-19 10:32:09'),
 (8, 'jcdavid123', 'Deleted Service ID: 37', 'Admin', '2025-10-19 11:37:46'),
 (8, 'jcdavid123', 'Updated Service ID: 1', 'Admin', '2025-10-19 11:43:23'),
-(8, 'jcdavid123', 'Updated Service ID: 1', 'Admin', '2025-10-19 11:44:53');
+(8, 'jcdavid123', 'Updated Service ID: 1', 'Admin', '2025-10-19 11:44:53'),
+(8, 'jcdavid123', 'Added Product: Chicken Wings', 'Admin', '2025-11-05 13:30:32'),
+(8, 'jcdavid123', 'Added Product: Chicken Wings', 'Admin', '2025-11-05 13:38:18'),
+(8, 'jcdavid123', 'Updated Product ID: 20', 'Admin', '2025-11-05 13:48:15'),
+(8, 'jcdavid123', 'Updated Product ID: 20', 'Admin', '2025-11-05 13:48:24'),
+(8, 'jcdavid123', 'Updated Product ID: 20', 'Admin', '2025-11-05 14:01:32'),
+(8, 'jcdavid123', 'Deactivated Account ID: 1', 'Admin', '2025-11-05 14:16:57'),
+(8, 'jcdavid123', 'Deactivated Account ID: 1', 'Admin', '2025-11-05 14:20:13');
 
 -- --------------------------------------------------------
 
@@ -297,8 +326,8 @@ INSERT INTO `tbl_cart` (`item_id`, `prod_id`, `prod_qnty`, `order_date`, `status
 (13, 2, 1, '2025-10-21', 5, 12),
 (14, 1, 1, '2025-10-21', 5, 12),
 (15, 3, 1, '2025-10-21', 5, 12),
-(17, 4, 1, '2025-10-21', 5, 12),
-(18, 1, 1, '2025-10-21', 2, 12);
+(17, 4, 1, '2025-11-05', 2, 12),
+(18, 1, 1, '2025-11-05', 2, 12);
 
 -- --------------------------------------------------------
 
@@ -1197,6 +1226,31 @@ CREATE TABLE `tbl_order_vouchers` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_page_reviews`
+--
+
+CREATE TABLE `tbl_page_reviews` (
+  `review_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `review_title` varchar(100) NOT NULL,
+  `rating` decimal(2,1) NOT NULL,
+  `review_text` text NOT NULL,
+  `reviewer_image` varchar(255) DEFAULT NULL,
+  `is_verified` tinyint(1) DEFAULT 0,
+  `status` enum('pending','approved','rejected') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_page_reviews`
+--
+
+INSERT INTO `tbl_page_reviews` (`review_id`, `account_id`, `review_title`, `rating`, `review_text`, `reviewer_image`, `is_verified`, `status`, `created_at`) VALUES
+(3, 12, 'Wow', 4.0, 'asdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaa', '6909e76001137.png', 0, 'approved', '2025-11-04 11:46:59');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_payment_type`
 --
 
@@ -1238,10 +1292,10 @@ CREATE TABLE `tbl_products` (
 --
 
 INSERT INTO `tbl_products` (`prod_id`, `prod_name`, `prod_price`, `prod-short-desc`, `prod_description`, `concern_id`, `ingredients_id`, `prod_stocks`, `prod_discount`, `prod_img`, `prod_hover_img`) VALUES
-(1, 'Acne Refining Foaming Cleanser', 500, 'Deep Cleansing | Reduces Breakouts', 'DermSignal Acne Refining Foaming Cleanser has a synergistic blend of Iris, Zinc, Vitamin A, and Niacinamide designed for oily and acne prone skin. It helps in reducing sebum production and acne breakouts.', 3, 2, 45, 20, 'prod-1-ref-cleanser.png', 'prod-1-ref-cleanser-hover.png'),
+(1, 'Acne Refining Foaming Cleanser', 500, 'Deep Cleansing | Reduces Breakouts', 'DermSignal Acne Refining Foaming Cleanser has a synergistic blend of Iris, Zinc, Vitamin A, and Niacinamide designed for oily and acne prone skin. It helps in reducing sebum production and acne breakouts.', 3, 2, 44, 20, 'prod-1-ref-cleanser.png', 'prod-1-ref-cleanser-hover.png'),
 (2, 'Acne Refining Gel', 260, 'Targets Acne | Controls Oil Production', 'DermSignal Acne Refining Gel is a water-based gel that has a synergistic blend of Iris, Zinc, Vitamin A, and Niacinamide designed for oily and acne prone skin. It helps in reducing sebum production and acne breakouts.', 1, 4, 50, 10, 'prod-2-ref-gel.png', 'prod-2-ref-gel-hover'),
 (3, 'Acne Refining Spot Corrector', 300, 'Precision Treatment | Reduces Pimples Fast', 'DermSignal Acne Refining Spot Corrector is a serum that has a synergistic blend of Iris, Zinc, Vitamin A, Niacinamide, and Salicylic Acid designed for oily and acne prone skin. It helps in reducing sebum production and acne breakouts.', 1, 2, 50, 10, 'prod-3-ref-spot.png', 'prod-3-ref-spot-hover.png'),
-(4, 'Acne Refining Toner', 450, 'Balances Skin | Minimizes Pores', 'A DermSignal Acne Refining Toner is an alcohol-free toner that has a synergistic blend of Iris, Zinc, Vitamin A, and Niacinamide designed for oily and acne prone skin.\r\nIt helps in reducing sebum production and acne breakouts.', 1, 1, 50, 10, 'prod-4-ref-toner.png', 'prod-4-ref-toner-hover.png'),
+(4, 'Acne Refining Toner', 450, 'Balances Skin | Minimizes Pores', 'A DermSignal Acne Refining Toner is an alcohol-free toner that has a synergistic blend of Iris, Zinc, Vitamin A, and Niacinamide designed for oily and acne prone skin.\r\nIt helps in reducing sebum production and acne breakouts.', 1, 1, 49, 10, 'prod-4-ref-toner.png', 'prod-4-ref-toner-hover.png'),
 (5, 'Skin Renewal Foaming Cleanser', 460, 'Gentle Cleansing | Refreshes & Revives Skin', 'DermSignal Skin Renewal Foaming Cleanser contains salicylic acid that helps hydrate, remove dirt and excess oil on the face.', 3, 1, 50, 10, 'prod-5-renew-cleanser.png', 'prod-5-renew-cleanser-hover.png'),
 (6, 'Skin Renewal Creme', 500, 'Nourishing Hydration | Restores Skin\'s Radiance', 'DermSignal Skin Renewal Creme contains natural AHAs that help increase the production of collagen and glycosaminoglycan that are responsible for reducing surface wrinkles, fine lines, and smoothen rough skin.', 2, 3, 50, 10, 'prod-6-renew-cream.png', 'prod-6-renew-cream-hover.png'),
 (7, 'Skin Renewal Fruit Mix Booster', 340, 'Revitalizing Formula | Boosts Skin Glow', 'DermSignal Skin Renewal Fruit Mix Booster contains natural AHAs. This product helps increase the production of collagen and glycosaminoglycan that are responsible for reducing surface wrinkles, fine lines, and smoothens rough skin.', 2, 5, 49, 10, 'prod-7-renew-spot.png', 'prod-7-renew-spot-hover.png'),
@@ -1500,7 +1554,11 @@ INSERT INTO `tbl_transactions` (`user_id`, `user_name`, `user_type`, `user_activ
 (8, 'jcdavid123', '2', 'Claimed item Acne Refining Foaming Cleanser', '2025-10-21', 18),
 (8, 'jcdavid123', '2', 'Claimed item Acne Refining Foaming Cleanser', '2025-10-21', 18),
 (8, 'jcdavid123', '2', 'Claimed item Acne Refining Foaming Cleanser', '2025-10-21', 18),
-(8, 'jcdavid123', '2', 'Claimed item Acne Refining Foaming Cleanser', '2025-10-21', 18);
+(8, 'jcdavid123', '2', 'Claimed item Acne Refining Foaming Cleanser', '2025-10-21', 18),
+(8, 'jcdavid123', '2', 'Set item for delivery', '2025-11-05', 17),
+(8, 'jcdavid123', '2', 'Claimed item Acne Refining Toner', '2025-11-05', 17),
+(8, 'jcdavid123', '2', 'Set item for delivery', '2025-11-05', 18),
+(8, 'jcdavid123', '2', 'Claimed item Acne Refining Foaming Cleanser', '2025-11-05', 18);
 
 -- --------------------------------------------------------
 
@@ -1536,7 +1594,7 @@ CREATE TABLE `tbl_vouchers` (
 --
 
 INSERT INTO `tbl_vouchers` (`voucher_id`, `voucher_code`, `voucher_name`, `voucher_type`, `discount_type`, `discount_value`, `min_purchase`, `max_discount`, `start_date`, `end_date`, `usage_limit`, `used_count`, `total_revenue_generated`, `total_discount_given`, `target_items`, `promo_category`, `is_active`, `auto_apply`, `created_by`, `created_at`) VALUES
-(2, 'BOOSTEABE08', 'Boost Low Performers - Oct 2025', 'both', 'percentage', 25.00, 0.00, 0.00, '2025-10-15', '2025-10-27', 0, 1, 336.00, 120.00, '[{\"type\":\"product\",\"id\":\"1\",\"name\":\"Acne Refining Foaming Cleanser\"},{\"type\":\"product\",\"id\":\"2\",\"name\":\"Acne Refining Gel\"},{\"type\":\"product\",\"id\":\"3\",\"name\":\"Acne Refining Spot Corrector\"},{\"type\":\"product\",\"id\":\"4\",\"name\":\"Acne Refining Toner\"},{\"type\":\"product\",\"id\":\"5\",\"name\":\"Skin Renewal Foaming Cleanser\"}]', 'Special', 0, 1, 8, '2025-10-20 10:39:49');
+(2, 'BOOSTEABE08', 'Boost Low Performers - Oct 2025', 'both', 'percentage', 25.00, 0.00, 0.00, '2025-10-15', '2025-11-20', 0, 1, 336.00, 120.00, '[{\"type\":\"product\",\"id\":\"1\",\"name\":\"Acne Refining Foaming Cleanser\"},{\"type\":\"product\",\"id\":\"2\",\"name\":\"Acne Refining Gel\"},{\"type\":\"product\",\"id\":\"3\",\"name\":\"Acne Refining Spot Corrector\"},{\"type\":\"product\",\"id\":\"4\",\"name\":\"Acne Refining Toner\"},{\"type\":\"product\",\"id\":\"5\",\"name\":\"Skin Renewal Foaming Cleanser\"}]', 'Special', 0, 1, 8, '2025-10-20 10:39:49');
 
 -- --------------------------------------------------------
 
@@ -1672,6 +1730,13 @@ ALTER TABLE `tbl_order_vouchers`
   ADD KEY `voucher_id` (`voucher_id`);
 
 --
+-- Indexes for table `tbl_page_reviews`
+--
+ALTER TABLE `tbl_page_reviews`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `account_id` (`account_id`);
+
+--
 -- Indexes for table `tbl_products`
 --
 ALTER TABLE `tbl_products`
@@ -1756,7 +1821,7 @@ ALTER TABLE `tbl_ac_status`
 -- AUTO_INCREMENT for table `tbl_appointments`
 --
 ALTER TABLE `tbl_appointments`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_best_seller`
@@ -1774,7 +1839,7 @@ ALTER TABLE `tbl_billing_details`
 -- AUTO_INCREMENT for table `tbl_cart`
 --
 ALTER TABLE `tbl_cart`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_cart_vouchers`
@@ -1831,10 +1896,16 @@ ALTER TABLE `tbl_order_vouchers`
   MODIFY `order_voucher_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `tbl_page_reviews`
+--
+ALTER TABLE `tbl_page_reviews`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `tbl_products`
 --
 ALTER TABLE `tbl_products`
-  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_prod_bestseller`
@@ -1915,6 +1986,12 @@ ALTER TABLE `tbl_derm_schedule`
 ALTER TABLE `tbl_order_vouchers`
   ADD CONSTRAINT `fk_order_voucher_receipt` FOREIGN KEY (`receipt_id`) REFERENCES `tbl_receipt` (`receipt_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_order_voucher_voucher` FOREIGN KEY (`voucher_id`) REFERENCES `tbl_vouchers` (`voucher_id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tbl_page_reviews`
+--
+ALTER TABLE `tbl_page_reviews`
+  ADD CONSTRAINT `tbl_page_reviews_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `tbl_account` (`ac_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `tbl_ratings`

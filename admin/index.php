@@ -793,6 +793,7 @@ while ($derm = $derm_result->fetch_assoc()) {
 
   <script src="../scripts/bootstrap.bundle.min.js"></script>
   <script src="../scripts/toggle.js"></script>
+  <script src="../jquery/sideBarProd.js"></script> 
 </body>
 
 </html>

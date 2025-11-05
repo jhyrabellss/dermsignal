@@ -178,9 +178,37 @@ $service_group = isset($_GET['service_group']) ? $_GET['service_group'] : 'all';
                 <textarea id="appointmentNotes" name="notes" rows="4" placeholder="Any special requests or concerns..."></textarea>
             </div>
 
+            <!-- Payment Section -->
+            <div class="form-group payment-section">
+                <label>Payment Required (50% Downpayment - Non-Refundable) *</label>
+                <div class="payment-info">
+                    <p>Downpayment Amount: <strong id="downpaymentAmount">₱0.00</strong></p>
+                    <p class="payment-note">⚠️ This downpayment is non-refundable to secure your appointment slot.</p>
+                </div>
+                
+                <div class="gcash-payment">
+                    <h4>Pay via GCash</h4>
+                    <div class="qr-code-container">
+                        <img src="../images/icons/qr-cash.jpg" alt="GCash QR Code" style="max-width: 250px;">
+                        <p>Scan this QR code with your GCash app</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="gcashNumber">GCash Reference Number *</label>
+                    <input type="text" id="gcashNumber" name="gcash_reference" required placeholder="Enter your GCash reference number">
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentProof">Upload Payment Proof *</label>
+                    <input type="file" id="paymentProof" name="payment_proof" accept="image/*" required>
+                    <small>Upload a screenshot of your GCash payment</small>
+                </div>
+            </div>
+
             <div class="modal-actions">
                 <button type="button" class="btn-cancel">Cancel</button>
-                <button type="submit" class="btn-confirm">Confirm Appointment</button>
+                <button type="submit" class="btn-confirm">Confirm Appointment & Pay</button>
             </div>
         </form>
     </div>
@@ -199,6 +227,7 @@ include "footer.php"
     $(document).ready(function() {
     const modal = $('#appointmentModal');
     let selectedTimeSlot = null;
+    let selectedServicePrice = 0;
 
     // Open modal when book button is clicked
     $('.book-button').click(function() {
@@ -215,9 +244,13 @@ include "footer.php"
             const serviceName = $(this).data('service-name');
             const servicePrice = $(this).data('service-price');
             
+            selectedServicePrice = parseFloat(servicePrice);
+            const downpayment = (selectedServicePrice * 0.5).toFixed(2);
+            
             $('#selectedServiceId').val(serviceId);
             $('#selectedServiceName').text(serviceName);
-            $('#selectedServicePrice').text('₱' + parseFloat(servicePrice).toFixed(2));
+            $('#selectedServicePrice').text('₱' + selectedServicePrice.toFixed(2));
+            $('#downpaymentAmount').text('₱' + downpayment);
             
             modal.fadeIn();
         <?php endif; ?>
@@ -263,12 +296,10 @@ include "footer.php"
                 const container = $('#timeSlotContainer');
                 container.empty();
 
-
                 if (data.status === 'failed') {
                     container.html(`<p class="select-date-first">${data.error}</p>`);
                     return;
                 }
-                
                 
                 if (data.slots.length === 0) {
                     container.html('<p class="select-date-first">No available slots for this date</p>');
@@ -320,17 +351,9 @@ include "footer.php"
             });
             return;
         }
-        
-        const formData = {
-            service_id: $('#selectedServiceId').val(),
-            derm_id: $('#dermatologist').val(),
-            appointment_date: $('#appointmentDate').val(),
-            appointment_time: selectedTimeSlot,
-            notes: $('#appointmentNotes').val()
-        };
 
-        const currentDateTime = new Date();
         const appointmentDate = new Date($('#appointmentDate').val());
+        const currentDateTime = new Date();
 
         if(appointmentDate < currentDateTime.setHours(0,0,0,0)) {
             Swal.fire({
@@ -340,18 +363,30 @@ include "footer.php"
                 confirmButtonColor: 'rgb(39,153,137)'
             });
             return;
-        }  
+        }
+
+        const formData = new FormData();
+        formData.append('service_id', $('#selectedServiceId').val());
+        formData.append('derm_id', $('#dermatologist').val());
+        formData.append('appointment_date', $('#appointmentDate').val());
+        formData.append('appointment_time', selectedTimeSlot);
+        formData.append('notes', $('#appointmentNotes').val());
+        formData.append('gcash_reference', $('#gcashNumber').val());
+        formData.append('downpayment_amount', (selectedServicePrice * 0.5).toFixed(2));
+        formData.append('payment_proof', $('#paymentProof')[0].files[0]);
         
         $.ajax({
             url: '../backend/book_appointment.php',
             type: 'POST',
             data: formData,
+            processData: false,
+            contentType: false,
             success: function(response) {
                 if (response === 'success') {
                     Swal.fire({
                         icon: 'success',
                         title: 'Appointment Booked!',
-                        text: 'Your appointment has been successfully booked',
+                        text: 'Your appointment has been successfully booked. Payment is being verified.',
                         confirmButtonColor: 'rgb(39,153,137)'
                     }).then(() => {
                         modal.fadeOut();
@@ -364,13 +399,12 @@ include "footer.php"
                         text: 'This time slot has just been booked. Please select another time.',
                         confirmButtonColor: 'rgb(39,153,137)'
                     });
-                    // Reload time slots
-                    loadTimeSlots($('#dermatologist').val(), $('#appointmentDate').val());
+                    loadTimeSlots($('#dermatologist').val(), $('#appointmentDate').val(), $('#selectedServiceId').val());
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Booking Failed',
-                        text: 'Failed to book appointment. Please try again.',
+                        text: response || 'Failed to book appointment. Please try again.',
                         confirmButtonColor: 'rgb(39,153,137)'
                     });
                 }
@@ -391,6 +425,7 @@ include "footer.php"
         $('#appointmentForm')[0].reset();
         $('#timeSlotContainer').html('<p class="select-date-first">Please select a dermatologist and date first</p>');
         selectedTimeSlot = null;
+        selectedServicePrice = 0;
     }
 });
 </script>

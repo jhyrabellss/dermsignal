@@ -96,6 +96,12 @@
           </div>
           Feedbacks
         </a>
+        <a class="nav-link" href="reviews.php">
+          <div class="sb-nav-link-icon">
+            <i class="fa-solid fa-star"></i>
+          </div>
+          Reviews & Ratings
+        </a>
         <a class="nav-link" href="./voucher.php">
           <div class="sb-nav-link-icon">
             <i class="fa-solid fa-ticket-simple"></i>
@@ -131,7 +137,7 @@
           </div>
           Receipts
         </a>
-        <a class="nav-link" href="tableOrders.php">
+        <a class="nav-link" href="tableOrders.php?status=all">
           <div class="sb-nav-link-icon">
             <i class="fa-solid fa-book"></i>
           </div>
