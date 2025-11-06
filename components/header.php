@@ -1,6 +1,10 @@
 <?php require_once("../backend/config/config.php") ?>
 <?php
-session_start();
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 ?>
 
 <link rel="stylesheet" href="../styles/general-styles.css">
@@ -192,7 +196,7 @@ session_start();
                     </div>
                 <?php } else { ?>
                     <div onclick="openForm('myFormSignUp')" style="cursor: pointer;">
-                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        <i class="fa-solid fa-circle-user " style="font-size: 22px;"></i>
                     </div>
                 <?php } ?>
             </div>

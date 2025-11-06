@@ -9,12 +9,13 @@ $(document).ready(function() {
         var productConcern = $('#prod_concern').val();
         var productStocks = $('#prod_stocks').val();
         var productImage = $('#prod_img').prop('files')[0];
+        var productHoverImage = $('#prod_hover_img').prop('files')[0];
 
         // Validate form inputs
         if (!productName || !productPrice || !productConcern || !productStocks || !productImage || !productIngredients) {
             Swal.fire({
                 title: "Empty Field!",
-                text: "Please fill in all fields.",
+                text: "Please fill in all required fields.",
                 showConfirmButton: true,
             })
             return;
@@ -24,10 +25,15 @@ $(document).ready(function() {
         var formData = new FormData();
         formData.append('prod_name', productName);
         formData.append('prod_price', productPrice);
-        formData.append('prod_concern', productConcern); // Ensure this matches the backend field name
+        formData.append('prod_concern', productConcern);
         formData.append('prod_stocks', productStocks);
         formData.append('prod_img', productImage);
-        formData.append('prod_ingredients', productIngredients); // Ensure this matches the backend field name
+        formData.append('prod_ingredients', productIngredients);
+        
+        // Add hover image if selected
+        if(productHoverImage) {
+            formData.append('prod_hover_img', productHoverImage);
+        }
 
         // AJAX request to submit form data
         $.ajax({

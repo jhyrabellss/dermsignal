@@ -108,6 +108,11 @@ require_once("../backend/config/config.php");
                                 <input type="file" class="form-control" id="prod_img">
                             </div>
 
+                            <div class="col-md-4">
+                                <label for="prod_hover_img" class="form-label">Product Hover Image</label>
+                                <input type="file" class="form-control" id="prod_hover_img">
+                            </div>
+
                             
 
                             <div class="col-12 text-center mb-4 mt-5">

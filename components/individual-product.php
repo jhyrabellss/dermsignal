@@ -86,27 +86,65 @@
 
 
   <?php
-  $sql = "SELECT * FROM tbl_products WHERE prod_id = ?";
-  $stmt = $conn->prepare($sql); // Fixed variable name from $query to $sql
-  $stmt->bind_param("i", $_GET["item"]);
-  $stmt->execute();
-  $result = $stmt->get_result();
+$sql = "SELECT * FROM tbl_products WHERE prod_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $_GET["item"]);
+$stmt->execute();
+$result = $stmt->get_result();
 
-  $products = [];
+$products = [];
 
-  while ($data = $result->fetch_assoc()) {
-    $products[] = $data;
-  }
+while ($data = $result->fetch_assoc()) {
+  $products[] = $data;
+}
 
-  // Assuming there's only one product, we'll take the first one from the array
-  $product = $products[0];
+$product = $products[0];
 
-  // Calculate prices outside the loop
-  $origprice = $product['prod_price'] + 100; // Adjusted original price
-  $proddiscount = $product['prod_discount'] / 100;
-  $prodprice = $origprice - ($origprice * $proddiscount); // Calculate discounted price
-  $discprice = $product['prod_discount']; // Convert to percentage for display
-  ?>
+// Calculate base price
+$origprice = $product['prod_price'] + 100;
+$prodprice = $origprice; // Default: no discount
+$proddiscount = 0;
+$discprice = 0;
+$voucher_name = '';
+
+// Check for active vouchers that include this product
+$voucher_sql = "SELECT * FROM tbl_vouchers 
+                WHERE is_active = 1 
+                AND (voucher_type = 'product' OR voucher_type = 'both')
+                AND CURDATE() BETWEEN start_date AND end_date
+                ";
+$voucher_result = mysqli_query($conn, $voucher_sql);
+
+if ($voucher_result && mysqli_num_rows($voucher_result) > 0) {
+    while ($voucher = mysqli_fetch_assoc($voucher_result)) {
+        // Check if this product is in the target_items
+        $target_items = json_decode($voucher['target_items'], true);
+        if ($target_items) {
+            foreach ($target_items as $item) {
+                if ($item['type'] == 'product' && $item['id'] == $product['prod_id']) {
+                    // Apply discount
+                    $voucher_name = $voucher['voucher_name'];
+                    if ($voucher['discount_type'] == 'percentage') {
+                        $discount_amount = $origprice * ($voucher['discount_value'] / 100);
+                        // Check max_discount limit
+                        if ($voucher['max_discount'] > 0 && $discount_amount > $voucher['max_discount']) {
+                            $discount_amount = $voucher['max_discount'];
+                        }
+                        $prodprice = $origprice - $discount_amount;
+                        $discprice = $voucher['discount_value'];
+                    } else {
+                        // Fixed discount
+                        $discount_amount = $voucher['discount_value'];
+                        $prodprice = max(0, $origprice - $discount_amount);
+                        $discprice = ($discount_amount / $origprice) * 100;
+                    }
+                    break 2; // Exit both loops once discount is applied
+                }
+            }
+        }
+    }
+}
+?>
   <div class="individual-prod-main-cont">
     <div class="prod-details-main-cont">
       <div class="swiper-cont">
@@ -151,8 +189,13 @@
       <div>Special Price</div>
       <div class="discount-cont">
         <div id="item-price">₱<?= number_format($prodprice, 2) ?></div>
-        <div id="original-price"><?= number_format($origprice, 2) ?> </div>
-        <div id="percentage-off"><?= $product['prod_discount'] ?>% off</div>
+        <?php if ($discprice > 0) { ?>
+          <div id="original-price">₱<?= number_format($origprice, 2) ?></div>
+          <div id="percentage-off"><?= number_format($discprice, 0) ?>% off</div>
+          <?php if ($voucher_name) { ?>
+            <div style="color: green; font-size: 12px;">🎉 <?= htmlspecialchars($voucher_name) ?></div>
+          <?php } ?>
+        <?php } ?>
       </div>
       <hr>
       <div class="prod-buttons">
@@ -356,10 +399,35 @@ $related_result = $stmt_related->get_result();
   <div class="product-list-items">
     <?php while($related = $related_result->fetch_assoc()) { 
       $rel_origprice = $related['prod_price'] + 100;
-      $rel_proddiscount = $related['prod_discount'] / 100;
-      $rel_prodprice = $rel_origprice - ($rel_origprice * $rel_proddiscount);
+      $rel_prodprice = $rel_origprice;
+      $rel_discprice = 0;
+      
+      // Check voucher for related product
+      mysqli_data_seek($voucher_result, 0); // Reset pointer
+      while ($voucher = mysqli_fetch_assoc($voucher_result)) {
+          $target_items = json_decode($voucher['target_items'], true);
+          if ($target_items) {
+              foreach ($target_items as $item) {
+                  if ($item['type'] == 'product' && $item['id'] == $related['prod_id']) {
+                      if ($voucher['discount_type'] == 'percentage') {
+                          $discount_amount = $rel_origprice * ($voucher['discount_value'] / 100);
+                          if ($voucher['max_discount'] > 0 && $discount_amount > $voucher['max_discount']) {
+                              $discount_amount = $voucher['max_discount'];
+                          }
+                          $rel_prodprice = $rel_origprice - $discount_amount;
+                          $rel_discprice = $voucher['discount_value'];
+                      } else {
+                          $discount_amount = $voucher['discount_value'];
+                          $rel_prodprice = max(0, $rel_origprice - $discount_amount);
+                          $rel_discprice = ($discount_amount / $rel_origprice) * 100;
+                      }
+                      break 2;
+                  }
+              }
+          }
+      }
     ?>
-    <a href="individual-products.php?item=<?= $related['prod_id'] ?>" class="product-items">
+    <a href="individual-product.php?item=<?= $related['prod_id'] ?>" class="product-items">
       <div class="prod-img-cont">
         <img src="../images/products/<?= $related['prod_img'] ?>" alt="<?= $related['prod_name'] ?>">
       </div>
@@ -368,8 +436,10 @@ $related_result = $stmt_related->get_result();
         <div class="prod-description"><?= $related['prod-short-desc'] ?></div>
         <div class="discount-cont">
           <div style="font-weight: bold;">₱<?= number_format($rel_prodprice, 2) ?></div>
-          <div style="text-decoration: line-through; color: gray;">₱<?= number_format($rel_origprice, 2) ?></div>
-          <div style="color: red;"><?= $related['prod_discount'] ?>% off</div>
+          <?php if ($rel_discprice > 0) { ?>
+            <div style="text-decoration: line-through; color: gray;">₱<?= number_format($rel_origprice, 2) ?></div>
+            <div style="color: red;"><?= number_format($rel_discprice, 0) ?>% off</div>
+          <?php } ?>
         </div>
       </div>
     </a>

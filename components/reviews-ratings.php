@@ -16,6 +16,7 @@
           $review_row = $review_result->fetch_assoc();
           $total_reviews = $review_row['total_reviews'];
           $total_rated_accounts = $review_row['total_rated_accounts'];
+          $average_rating = $total_rated_accounts > 0 ? round($total_reviews / $total_rated_accounts, 1) : 0;
       } else {
           echo "No reviews found for this product.<br>";
       }

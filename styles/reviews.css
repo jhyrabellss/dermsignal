@@ -2,7 +2,8 @@
     display: flex;
     justify-content: center;
     width: 74%;
-    height: 600px;
+    max-height: 600px;
+    height: 100%;
 }
 
 .review-wrapper{
@@ -46,8 +47,8 @@
 }
 
 .reviews-cont .reviewers-description{
-    display: flex;
-    justify-content: center;
     font-weight: 500;
     font-size: 13px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
 }

@@ -73,7 +73,7 @@ require_once("../backend/config/config.php");
                                 $result = $stmt->get_result();
                                 while ($data = $result->fetch_assoc()) {
                           ?>
-                          <tr class="product-row" data-prod-id="<?php echo $data['service_id']; ?>" data-prod-name="<?php echo $data['prod_name']; ?>">
+                          <tr class="product-row" data-prod-id="<?php echo $data['service_id']; ?>">
                               <td><?php echo $data['service_id']; ?></td>
                               <td><?php echo $data['service_name']; ?></td>
                               <td>₱<?php echo number_format($data['service_price'], 2); ?></td>

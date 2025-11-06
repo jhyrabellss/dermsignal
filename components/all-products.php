@@ -81,15 +81,60 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'high'; // Default to 'high' if s
          }
 
          $stmt->execute();
-         $result = $stmt->get_result();
+          $result = $stmt->get_result();
+
+          // Fetch all active vouchers once
+          $voucher_sql = "SELECT * FROM tbl_vouchers 
+                          WHERE is_active = 1 
+                          AND (voucher_type = 'product' OR voucher_type = 'both')
+                          AND CURDATE() BETWEEN start_date AND end_date";
+          $voucher_result = mysqli_query($conn, $voucher_sql);
+
+          // Store vouchers in an array for reuse
+          $active_vouchers = [];
+          if ($voucher_result && mysqli_num_rows($voucher_result) > 0) {
+              while ($voucher = mysqli_fetch_assoc($voucher_result)) {
+                  $active_vouchers[] = $voucher;
+              }
+          }
+
           if($result->num_rows){
-            while($data = $result->fetch_assoc()){
-            $origprice = $data['prod_price'] + 100; // Adjusted original price
-            $proddiscount = $data['prod_discount'] / 100;
-            $prodprice = $origprice - ($origprice * $proddiscount); // Calculate discounted price
-            $discprice = $data['prod_discount']; // Convert to percentage for display  
-            include "../components/reviews-ratings.php"
-        ?>  
+              while($data = $result->fetch_assoc()){
+                  $origprice = $data['prod_price'] + 100;
+                  $prodprice = $origprice; // Default: no discount
+                  $discprice = 0;
+                  $voucher_applied = false;
+
+                  // Check if product is eligible for any voucher
+                  foreach ($active_vouchers as $voucher) {
+                      $target_items = json_decode($voucher['target_items'], true);
+                      if ($target_items) {
+                          foreach ($target_items as $item) {
+                              if ($item['type'] == 'product' && $item['id'] == $data['prod_id']) {
+                                  // Apply discount
+                                  if ($voucher['discount_type'] == 'percentage') {
+                                      $discount_amount = $origprice * ($voucher['discount_value'] / 100);
+                                      // Check max_discount limit
+                                      if ($voucher['max_discount'] > 0 && $discount_amount > $voucher['max_discount']) {
+                                          $discount_amount = $voucher['max_discount'];
+                                      }
+                                      $prodprice = $origprice - $discount_amount;
+                                      $discprice = $voucher['discount_value'];
+                                  } else {
+                                      // Fixed discount
+                                      $discount_amount = $voucher['discount_value'];
+                                      $prodprice = max(0, $origprice - $discount_amount);
+                                      $discprice = ($discount_amount / $origprice) * 100;
+                                  }
+                                  $voucher_applied = true;
+                                  break 2; // Exit both loops
+                              }
+                          }
+                      }
+                  }
+                  
+                  include "../components/reviews-ratings.php"
+          ?>
         <div class="product-list-items "data-prod-id="<?= $data['prod_id']?>">
             <div class="product-items">
             <div>
@@ -109,9 +154,11 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'high'; // Default to 'high' if s
                       <div><?= $total_reviews?> reviews</div>                     
                   </div>
                   <div class="discount-cont">
-                      <div id="item-price">₱<?= $prodprice?> </div>
-                      <div id="original-price">₱<?= $origprice?> </div>
-                      <div id="percentage-off"><?= $discprice?>% off</div>
+                      <div id="item-price">₱<?= number_format($prodprice, 2) ?></div>
+                      <?php if ($voucher_applied) { ?>
+                          <div id="original-price">₱<?= number_format($origprice, 2) ?></div>
+                          <div id="percentage-off"><?= number_format($discprice, 0) ?>% off</div>
+                      <?php } ?>
                   </div>
               </div>
               <button class="cart-button submit-cart" >Add to Cart</button>

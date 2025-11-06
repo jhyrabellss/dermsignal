@@ -57,7 +57,6 @@ require_once("../backend/config/config.php");
                       <th>Customer Name</th>
                       <th>Order Price</th>
                       <th>Order Quantity</th>
-                      <th>Order Type</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -89,7 +88,6 @@ require_once("../backend/config/config.php");
                         <td><?php echo htmlspecialchars($data['full_name']); ?></td>
                         <td>₱<?php echo number_format($data['prod_price'], 2); ?></td>
                         <td><?php echo htmlspecialchars($data['prod_qnty']); ?></td>
-                        <td><?php echo htmlspecialchars($data['prod_type_name']); ?></td>
                         <td>
                         <button type="button" class="btn btn-primary" id="<?php echo htmlspecialchars($data['item_id']); ?>" 
                           data-bs-toggle="modal" data-bs-target="#productDetails<?php echo htmlspecialchars($data['item_id']); ?>" 
