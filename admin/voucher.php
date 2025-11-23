@@ -162,25 +162,25 @@ $low_services = $conn->query($low_services_query);
     }
 
     .btn-primary {
-      background-color: #5a8c3a;
-      border-color: #5a8c3a;
+      background-color: rgb(59, 156, 157);
+      border-color: rgb(59, 156, 157);
       color: white;
     }
 
     .btn-primary:hover {
-      background-color: #4a7530;
-      border-color: #4a7530;
+      background-color: rgba(47, 131, 132, 1);
+      border-color: rgb(47, 131, 132);
     }
 
     .btn-success {
-      background-color: #6fa34f;
-      border-color: #6fa34f;
+      background-color: rgb(59, 156, 157);
+      border-color: rgb(59, 156, 157);
       color: white;
     }
 
     .btn-success:hover {
-      background-color: #5f8f42;
-      border-color: #5f8f42;
+      background-color: rgb(47, 131, 132);
+      border-color: rgb(47, 131, 132);
     }
 
     .modal-header {

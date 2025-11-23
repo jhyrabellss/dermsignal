@@ -1,4 +1,5 @@
-<?php require_once("../config/config.php");
+<?php 
+require_once("../config/config.php");
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST["email"], $_POST["username"], $_POST["password"], $_POST["fname"], $_POST["mname"], $_POST["lname"])){
@@ -26,6 +27,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($result->num_rows > 0) {
             echo "existed";
+            exit; // Stop execution here
         } else {
             // Insert data into the database
             $query2 = "INSERT INTO tbl_account (ac_username, ac_email, ac_password, role_id) VALUES (?, ?, ?, ?)";
@@ -33,25 +35,31 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt2->bind_param("sssi", $user, $email, $hashed_password, $role_id);
 
             if ($stmt2->execute()) {
-                echo "Account created successfully!";
+                $account_id = $stmt2->insert_id;
+                
+                // Insert account details
+                $query3 = "INSERT INTO tbl_account_details (ac_id, first_name, middle_name, last_name) VALUES(?, ?, ?, ?)";
+                $stmt3 = $conn->prepare($query3);
+                $stmt3->bind_param("isss", $account_id, $fname, $mname, $lname);
+                
+                if($stmt3->execute()) {
+                    echo "success"; // Single, clear response
+                } else {
+                    error_log("SQL Error (Details): " . $stmt3->error);
+                    echo "error";
+                }
             } else {
-                error_log("SQL Error: " . $stmt2->error);
-                echo "SQL Error: " . $stmt2->error;
+                error_log("SQL Error (Account): " . $stmt2->error);
+                echo "error";
             }
-
-            $account_id = $stmt2->insert_id;
-            $query3 = "INSERT INTO tbl_account_details (ac_id, first_name, middle_name, last_name)
-            VALUES(?, ?, ?, ?)";
-            $stmt3 = $conn->prepare($query3);
-            $stmt3->bind_param("isss", $account_id, $fname, $mname, $lname);
-            $stmt3->execute();
+            exit; // Stop execution here
         }
     } else {
-        echo "Invalid request data.";
+        echo "invalid_data";
+        exit;
     }
 } else {
-    echo "Invalid request method.";
+    echo "invalid_method";
+    exit;
 }
-
-
 ?>

@@ -1,11 +1,16 @@
-$(document).ready(function(){
+// UPDATED FILE: modifyService.js (or whatever this file is named)
 
-    $('.updateResBtn').on('click', function(){
-        const service_name = $(this).closest('.modal-content').find('.updatedName').val();
-        const service_price = $(this).closest('.modal-content').find('.updatedPrice').val();
+$(document).ready(function(){
+    // Handle the initial Save button click - open password modal
+    $('.modal-footer .updateResBtn').not('#modalPassword .updateResBtn').on('click', function(){
         const service_id = $(this).val();
-        const procedure_benefits = $(this).closest('.modal-content').find('.updatedBenefits').val();
-        const sessions = $(this).closest('.modal-content').find('.updatedSessions').val();
+        const currentModal = $(this).closest('.modal');
+        
+        // Validate fields before opening password modal
+        const service_name = currentModal.find('.updatedName').val();
+        const service_price = currentModal.find('.updatedPrice').val();
+        const procedure_benefits = currentModal.find('.updatedBenefits').val();
+        const sessions = currentModal.find('.updatedSessions').val();
 
         if(!service_id || !service_name || !service_price || !procedure_benefits || !sessions){
             Swal.fire({
@@ -15,8 +20,23 @@ $(document).ready(function(){
             });
             return;
         }
+        
+        // Open password modal using the global function
+        window.openPasswordModal(currentModal.attr('id'), service_id);
+    });
 
-        const updatedImage = $(this).closest('.modal-content').find('.updatedImage')[0].files[0];
+    // Listen for password verification success
+    $(document).on('passwordVerified', async function(event, data){
+        const service_id = data.dataId;
+        const sourceModalId = data.sourceModal;
+        const sourceModal = $('#' + sourceModalId);
+        
+        // Get values from the original modal
+        const service_name = sourceModal.find('.updatedName').val();
+        const service_price = sourceModal.find('.updatedPrice').val();
+        const procedure_benefits = sourceModal.find('.updatedBenefits').val();
+        const sessions = sourceModal.find('.updatedSessions').val();
+        const updatedImage = sourceModal.find('.updatedImage')[0].files[0];
 
         // Create FormData object to handle file upload
         const formData = new FormData();
@@ -70,5 +90,5 @@ $(document).ready(function(){
                 })
             }
         })
-    })
+    });
 })

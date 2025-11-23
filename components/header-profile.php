@@ -1,6 +1,8 @@
 <?php require_once("../backend/config/config.php") ?>
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 
 <link rel="stylesheet" href="../styles/general-styles.css">

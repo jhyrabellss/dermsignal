@@ -284,6 +284,27 @@ require_once("./derm-select.php");
     color: white;
   }
 
+  @media (max-width: 576px) {
+  .filter-btn {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.5rem;
+  }
+  
+  .btn-group {
+    width: 100%;
+  }
+  
+  .btn-group .btn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-group {
+    gap: 0.25rem;
+  }
+}
+
     </style>
   </head>
   <body class="sb-nav-fixed">
@@ -300,7 +321,7 @@ require_once("./derm-select.php");
 
               <div class="row">
                 <!-- Statistics Cards -->
-                <div class="c-dashboardInfo col-xl-3 col-md-6">
+                <div class="c-dashboardInfo-pending col-xl-3 col-md-6">
                   <div class="wrap">
                     <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
                     <?php
@@ -318,7 +339,7 @@ require_once("./derm-select.php");
                   </div>
                 </div>
 
-                <div class="c-dashboardInfo col-xl-3 col-md-6">
+                <div class="c-dashboardInfo-confirmed col-xl-3 col-md-6">
                   <div class="wrap">
                     <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
                     <?php
@@ -336,7 +357,7 @@ require_once("./derm-select.php");
                   </div>
                 </div>
 
-                <div class="c-dashboardInfo col-xl-3 col-md-6">
+                <div class="c-dashboardInfo-completed col-xl-3 col-md-6">
                   <div class="wrap">
                     <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
                     <?php
@@ -354,7 +375,7 @@ require_once("./derm-select.php");
                   </div>
                 </div>
 
-                <div class="c-dashboardInfo col-xl-3 col-md-6">
+                <div class="c-dashboardInfo-today col-xl-3 col-md-6">
                   <div class="wrap">
                     <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
                     <?php
@@ -380,23 +401,23 @@ require_once("./derm-select.php");
                 <div class="col-md-12">
                   <div class="card">
                     <div class="card-header bg-primary" style="background-color: rgb(39,153,137) !important;">
-                      <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
                         <h5 class="text-white mb-0">Appointments</h5>
-                        <div class="btn-group" role="group">
+                        <div class="btn-group flex-wrap" role="group">
                           <button type="button" class="btn btn-info btn-sm filter-btn active" data-filter="today">
-                            <i class="fas fa-calendar-day"></i> Today
+                            <i class="fas fa-calendar-day"></i> <span class="d-none d-sm-inline">Today</span>
                           </button>
                           <button type="button" class="btn btn-info btn-sm filter-btn" data-filter="upcoming">
-                            <i class="fas fa-calendar-alt"></i> Upcoming
+                            <i class="fas fa-calendar-alt"></i> <span class="d-none d-sm-inline">Upcoming</span>
                           </button>
                           <button type="button" class="btn btn-info btn-sm filter-btn" data-filter="completed">
-                            <i class="fas fa-check-circle"></i> Completed
+                            <i class="fas fa-check-circle"></i> <span class="d-none d-sm-inline">Completed</span>
                           </button>
                           <button type="button" class="btn btn-info btn-sm filter-btn" data-filter="cancelled">
-                            <i class="fas fa-times-circle"></i> Cancelled
+                            <i class="fas fa-times-circle"></i> <span class="d-none d-sm-inline">Cancelled</span>
                           </button>
                           <button type="button" class="btn btn-info btn-sm filter-btn" data-filter="all">
-                            <i class="fas fa-list"></i> All
+                            <i class="fas fa-list"></i> <span class="d-none d-sm-inline">All</span>
                           </button>
                         </div>
                       </div>

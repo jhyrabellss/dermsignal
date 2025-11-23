@@ -6,7 +6,7 @@ h1 {
 }
 
 h2 {
-  text-align: center;
+  text-align: start;
   margin-top: 40px;
   margin-bottom: 20px;
   font-size: 24px;
@@ -17,11 +17,11 @@ h2 {
 h3 {
   font-weight: 400;
   font-size: 15px;
-  text-align: center;
+  text-align: start;
 }
 
 h4 {
-  text-align: center;
+  text-align: start;
   margin-bottom: 20px;
   font-weight: 300;
   font-size: 12px;
@@ -246,7 +246,7 @@ input[type=radio] {
 
 .reco-product-cont h3 {
   font-size: 24px;
-  text-align: left;
+  text-align: start;
   margin-bottom: 20px;
   color: #333;
   font-weight: 600;
@@ -589,4 +589,8 @@ h2.faq-title::after {
   h2.faq-title {
     font-size: 22px;
   }
+}
+
+.faqs-main-cont details summary h1{
+  text-align: start;
 }
