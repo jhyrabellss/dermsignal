@@ -172,9 +172,15 @@ require_once("../backend/config/config.php");
       </main>
     </div>
   </div>
+
+  <!-- Verify Password Modal -->
+  <?php require_once("./verifyPassword.php"); ?>
+
   <script src="../scripts/bootstrap.bundle.min.js"></script>
   <script src="../scripts/jquery.js"></script>
   <script src="../scripts/toggle.js"></script>
+  <script src="../jquery/verify-password-modal.js"></script>
+  <script src="../jquery/check-valid-password.js"></script>
   <script src="../jquery/modifyProd.js"></script>
   <!-- DataTables Scripts -->
   <script src="../plugins/js/jquery.dataTables.min.js"></script>

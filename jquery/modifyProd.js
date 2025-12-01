@@ -1,16 +1,33 @@
+// UPDATED FILE: modifyProd.js
+// This handles the product update logic
+
 $(document).ready(()=>{
-    $('.updateResBtn').on('click', function(){
-        const prod_name = $(this).closest('.modal-content').find('.updatedName').val();
-        const prod_price = $(this).closest('.modal-content').find('.updatedPrice').val();
+    // Handle the initial Save button click - open password modal
+    $('.modal-footer .updateResBtn').not('#modalPassword .updateResBtn').on('click', function(){
         const prod_id = $(this).val();
-        const prod_description = $(this).closest('.modal-content').find('.updatedDescription').val();
-        const stocks = $(this).closest('.modal-content').find('.updatedStocks').val();
-        const prod_image = $(this).closest('.modal-content').find('.updatedImage')[0].files[0];
-        const prod_hover_image = $(this).closest('.modal-content').find('.updatedHoverImage')[0].files[0];
+        const currentModal = $(this).closest('.modal');
         
-        if(prod_id && prod_name && prod_price){
+        // Open password modal using the global function
+        window.openPasswordModal(currentModal.attr('id'), prod_id);
+    });
+
+    // Listen for password verification success
+    $(document).on('passwordVerified', async function(event, data){
+        const prodId = data.dataId;
+        const sourceModalId = data.sourceModal;
+        const sourceModal = $('#' + sourceModalId);
+        
+        // Get values from the original modal
+        const prod_name = sourceModal.find('.updatedName').val();
+        const prod_price = sourceModal.find('.updatedPrice').val();
+        const prod_description = sourceModal.find('.updatedDescription').val();
+        const stocks = sourceModal.find('.updatedStocks').val();
+        const prod_image = sourceModal.find('.updatedImage')[0].files[0];
+        const prod_hover_image = sourceModal.find('.updatedHoverImage')[0].files[0];
+
+        if(prodId && prod_name && prod_price){
             const formData = new FormData();
-            formData.append('prod_id', prod_id);
+            formData.append('prod_id', prodId);
             formData.append('prod_name', prod_name);
             formData.append('prod_price', prod_price);
             formData.append('stocks', stocks);
@@ -60,7 +77,7 @@ $(document).ready(()=>{
                 text: "You cannot empty the field.",
                 showConfirmButton: false,
                 timer: 1500
-              });
+            });
         }
-    })
+    });
 })

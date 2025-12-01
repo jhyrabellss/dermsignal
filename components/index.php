@@ -249,7 +249,7 @@
         <div class="wrapper">
             <div class="product-list-items swiper-wrapper">
                 <?php
-                    $sql = "SELECT 
+                $sql = "SELECT 
                                 p.*,
                                 COALESCE(SUM(c.prod_qnty), 0) as total_sold
                             FROM tbl_products p
@@ -258,105 +258,105 @@
                             ORDER BY total_sold DESC
                             LIMIT 5";
 
-                    $result = $conn->query($sql);
+                $result = $conn->query($sql);
 
-                    // Fetch all active vouchers once
-                    $voucher_sql = "SELECT * FROM tbl_vouchers 
+                // Fetch all active vouchers once
+                $voucher_sql = "SELECT * FROM tbl_vouchers 
                                     WHERE is_active = 1 
                                     AND (voucher_type = 'product' OR voucher_type = 'both')
                                     AND CURDATE() BETWEEN start_date AND end_date
                                     ";
-                    $voucher_result = mysqli_query($conn, $voucher_sql);
+                $voucher_result = mysqli_query($conn, $voucher_sql);
 
-                    // Store vouchers in an array for reuse
-                    $active_vouchers = [];
-                    if ($voucher_result && mysqli_num_rows($voucher_result) > 0) {
-                        while ($voucher = mysqli_fetch_assoc($voucher_result)) {
-                            $active_vouchers[] = $voucher;
-                        }
+                // Store vouchers in an array for reuse
+                $active_vouchers = [];
+                if ($voucher_result && mysqli_num_rows($voucher_result) > 0) {
+                    while ($voucher = mysqli_fetch_assoc($voucher_result)) {
+                        $active_vouchers[] = $voucher;
                     }
+                }
 
-                    if ($result && $result->num_rows > 0) {
-                        while ($data = $result->fetch_assoc()) {
-                            $origprice = $data['prod_price'] + 100;
-                            $prodprice = $origprice; // Default: no discount
-                            $discprice = 0;
-                            $voucher_applied = false;
+                if ($result && $result->num_rows > 0) {
+                    while ($data = $result->fetch_assoc()) {
+                        $origprice = $data['prod_price'] + 100;
+                        $prodprice = $origprice; // Default: no discount
+                        $discprice = 0;
+                        $voucher_applied = false;
 
-                            // Check if product is eligible for any voucher
-                            foreach ($active_vouchers as $voucher) {
-                                $target_items = json_decode($voucher['target_items'], true);
-                                if ($target_items) {
-                                    foreach ($target_items as $item) {
-                                        if ($item['type'] == 'product' && $item['id'] == $data['prod_id']) {
-                                            // Apply discount
-                                            if ($voucher['discount_type'] == 'percentage') {
-                                                $discount_amount = $origprice * ($voucher['discount_value'] / 100);
-                                                // Check max_discount limit
-                                                if ($voucher['max_discount'] > 0 && $discount_amount > $voucher['max_discount']) {
-                                                    $discount_amount = $voucher['max_discount'];
-                                                }
-                                                $prodprice = $origprice - $discount_amount;
-                                                $discprice = $voucher['discount_value'];
-                                            } else {
-                                                // Fixed discount
-                                                $discount_amount = $voucher['discount_value'];
-                                                $prodprice = max(0, $origprice - $discount_amount);
-                                                $discprice = ($discount_amount / $origprice) * 100;
+                        // Check if product is eligible for any voucher
+                        foreach ($active_vouchers as $voucher) {
+                            $target_items = json_decode($voucher['target_items'], true);
+                            if ($target_items) {
+                                foreach ($target_items as $item) {
+                                    if ($item['type'] == 'product' && $item['id'] == $data['prod_id']) {
+                                        // Apply discount
+                                        if ($voucher['discount_type'] == 'percentage') {
+                                            $discount_amount = $origprice * ($voucher['discount_value'] / 100);
+                                            // Check max_discount limit
+                                            if ($voucher['max_discount'] > 0 && $discount_amount > $voucher['max_discount']) {
+                                                $discount_amount = $voucher['max_discount'];
                                             }
-                                            $voucher_applied = true;
-                                            break 2; // Exit both loops
+                                            $prodprice = $origprice - $discount_amount;
+                                            $discprice = $voucher['discount_value'];
+                                        } else {
+                                            // Fixed discount
+                                            $discount_amount = $voucher['discount_value'];
+                                            $prodprice = max(0, $origprice - $discount_amount);
+                                            $discprice = ($discount_amount / $origprice) * 100;
                                         }
+                                        $voucher_applied = true;
+                                        break 2; // Exit both loops
                                     }
                                 }
                             }
-
-                            // Get reviews and ratings for this product
-                            $product_id = $data['prod_id'];
-                            include "./reviews-ratings.php";
-                    ?>
-                            <div class="product-items swiper-slide" data-prod-id="<?= $data['prod_id'] ?>">
-                                <div class="prod-img-cont img-con-click" data-item-id="<?= $data['prod_id'] ?>">
-                                    <?php
-                                    if (file_exists('../images/products/' . $data["prod_img"]) == false || $data["prod_img"] == NULL) {
-                                        echo '<div class="no-image-placeholder" style="color: rgb(77, 77, 77);">No Image Available</div>';
-                                    } else {
-                                        echo '<img src="../images/products/' . $data["prod_img"] . '" >';
-                                        echo '<img src="../images/products-hover/' . $data["prod_hover_img"] . '" class="hovered-image">';
-                                    }
-                                    ?>
-
-                                    <div class="product-status">Best Seller (<?= $data['total_sold'] ?> sold)</div>
-                                </div>
-                                <div class="details-cont">
-                                    <div class="prod-name"><?php echo $data['prod_name']; ?></div>
-                                    <div class="prod-description"><?php echo $data['prod-short-desc']; ?></div>
-                                    <div class="prod-rating-cont">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-                                            <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300" />
-                                        </svg>
-                                        <div><?= $average_rating > 0 ? $average_rating : '0' ?></div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
-                                            <path id="verified_" data-name="verified " d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff" />
-                                        </svg>
-                                        <div><?= $total_reviews ?> reviews</div>
-                                    </div>
-                                    <div class="discount-cont">
-                                        <div id="item-price">₱<?php echo number_format($prodprice, 2) ?></div>
-                                        <?php if ($voucher_applied) { ?>
-                                            <div id="original-price">₱<?php echo number_format($origprice, 2) ?></div>
-                                            <div id="percentage-off" ><?php echo number_format($discprice, 0) ?>%</div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                                <button class="cart-button submit-cart">Add to Cart</button>
-                            </div>
-                    <?php
                         }
-                    } else {
-                        echo '<div class="no-products">No best sellers found yet.</div>';
+
+                        // Get reviews and ratings for this product
+                        $product_id = $data['prod_id'];
+                        include "./reviews-ratings.php";
+                ?>
+                        <div class="product-items swiper-slide" data-prod-id="<?= $data['prod_id'] ?>">
+                            <div class="prod-img-cont img-con-click" data-item-id="<?= $data['prod_id'] ?>">
+                                <?php
+                                if (file_exists('../images/products/' . $data["prod_img"]) == false || $data["prod_img"] == NULL) {
+                                    echo '<div class="no-image-placeholder" style="color: rgb(77, 77, 77);">No Image Available</div>';
+                                } else {
+                                    echo '<img src="../images/products/' . $data["prod_img"] . '" >';
+                                    echo '<img src="../images/products-hover/' . $data["prod_hover_img"] . '" class="hovered-image">';
+                                }
+                                ?>
+
+                                <div class="product-status">Best Seller (<?= $data['total_sold'] ?> sold)</div>
+                            </div>
+                            <div class="details-cont">
+                                <div class="prod-name"><?php echo $data['prod_name']; ?></div>
+                                <div class="prod-description"><?php echo $data['prod-short-desc']; ?></div>
+                                <div class="prod-rating-cont">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+                                        <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300" />
+                                    </svg>
+                                    <div><?= $average_rating > 0 ? $average_rating : '0' ?></div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
+                                        <path id="verified_" data-name="verified " d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff" />
+                                    </svg>
+                                    <div><?= $total_reviews ?> reviews</div>
+                                </div>
+                                <div class="discount-cont">
+                                    <div id="item-price">₱<?php echo number_format($prodprice, 2) ?></div>
+                                    <?php if ($voucher_applied) { ?>
+                                        <div id="original-price">₱<?php echo number_format($origprice, 2) ?></div>
+                                        <div id="percentage-off"><?php echo number_format($discprice, 0) ?>%</div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <button class="cart-button submit-cart">Add to Cart</button>
+                        </div>
+                <?php
                     }
-                    ?>
+                } else {
+                    echo '<div class="no-products">No best sellers found yet.</div>';
+                }
+                ?>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -376,101 +376,101 @@
         <div class="wrapper">
             <div class="product-list-items swiper-wrapper">
                 <?php
-                    $sql = "
+                $sql = "
                         SELECT *
                         FROM tbl_products
                         ORDER BY prod_id DESC
                         LIMIT 5";
-                    $result = $conn->query($sql);
+                $result = $conn->query($sql);
 
-                    // Fetch all active vouchers once
-                    $voucher_sql = "SELECT * FROM tbl_vouchers 
+                // Fetch all active vouchers once
+                $voucher_sql = "SELECT * FROM tbl_vouchers 
                                     WHERE is_active = 1 
                                     AND (voucher_type = 'product' OR voucher_type = 'both')
                                     AND CURDATE() BETWEEN start_date AND end_date
                                     ";
-                    $voucher_result = mysqli_query($conn, $voucher_sql);
+                $voucher_result = mysqli_query($conn, $voucher_sql);
 
-                    // Store vouchers in an array for reuse
-                    $active_vouchers = [];
-                    if ($voucher_result && mysqli_num_rows($voucher_result) > 0) {
-                        while ($voucher = mysqli_fetch_assoc($voucher_result)) {
-                            $active_vouchers[] = $voucher;
-                        }
+                // Store vouchers in an array for reuse
+                $active_vouchers = [];
+                if ($voucher_result && mysqli_num_rows($voucher_result) > 0) {
+                    while ($voucher = mysqli_fetch_assoc($voucher_result)) {
+                        $active_vouchers[] = $voucher;
                     }
+                }
 
-                    if ($result->num_rows > 0) {
-                        while ($data = $result->fetch_assoc()) {
-                            $origprice = $data['prod_price'] + 100;
-                            $prodprice = $origprice; // Default: no discount
-                            $discprice = 0;
-                            $voucher_applied = false;
+                if ($result->num_rows > 0) {
+                    while ($data = $result->fetch_assoc()) {
+                        $origprice = $data['prod_price'] + 100;
+                        $prodprice = $origprice; // Default: no discount
+                        $discprice = 0;
+                        $voucher_applied = false;
 
-                            // Check if product is eligible for any voucher
-                            foreach ($active_vouchers as $voucher) {
-                                $target_items = json_decode($voucher['target_items'], true);
-                                if ($target_items) {
-                                    foreach ($target_items as $item) {
-                                        if ($item['type'] == 'product' && $item['id'] == $data['prod_id']) {
-                                            // Apply discount
-                                            if ($voucher['discount_type'] == 'percentage') {
-                                                $discount_amount = $origprice * ($voucher['discount_value'] / 100);
-                                                // Check max_discount limit
-                                                if ($voucher['max_discount'] > 0 && $discount_amount > $voucher['max_discount']) {
-                                                    $discount_amount = $voucher['max_discount'];
-                                                }
-                                                $prodprice = $origprice - $discount_amount;
-                                                $discprice = $voucher['discount_value'];
-                                            } else {
-                                                // Fixed discount
-                                                $discount_amount = $voucher['discount_value'];
-                                                $prodprice = max(0, $origprice - $discount_amount);
-                                                $discprice = ($discount_amount / $origprice) * 100;
+                        // Check if product is eligible for any voucher
+                        foreach ($active_vouchers as $voucher) {
+                            $target_items = json_decode($voucher['target_items'], true);
+                            if ($target_items) {
+                                foreach ($target_items as $item) {
+                                    if ($item['type'] == 'product' && $item['id'] == $data['prod_id']) {
+                                        // Apply discount
+                                        if ($voucher['discount_type'] == 'percentage') {
+                                            $discount_amount = $origprice * ($voucher['discount_value'] / 100);
+                                            // Check max_discount limit
+                                            if ($voucher['max_discount'] > 0 && $discount_amount > $voucher['max_discount']) {
+                                                $discount_amount = $voucher['max_discount'];
                                             }
-                                            $voucher_applied = true;
-                                            break 2; // Exit both loops
+                                            $prodprice = $origprice - $discount_amount;
+                                            $discprice = $voucher['discount_value'];
+                                        } else {
+                                            // Fixed discount
+                                            $discount_amount = $voucher['discount_value'];
+                                            $prodprice = max(0, $origprice - $discount_amount);
+                                            $discprice = ($discount_amount / $origprice) * 100;
                                         }
+                                        $voucher_applied = true;
+                                        break 2; // Exit both loops
                                     }
                                 }
                             }
-                    ?>
-                            <div class="product-items swiper-slide" data-prod-id="<?= $data['prod_id'] ?>">
-                                <div class="prod-img-cont img-con-click" data-item-id="<?= $data['prod_id'] ?>">
-                                    <?php
-                                    if (file_exists('../images/products/' . $data["prod_img"]) == false || $data["prod_img"] == NULL) {
-                                        echo '<div class="no-image-placeholder" style="color: rgb(77, 77, 77);">No Image Available</div>';
-                                    } else {
-                                        echo '<img src="../images/products/' . $data["prod_img"] . '" >';
-                                        echo '<img src="../images/products-hover/' . $data["prod_hover_img"] . '" class="hovered-image">';
-                                    }
-                                    ?>
-                                    <div class="product-status" style="background-color: green;">New Arrivals</div>
-                                </div>
-                                <div class="details-cont">
-                                    <div class="prod-name"><?php echo $data['prod_name']; ?></div>
-                                    <div class="prod-description"><?php echo $data['prod-short-desc']; ?></div>
-                                    <div class="prod-rating-cont">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-                                            <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300" />
-                                        </svg>
-                                        <div>4.8</div>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
-                                            <path id="verified_" data-name="verified " d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff"></path>
-                                        </svg>
-                                        <div><?= isset($total_reviews) ? $total_reviews : 0 ?> reviews</div>
-                                    </div>
-                                    <div class="discount-cont">
-                                        <div id="item-price">₱<?php echo number_format($prodprice, 2) ?></div>
-                                        <?php if ($voucher_applied) { ?>
-                                            <div id="original-price">₱<?php echo number_format($origprice, 2) ?></div>
-                                            <div id="percentage-off"><?php echo number_format($discprice, 0) ?>%</div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                                <button class="cart-button submit-cart">Add to Cart</button>
+                        }
+                ?>
+                        <div class="product-items swiper-slide" data-prod-id="<?= $data['prod_id'] ?>">
+                            <div class="prod-img-cont img-con-click" data-item-id="<?= $data['prod_id'] ?>">
+                                <?php
+                                if (file_exists('../images/products/' . $data["prod_img"]) == false || $data["prod_img"] == NULL) {
+                                    echo '<div class="no-image-placeholder" style="color: rgb(77, 77, 77);">No Image Available</div>';
+                                } else {
+                                    echo '<img src="../images/products/' . $data["prod_img"] . '" >';
+                                    echo '<img src="../images/products-hover/' . $data["prod_hover_img"] . '" class="hovered-image">';
+                                }
+                                ?>
+                                <div class="product-status" style="background-color: green;">New Arrivals</div>
                             </div>
-                    <?php }
-                    } ?>
+                            <div class="details-cont">
+                                <div class="prod-name"><?php echo $data['prod_name']; ?></div>
+                                <div class="prod-description"><?php echo $data['prod-short-desc']; ?></div>
+                                <div class="prod-rating-cont">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+                                        <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300" />
+                                    </svg>
+                                    <div>4.8</div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16">
+                                        <path id="verified_" data-name="verified " d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff"></path>
+                                    </svg>
+                                    <div><?= isset($total_reviews) ? $total_reviews : 0 ?> reviews</div>
+                                </div>
+                                <div class="discount-cont">
+                                    <div id="item-price">₱<?php echo number_format($prodprice, 2) ?></div>
+                                    <?php if ($voucher_applied) { ?>
+                                        <div id="original-price">₱<?php echo number_format($origprice, 2) ?></div>
+                                        <div id="percentage-off"><?php echo number_format($discprice, 0) ?>%</div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <button class="cart-button submit-cart">Add to Cart</button>
+                        </div>
+                <?php }
+                } ?>
             </div>
             <div class="swiper-pagination"></div>
             <div class="swiper-button-prev"></div>
@@ -574,56 +574,86 @@
     <div class="reviews-main-cont swiper">
         <div class="review-wrapper">
             <ul class="reviews-cont-list swiper-wrapper">
-                <?php 
-                    $query_reviews = "SELECT pr.*, td.first_name, td.last_name FROM tbl_page_reviews pr JOIN tbl_account_details td ON pr.account_id = td.ac_id WHERE pr.status = 'approved' ORDER BY pr.created_at DESC";
-                    $result_reviews = $conn->query($query_reviews);
-                    if($result_reviews->num_rows > 0){
-                        while($review = $result_reviews->fetch_assoc()){
-                ?>
-                <li class="reviews-cont <?php echo $result_reviews->num_rows > 5 ? 'swiper-slide' : ''; ?>" >
-                    <div class=" reviews-img">
-                        <img src="../images/testimonials/<?php echo htmlspecialchars($review['reviewer_image']); ?>" alt="">
-                    </div>
-                    <div class="reviewer-details">
-                        <div>
-                            <?php echo htmlspecialchars($review['first_name'] . ' ' . $review['last_name']); ?>
-                        </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-                                <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300" />
-                            </svg>
-                        </div>
-                        <div>
-                            <?php 
-                                // Display average rating stars
-                                $rating = (int)$review['rating'];
-                                echo $rating;
-                            ?>
-                        </div>
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-                                <path id="verified_" data-name="verified " d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="reviewers-opinion">
-                        "<?php echo htmlspecialchars($review['review_title']); ?>"
-                    </div>
-                    <div class="reviewers-description">
-                        <?php echo $review['review_text']; ?>
-                    </div>
-                </li>
                 <?php
-                        }
-                    } else {
-                        echo '<li class="no-reviews">No reviews found.</li>';
+                $query_reviews = "SELECT pr.*, td.first_name, td.last_name FROM tbl_page_reviews pr JOIN tbl_account_details td ON pr.account_id = td.ac_id WHERE pr.status = 'approved' ORDER BY pr.created_at DESC";
+                $result_reviews = $conn->query($query_reviews);
+                if ($result_reviews->num_rows > 0) {
+                    while ($review = $result_reviews->fetch_assoc()) {
+                ?>
+                        <li class="reviews-cont <?php echo $result_reviews->num_rows >= 5 ? 'swiper-slide' : ''; ?>">
+                            <div class="reviews-img">
+                                <img src="../images/testimonials/<?php echo htmlspecialchars($review['reviewer_image']); ?>" alt="">
+                            </div>
+                            <div class="reviewer-details">
+                                <div>
+                                    <?php echo htmlspecialchars($review['first_name'] . ' ' . $review['last_name']); ?>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+                                        <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <?php
+                                    $rating = (int)$review['rating'];
+                                    echo $rating;
+                                    ?>
+                                </div>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                                        <path id="verified_" data-name="verified " d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="reviewers-opinion">
+                                "<?php echo htmlspecialchars($review['review_title']); ?>"
+                            </div>
+                            <div class="reviewers-description">
+                                <?php echo htmlspecialchars($review['review_text']); ?>
+                            </div>
+                            <button class="read-more-btn"
+                                data-reviewer-name="<?php echo htmlspecialchars($review['first_name'] . ' ' . $review['last_name']); ?>"
+                                data-reviewer-image="../images/testimonials/<?php echo htmlspecialchars($review['reviewer_image']); ?>"
+                                data-rating="<?php echo (int)$review['rating']; ?>"
+                                data-review-title="<?php echo htmlspecialchars($review['review_title']); ?>"
+                                data-review-text="<?php echo htmlspecialchars($review['review_text']); ?>">
+                                Read More
+                            </button>
+                        </li>
+                <?php
                     }
+                } else {
+                    echo '<li class="no-reviews">No reviews found.</li>';
+                }
                 ?>
             </ul>
             <div class="swiper-pagination"></div>
-            <!-- If we need navigation buttons -->
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="review-modal" id="reviewModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-header">
+                <img src="" alt="Reviewer" class="modal-reviewer-img" id="modalReviewerImg">
+                <div class="modal-reviewer-info">
+                    <h3 id="modalReviewerName"></h3>
+                    <div class="modal-rating">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+                            <path d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300" />
+                        </svg>
+                        <span id="modalRating"></span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-review-title" id="modalReviewTitle"></div>
+            <div class="modal-review-text" id="modalReviewText"></div>
         </div>
     </div>
 
@@ -1143,7 +1173,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="../scripts/swiper.js"></script>
-    <script src="../jquery/signup.js"></script>
     <script src="../scripts/log-in-sign-up.js"></script>
     <script src="../scripts/cart.js"></script>
     <script src="../jquery/addtocart-index.js"></script>
@@ -1198,6 +1227,42 @@
                 button.classList.remove('button-bg-color');
             });
         }
+    </script>
+
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('reviewModal');
+        const modalClose = document.getElementById('modalClose');
+        const readMoreBtns = document.querySelectorAll('.read-more-btn');
+
+        readMoreBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const reviewerName = this.getAttribute('data-reviewer-name');
+                const reviewerImage = this.getAttribute('data-reviewer-image');
+                const rating = this.getAttribute('data-rating');
+                const reviewTitle = this.getAttribute('data-review-title');
+                const reviewText = this.getAttribute('data-review-text');
+
+                document.getElementById('modalReviewerImg').src = reviewerImage;
+                document.getElementById('modalReviewerName').textContent = reviewerName;
+                document.getElementById('modalRating').textContent = rating;
+                document.getElementById('modalReviewTitle').textContent = `"${reviewTitle}"`;
+                // Use innerText instead of textContent to preserve line breaks
+                document.getElementById('modalReviewText').innerText = reviewText;
+
+                modal.classList.add('active');
+            });
+        });
+
+        modalClose.addEventListener('click', function() {
+            modal.classList.remove('active');
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
     </script>
 
     <script>

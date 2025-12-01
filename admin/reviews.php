@@ -237,9 +237,12 @@ if(isset($_POST['delete_review'])){
     </div>
   </div>
 
+  <?php require_once("./verifyPassword.php"); ?>
+
   <script src="../scripts/bootstrap.bundle.min.js"></script>
   <script src="../scripts/jquery.js"></script>
-  <script src="../jquery/responseReport.js"></script>
+  <script src="../jquery/verify-password-modal.js"></script>
+  <script src="../jquery/check-valid-password.js"></script>
   <script src="../scripts/toggle.js"></script>
   
   <!-- DataTables Scripts -->
@@ -264,123 +267,183 @@ if(isset($_POST['delete_review'])){
   </script>
 
   <script>
-    $(document).ready(function() {
-        $('#residenceAccounts').DataTable({
-            responsive: true,
-            order: [[0, 'desc']],
-        });
+  $(document).ready(function() {
+      $('#residenceAccounts').DataTable({
+          responsive: true,
+          order: [[0, 'desc']],
+      });
 
-        // Update Status Handler
-        $('.update-status-submit').on('click', function(e) {
-            e.preventDefault();
-            var reviewId = $(this).data('review-id');
-            var form = $('#updateStatusForm' + reviewId);
-            var formData = form.serialize();
-            formData += '&update_status=1';
+      // Update Status Handler - Open password modal first
+      $('.update-status-submit').on('click', function(e) {
+          e.preventDefault();
+          var reviewId = $(this).data('review-id');
+          var currentModal = $(this).closest('.modal');
+          
+          // Get the selected status value from the select element in THIS modal
+          var selectElement = currentModal.find('select[name="status"]');
+          var selectedStatus = selectElement.val();
+          
+          console.log('Review ID:', reviewId); // Debug log
+          console.log('Select Element:', selectElement); // Debug log
+          console.log('Selected Status:', selectedStatus); // Debug log
+          
+          if(!selectedStatus || selectedStatus === '') {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Please select a status!',
+              });
+              return;
+          }
+          
+          // Store ALL the data we need in modalPassword BEFORE closing the modal
+          $('#modalPassword').data('actionType', 'update');
+          $('#modalPassword').data('reviewId', reviewId);
+          $('#modalPassword').data('selectedStatus', selectedStatus); // Store the status value
+          
+          // Close current modal and open password modal
+          currentModal.modal('hide');
+          
+          // Use setTimeout to ensure modal is fully closed before opening new one
+          setTimeout(function() {
+              $('#modalPassword').modal('show');
+          }, 300);
+      });
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "Do you want to update this review status?",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '',
-                        type: 'POST',
-                        data: formData,
-                        dataType: 'json',
-                        success: function(response) {
-                            if(response.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success!',
-                                    text: response.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error!',
-                                    text: response.message
-                                });
-                            }
-                        },
-                        error: function() {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
-                                text: 'An error occurred while updating the status.'
-                            });
-                        }
-                    });
-                }
-            });
-        });
+      // Delete Review Handler - Open password modal first
+      $('.delete-review-btn').on('click', function(e) {
+          e.preventDefault();
+          var reviewId = $(this).data('review-id');
+          
+          // Store the action type
+          $('#modalPassword').data('actionType', 'delete');
+          $('#modalPassword').data('reviewId', reviewId);
+          
+          // Open password modal
+          $('#modalPassword').modal('show');
+      });
 
-        // Delete Review Handler
-        $('.delete-review-btn').on('click', function(e) {
-            e.preventDefault();
-            var reviewId = $(this).data('review-id');
+      // Handle password verification from the modal
+      $('#modalPassword .updateResBtn').on('click', async function() {
+          const admin_password = $('.verifyAdminPassword').val();
+          
+          if(!admin_password) {
+              Swal.fire({
+                  title: "Empty Field!",
+                  text: "Please enter your password.",
+                  showConfirmButton: false,
+                  timer: 1500
+              });
+              return;
+          }
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '',
-                        type: 'POST',
-                        data: {
-                            delete_review: 1,
-                            review_id: reviewId
-                        },
-                        dataType: 'json',
-                        success: function(response) {
-                            if(response.success) {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Deleted!',
-                                    text: response.message,
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Error!',
-                                    text: response.message
-                                });
-                            }
-                        },
-                        error: function() {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
-                                text: 'An error occurred while deleting the review.'
-                            });
-                        }
-                    });
-                }
-            });
-        });
-    });
-  </script>
+          let passwordVerified = await checkValidPassword(admin_password);
+          
+          if(!passwordVerified) {
+              Swal.fire({
+                  title: "Invalid Password",
+                  text: "The password you entered is incorrect.",
+              });
+              return;
+          }
+
+          // Password verified - proceed with the action
+          var actionType = $('#modalPassword').data('actionType');
+          var reviewId = $('#modalPassword').data('reviewId');
+          
+          // Close password modal
+          $('#modalPassword').modal('hide');
+          $('.verifyAdminPassword').val(''); // Clear password field
+          
+          if(actionType === 'update') {
+              // Get the stored status value
+              var selectedStatus = $('#modalPassword').data('selectedStatus');
+              
+              console.log('Processing update with status:', selectedStatus); // Debug log
+
+              $.ajax({
+                  url: '',
+                  type: 'POST',
+                  data: {
+                      update_status: 1,
+                      review_id: reviewId,
+                      status: selectedStatus
+                  },
+                  dataType: 'json',
+                  success: function(response) {
+                      if(response.success) {
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Success!',
+                              text: response.message,
+                              showConfirmButton: false,
+                              timer: 1500
+                          }).then(() => {
+                              location.reload();
+                          });
+                      } else {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error!',
+                              text: response.message
+                          });
+                      }
+                  },
+                  error: function() {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error!',
+                          text: 'An error occurred while updating the status.'
+                      });
+                  }
+              });
+              
+          } else if(actionType === 'delete') {
+              // Handle delete review
+              $.ajax({
+                  url: '',
+                  type: 'POST',
+                  data: {
+                      delete_review: 1,
+                      review_id: reviewId
+                  },
+                  dataType: 'json',
+                  success: function(response) {
+                      if(response.success) {
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Deleted!',
+                              text: response.message,
+                              showConfirmButton: false,
+                              timer: 1500
+                          }).then(() => {
+                              location.reload();
+                          });
+                      } else {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error!',
+                              text: response.message
+                          });
+                      }
+                  },
+                  error: function() {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error!',
+                          text: 'An error occurred while deleting the review.'
+                      });
+                  }
+              });
+          }
+          
+          // Clear stored data
+          $('#modalPassword').removeData('actionType');
+          $('#modalPassword').removeData('reviewId');
+          $('#modalPassword').removeData('selectedStatus');
+      });
+  });
+</script>
 
   <script src="../jquery/sideBarProd.js"></script> 
   </body>
