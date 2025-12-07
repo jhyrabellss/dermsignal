@@ -43,7 +43,7 @@ $(document).ready(() => {
                 window.location.href = "../admin/index.php";
               } else if (data.role_id == 3) {
                 localStorage.setItem("dermDetails", response);
-                window.location.href = "../dermatologist/derm-index.php";
+                window.location.href = "./dermatologist/derm-index.php";
               }
             });
           }
