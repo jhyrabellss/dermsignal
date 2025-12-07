@@ -55,8 +55,9 @@ if($voucher_result && $voucher_result->num_rows > 0) {
         ?>
         <div class="voucher-card <?= $voucher['auto_apply'] ? 'auto-apply' : '' ?> <?= $status_class ?>">
             <div class="store-only-badge">
-            <i class="fa-solid fa-store"></i>    
-            Physical Store Only</div>
+            <i class="fa-solid fa-store"></i>
+                Item Discount
+            </div>
             <div class="voucher-left">
                     <div class="voucher-discount"><?= rtrim($discount_text, '.00') ?></div>
                     <div class="voucher-category"><?= htmlspecialchars($voucher['promo_category']) ?></div>

@@ -42,6 +42,11 @@ h4 {
 }
 
 /* Main Container */
+.assessment-whole-cont {
+  width: 100%;
+  min-height: 100vh;
+}
+
 .assessment-main-cont {
   width: 100%;
   display: flex;
@@ -58,6 +63,25 @@ h4 {
   padding: 30px;
   width: 100%;
   border-radius: 10px;
+}
+
+/* Previous Button */
+.previous-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.previous-button:hover {
+  transform: translateX(-5px);
+}
+
+.previous-button svg {
+  width: 30px;
+  height: 30px;
 }
 
 /* Skin Type Selection */
@@ -153,6 +177,15 @@ input[type=radio] {
   color: #333;
 }
 
+/* Step Display Control */
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
 /* Skin Analysis Container */
 .skin-analysis-cont {
   width: 100%;
@@ -174,6 +207,7 @@ input[type=radio] {
   font-weight: 600;
   color: var(--background-color);
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .concern-analysis {
@@ -192,6 +226,7 @@ input[type=radio] {
   justify-content: center;
   gap: 10px;
   font-size: 16px;
+  flex-wrap: wrap;
 }
 
 .issue-concerns {
@@ -268,6 +303,12 @@ input[type=radio] {
   background-color: #fafafa;
   border-radius: 15px;
   padding: 25px;
+}
+
+.product-reco-cont-parent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .product-reco-cont {
@@ -468,6 +509,10 @@ summary h1 {
   color: inherit;
   margin: 0;
   line-height: 1.5;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 details p {
@@ -490,7 +535,7 @@ details p {
   }
 }
 
-/* FAQ Section Title (add this before the FAQ section in your HTML) */
+/* FAQ Section Title */
 h2.faq-title {
   text-align: center;
   margin-top: 60px;
@@ -523,8 +568,139 @@ h2.faq-title::after {
   font-weight: 400;
 }
 
-/* Responsive Design */
+.faqs-main-cont details summary h1 {
+  text-align: start;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - TABLET
+   ============================================ */
 @media (max-width: 768px) {
+  /* Typography */
+  h2 {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+
+  h3 {
+    font-size: 14px;
+  }
+
+  h4 {
+    font-size: 11px;
+  }
+
+  /* Assessment Bar */
+  .assessment-bar {
+    padding: 30px 15px;
+  }
+
+  /* Main Container */
+  .assessment-main-cont {
+    padding: 15px;
+  }
+
+  .assessment-cont {
+    padding: 20px;
+  }
+
+  /* Skin Type Selection */
+  .image-type .skin-type-img {
+    height: 50px;
+    width: 50px;
+    margin-right: 12px;
+  }
+
+  .container-info {
+    padding: 15px;
+  }
+
+  .issue-details {
+    font-size: 10px;
+  }
+
+  /* Skin Analysis */
+  .skin-analysis-cont {
+    padding: 15px;
+    margin: 20px auto;
+  }
+
+  .skin-analysis {
+    padding: 25px 15px;
+  }
+
+  .skin-analysis-title h3 {
+    font-size: 22px;
+  }
+
+  .concern-analysis {
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .issue-concerns-cont {
+    font-size: 14px;
+  }
+
+  .retake-button {
+    font-size: 12px;
+    padding: 6px 12px;
+    right: 15px;
+    top: 15px;
+  }
+
+  /* Product Recommendations */
+  .reco-product-cont {
+    padding: 20px;
+  }
+
+  .reco-product-cont h3 {
+    font-size: 20px;
+  }
+
+  .consumer-feedback {
+    font-size: 13px;
+    padding: 12px 15px;
+  }
+
+  .product-reco-main-cont {
+    padding: 20px;
+  }
+
+  .product-reco-cont {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .product-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .product-name {
+    font-size: 16px;
+  }
+
+  .product-description {
+    font-size: 13px;
+  }
+
+  .product-price {
+    font-size: 20px;
+  }
+
+  .benefits-cont div {
+    font-size: 12px;
+    padding: 12px 15px;
+  }
+
+  /* FAQs */
+  .faqs-main-cont {
+    margin: 40px 0;
+  }
+
   .faqs-cont {
     padding: 25px 20px;
     border-radius: 10px;
@@ -572,25 +748,316 @@ h2.faq-title::after {
   }
 }
 
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE
+   ============================================ */
 @media (max-width: 480px) {
+  /* Typography */
+  h2 {
+    font-size: 18px;
+    margin-top: 25px;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    font-size: 13px;
+  }
+
+  h4 {
+    font-size: 10px;
+    margin-bottom: 15px;
+  }
+
+  /* Assessment Bar */
+  .assessment-bar {
+    padding: 20px 10px;
+  }
+
+  /* Main Container */
+  .assessment-main-cont {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .assessment-cont {
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  /* Previous Button */
+  .previous-button svg {
+    width: 25px;
+    height: 25px;
+  }
+
+  /* Skin Type Selection */
+  .image-type .skin-type-img {
+    height: 45px;
+    width: 45px;
+    margin-right: 10px;
+  }
+
+  .container-info {
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+  }
+
+  .container-info:hover {
+    transform: translateX(3px);
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .skin-type {
+    font-size: 14px;
+  }
+
+  .issue-details {
+    font-size: 9px;
+  }
+
+  /* Skin Analysis */
+  .skin-analysis-cont {
+    padding: 10px;
+    margin: 15px auto;
+  }
+
+  .skin-analysis {
+    padding: 20px 12px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+
+  .skin-analysis-title h3 {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+
+  .concern-analysis {
+    padding: 15px;
+    gap: 10px;
+    border-radius: 8px;
+  }
+
+  .issue-concerns-cont {
+    font-size: 13px;
+    gap: 8px;
+  }
+
+  .retake-button {
+    position: static;
+    display: inline-flex;
+    margin: 10px 0 15px auto;
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+
+  .retake-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Product Recommendations */
+  .reco-product-main-cont {
+    margin: 20px 0;
+  }
+
+  .reco-product-cont {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .reco-product-cont h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  .consumer-feedback {
+    font-size: 11px;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border-left-width: 3px;
+  }
+
+  .product-reco-main-cont {
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  .product-reco-cont {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+
+  .product-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .product-details {
+    width: 100%;
+    text-align: center;
+  }
+
+  .product-name {
+    font-size: 14px;
+    line-height: 1.3;
+  }
+
+  .product-description {
+    font-size: 12px;
+  }
+
+  .price-cont {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .product-price {
+    font-size: 18px;
+  }
+
+  .original-price {
+    font-size: 14px;
+  }
+
+  .discount-off {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .benefits-cont {
+    margin-bottom: 15px;
+  }
+
+  .benefits-cont div {
+    font-size: 11px;
+    padding: 10px 12px;
+    border-radius: 6px;
+  }
+
+  /* FAQs */
   .faqs-main-cont {
     padding: 0 10px;
-    margin: 40px 0;
+    margin: 30px 0;
+  }
+
+  .faqs-cont {
+    padding: 20px 15px;
+    border-radius: 8px;
+  }
+
+  details {
+    padding: 15px 0;
+  }
+
+  details[open] {
+    padding-left: 8px;
+    margin-left: -8px;
+    padding-right: 8px;
+    margin-right: -8px;
   }
 
   summary {
     font-size: 14px;
+    padding-right: 35px;
   }
 
   summary h1 {
     font-size: 14px;
+    line-height: 1.4;
+  }
+
+  summary::after {
+    width: 18px;
+    height: 18px;
+    background-size: 14px;
+    right: 5px;
+  }
+
+  summary:hover {
+    padding-left: 3px;
+  }
+
+  details p {
+    font-size: 13px;
+    padding: 12px 0 5px 0;
+    line-height: 1.6;
   }
 
   h2.faq-title {
-    font-size: 22px;
+    font-size: 20px;
+    margin-top: 40px;
+  }
+
+  h2.faq-title::after {
+    width: 60px;
+    height: 3px;
+  }
+
+  .faq-subtitle {
+    font-size: 13px;
+    margin-bottom: 25px;
+    padding: 0 10px;
   }
 }
 
-.faqs-main-cont details summary h1{
-  text-align: start;
+/* ============================================
+   EXTRA SMALL DEVICES
+   ============================================ */
+@media (max-width: 360px) {
+  .assessment-main-cont {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .assessment-cont {
+    padding: 12px;
+  }
+
+  .image-type .skin-type-img {
+    height: 40px;
+    width: 40px;
+    margin-right: 8px;
+  }
+
+  .container-info {
+    padding: 10px;
+  }
+
+  .skin-analysis-title h3 {
+    font-size: 16px;
+  }
+
+  .issue-concerns-cont {
+    font-size: 12px;
+  }
+
+  .product-image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .product-name {
+    font-size: 13px;
+  }
+
+  .product-price {
+    font-size: 16px;
+  }
+
+  h2.faq-title {
+    font-size: 18px;
+  }
+
+  .faq-subtitle {
+    font-size: 12px;
+  }
 }

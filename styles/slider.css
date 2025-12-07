@@ -105,6 +105,14 @@
   .wrapper{
     width: calc(100%);
   }
+
+  .prod-img-cont {
+    height: 150px;
+  }
+
+  .products-cont{
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 550px) {

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../styles/general-styles.css">
     <link rel="stylesheet" href="../styles/assessment.css">
     <link rel="stylesheet" href="../styles/cart.css">
+    <script src="../scripts/sweetalert.js"></script>
 
 
 
@@ -22,8 +23,8 @@
 <?php 
 
   if(empty($_SESSION["user_id"])) {
-    header("Location: ../index.php");
-    exit();
+        header("Location: ./index.php");
+        exit();
     }
 ?>
 <?php include "../components/header.php"?>

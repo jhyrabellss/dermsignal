@@ -289,9 +289,6 @@ body.showCart .cart-cont{
   margin-bottom: 10px;
 }
 
-.shipping-discount div:nth-of-type(2){
-  text-decoration: line-through;
-}
 
 .grand-total div:nth-last-of-type(1){
   font-size: 20px;
@@ -404,4 +401,179 @@ body.showCart .cart-cont{
     padding: 10px 0;
     border-top: 1px dashed #dee2e6;
     margin-top: 10px;
+}
+
+/* Mobile Responsive - Cart */
+@media screen and (max-width: 768px) {
+    .cart-cont {
+        width: 100%;
+        inset: 0 -100% 0 auto !important;
+        height: 100vh;
+    }
+
+    body.showCart .cart-cont {
+        inset: 0 0 0 auto !important;
+    }
+
+    .my-cart-title {
+        width: 100%;
+        padding: 15px 10px;
+    }
+
+    .my-cart-title h1 {
+        font-size: 18px;
+    }
+
+    .exit svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .item-cont {
+        padding: 0 10px;
+    }
+
+    .item-img-cont {
+        max-width: 70px;
+        min-width: 70px;
+        height: 70px;
+    }
+
+    .item-name {
+        font-size: 14px;
+    }
+
+    .item-classification {
+        font-size: 11px;
+    }
+
+    .main-price {
+        font-size: 14px;
+    }
+
+    .discounted-price {
+        font-size: 11px;
+    }
+
+    .quantity-buttons {
+        width: 40%;
+        font-size: 14px;
+    }
+
+    .saved-amount-cont {
+        padding: 15px 10px;
+    }
+
+    .saved-amount {
+        font-size: 13px;
+        padding: 8px;
+    }
+
+    .price-summary-cont {
+        padding: 0 15px 15px 15px;
+        font-size: 13px;
+    }
+
+    .price-summary {
+        font-size: 14px;
+    }
+
+    .order-total,
+    .shipping-discount,
+    .online-payment-discount,
+    .grand-total,
+    .voucher-discount {
+        padding: 8px 0;
+        font-size: 13px;
+    }
+
+    .grand-total div:nth-last-of-type(1) {
+        font-size: 18px;
+    }
+
+    .checkout-button-cont {
+        padding: 10px 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .item-details-price {
+        width: 100%;
+        text-align: center;
+    }
+
+    .checkout-button-cont button {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+
+    .empty-cont-img img {
+        height: 150px;
+    }
+
+    .empty-cart-text {
+        font-size: 18px;
+    }
+
+    .shop-now {
+        font-size: 14px;
+        padding: 10px 30px;
+    }
+
+    /* Voucher items in cart */
+    .voucher-item {
+        padding: 12px;
+    }
+
+    .voucher-item .item-img-cont {
+        min-width: 60px;
+        max-width: 60px;
+        height: 60px;
+    }
+
+    .voucher-details {
+        font-size: 11px;
+    }
+
+    .voucher-eligible-items {
+        font-size: 10px;
+    }
+
+    .remove-voucher-btn {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cart-cont {
+        width: 100%;
+    }
+
+    .my-cart-title h1 {
+        font-size: 16px;
+    }
+
+    .item-img-cont {
+        max-width: 60px;
+        min-width: 60px;
+        height: 60px;
+    }
+
+    .item-name {
+        font-size: 13px;
+    }
+
+    .main-price {
+        font-size: 13px;
+    }
+
+    .quantity-buttons {
+        width: 50%;
+    }
+
+    .price-summary-cont {
+        font-size: 12px;
+    }
 }

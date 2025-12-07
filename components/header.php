@@ -131,14 +131,13 @@ if (!isset($_SESSION)) {
             <div class="nav-allprod-cont">
                 <a href="./services.php">Services</a>
             </div>
-            <a href="../components/assessment.php">
             <div class="nav-free-skin-assessment-cont">
                 <svg id="tabler-icon-clipboard-check" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path id="Path_116054" data-name="Path 116054" d="M0,0H24V24H0Z" fill="none"></path><path id="Path_116055" data-name="Path 116055" d="M9,5H7A2,2,0,0,0,5,7V19a2,2,0,0,0,2,2H17a2,2,0,0,0,2-2V7a2,2,0,0,0-2-2H15" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><rect id="Rectangle_7428" data-name="Rectangle 7428" width="6" height="4" rx="2" transform="translate(9 3)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></rect><path id="Path_116056" data-name="Path 116056" d="M9,14l2,2,4-4" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg>
                 <div class="nav-free-skin-assessment">
                     Free Skin Assesment
                 </div>
             </div>
-            </a>
+            
         </div>
         <div class="nav-right-icon" style="display:flex; gap: 20px;  ">
              <?php if (!empty($_SESSION["user_id"])) {
@@ -217,5 +216,19 @@ if (!isset($_SESSION)) {
         var itemId = $(this).data("item-id");
         const url = `../components/individual-product.php?item=${itemId}`;
         window.location.href = url;
+    });
+
+
+    $('.nav-free-skin-assessment-cont').click(function() {
+        if (!localStorage.getItem("userDetails")) {
+            Swal.fire({
+                title: "Please log in to access the Skin Assessment",
+                showConfirmButton: true,
+            }).then(() => {
+                openForm('myFormSignUp');
+            });
+        } else {
+            window.location.href = '../components/skin-assessment.php';
+        }
     });
 </script>

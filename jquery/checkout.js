@@ -142,8 +142,8 @@ $('.add-btn').on('click', function() {
         
         // Confirm pickup action
         Swal.fire({
-            title: "Want to pick up now?",
-            text: "Your items will be prepared right away.",
+            title: "Want to proceed?",
+            text: "Please ensure all details are correct before proceeding.",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",

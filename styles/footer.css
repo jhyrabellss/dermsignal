@@ -250,3 +250,178 @@ footer .facebook:hover  .white{
   color: white;
   background-color: var(--background-color);
 }
+
+/* Mobile Responsive - Footer */
+@media screen and (max-width: 768px) {
+    footer {
+        padding: 0 20px;
+        margin-bottom: 30px;
+    }
+
+    .footer-choices {
+        flex-direction: column;
+        gap: 20px;
+        padding-bottom: 15px;
+    }
+
+    .footer-components-cont {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .footer-components {
+        gap: 15px;
+    }
+
+    .components-img {
+        height: 50px;
+        width: 50px;
+    }
+
+    .footer-components div:nth-child(1) {
+        font-size: 14px;
+    }
+
+    .footer-components div:nth-child(2) div {
+        font-size: 12px;
+    }
+
+    .footer-queries {
+        text-align: center;
+        width: 100%;
+    }
+
+    .footer-queries > div:first-child {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .footer-queries a div {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .footer-main-details {
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .footer-details {
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .combined {
+        width: 180px;
+        text-align: center;
+    }
+
+    .footer-logo {
+        width: 180px;
+    }
+
+    .catchphrase {
+        font-size: 11px;
+    }
+
+    .footer-options {
+        flex-direction: column;
+        gap: 25px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .shop, .learn, .help {
+        width: 100%;
+    }
+
+    .shop h5, .learn h5, .help h5 {
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+
+    .shop p, .learn p, .help p {
+        font-size: 13px;
+        line-height: 28px;
+    }
+
+    .footer-icons {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .footer-icons div {
+        width: 45px;
+        height: 45px;
+    }
+
+    .footer-icons img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .instagram img, .youtube img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    footer {
+        padding: 0 15px;
+        margin-bottom: 20px;
+    }
+
+    .footer-components {
+        gap: 12px;
+    }
+
+    .components-img {
+        height: 45px;
+        width: 45px;
+    }
+
+    .footer-components div:nth-child(1) {
+        font-size: 13px;
+    }
+
+    .footer-components div:nth-child(2) div {
+        font-size: 11px;
+    }
+
+    .combined {
+        width: 160px;
+    }
+
+    .footer-logo {
+        width: 160px;
+    }
+
+    .catchphrase {
+        font-size: 10px;
+    }
+
+    .footer-options {
+        gap: 20px;
+    }
+
+    .shop h5, .learn h5, .help h5 {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .shop p, .learn p, .help p {
+        font-size: 12px;
+        line-height: 26px;
+    }
+
+    .footer-icons div {
+        width: 40px;
+        height: 40px;
+    }
+}

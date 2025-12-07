@@ -1,127 +1,425 @@
-/* Base font size */
+/* ============================================
+   GLOBAL STYLES & RESET
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html {
+  font-size: 16px;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+main {
+  margin-bottom: 50px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================================
+   GRID CONTAINER - DESKTOP
+   ============================================ */
+main .con-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  min-height: 500px;
+  position: relative;
+}
+
+main .reverse {
+  flex-direction: row-reverse;
+}
+
+/* ============================================
+   IMAGE CONTAINER - DESKTOP
+   ============================================ */
+main .img-con {
+  overflow: hidden;
+  height: 500px;
+  flex: 0 0 50%;
+  width: 50%;
+  position: relative;
+}
+
+main .img-con img {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================
+   CENTER CONTENT CONTAINER - DESKTOP
+   ============================================ */
+main .con-grid .center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 50%;
+  width: 50%;
+  padding: 60px 40px;
+  background-color: #fff;
+}
+
+main .con-grid .center .desc {
+  max-width: 600px;
+  width: 100%;
+}
+
+main .con-grid .center .desc h1 {
+  margin-bottom: 24px;
+  font-weight: 500;
+  color: rgb(94, 94, 94);
+  font-size: 32px;
+  text-align: left;
+  line-height: 1.3;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+main .con-grid .center .desc .flex-col {
+  font-weight: 300;
+  color: rgb(118, 118, 118);
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  line-height: 1.7;
+}
+
+.flex-col div {
+  font-size: 16px;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.flex-col a {
+  margin-top: 8px;
+}
+
+/* ============================================
+   BUTTON STYLING
+   ============================================ */
+.button {
+  text-decoration: none;
+  background-color: rgb(39, 153, 137);
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+  letter-spacing: 0.125rem;
+  font-size: 13px;
+  height: 50px;
+  width: 250px;
+  font-weight: 400;
+  margin-top: 12px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 2px;
+}
+
+.button:hover {
+  background-color: rgb(32, 130, 117);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 153, 137, 0.3);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   RESPONSIVE - LARGE TABLET (1024px)
+   ============================================ */
+@media screen and (max-width: 1024px) {
+  main .con-grid .center {
+    padding: 50px 35px;
+  }
+
+  main .con-grid .center .desc h1 {
+    font-size: 28px;
+  }
+
+  main .con-grid .center .desc .flex-col {
+    font-size: 15px;
+    gap: 14px;
+  }
+
+  .flex-col div {
+    font-size: 15px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - TABLET (768px - 900px)
+   ============================================ */
+@media screen and (max-width: 900px) {
+  main .con-grid {
+    flex-wrap: wrap;
+    min-height: auto;
+  }
+
+  main .con-grid,
+  main .reverse {
+    flex-direction: column !important;
+  }
+
+  main .img-con {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 400px;
+  }
+
+  main .con-grid .center {
+    flex: 0 0 100%;
+    width: 100%;
+    padding: 40px 30px;
+  }
+
+  main .con-grid .center .desc {
+    max-width: 100%;
+  }
+
+  main .con-grid .center .desc h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  main .con-grid .center .desc .flex-col {
+    font-size: 15px;
+    gap: 14px;
+  }
+
+  .flex-col div {
+    font-size: 15px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - SMALL TABLET (600px - 768px)
+   ============================================ */
+@media screen and (max-width: 768px) {
+  main {
+    margin-bottom: 40px;
+  }
+
+  main .img-con {
+    height: 350px;
+  }
+
+  main .con-grid .center {
+    padding: 35px 25px;
+  }
+
+  main .con-grid .center .desc h1 {
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
+
+  main .con-grid .center .desc .flex-col {
+    font-size: 14px;
+    gap: 12px;
+    line-height: 1.6;
+  }
+
+  .flex-col div {
     font-size: 14px;
   }
-  
-  /* Use rem units */
-  body {
-    margin-top: 4.5625rem; /* 73px */
-    margin-bottom: 3.75rem; /* 60px */
+
+  .button {
+    width: 220px;
+    height: 48px;
+    font-size: 12px;
   }
-  
-  main .con-grid {
-    display: flex;
-    flex-wrap: wrap; /* Ensure items wrap on smaller screens */
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE (480px - 600px)
+   ============================================ */
+@media screen and (max-width: 600px) {
+  main {
+    margin-bottom: 35px;
   }
-  
-  main .reverse {
-    flex-direction: row-reverse;
-  }
-  
+
   main .img-con {
-    overflow: hidden;
-    height: 31.25rem; /* 500px */
-    flex: 1;
+    height: 300px;
   }
-  
-  main .img-con img {
-    object-fit: cover;
-    object-position: center;
-    width: 100%; /* Ensure image fills its container */
-  }
-  
+
   main .con-grid .center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
+    padding: 30px 20px;
   }
-  
-  main .con-grid .center .desc {
-    max-width: 37.5rem; /* 600px */
-  }
-  
+
   main .con-grid .center .desc h1 {
-    margin-bottom: 1.25rem; /* 20px */
-    font-weight: 500;
-    color: rgb(94, 94, 94);
-    font-size: 30px; /* 30px */
-    text-align: left;
+    font-size: 22px;
+    margin-bottom: 16px;
   }
-  
+
   main .con-grid .center .desc .flex-col {
-    font-weight: 300;
-    color: rgb(118, 118, 118);
-    font-size: 18px; /* 14px */
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem; /* 12px */
-    line-height: 1.5; /* 24px */
+    font-size: 14px;
+    gap: 12px;
   }
-  
-  main .con-grid .center .desc .btn {
-    background: rgb(183, 205, 183);
-    letter-spacing: 0.125rem; /* 2px */
-    font-size: 0.8125rem; /* 13px */
-    color: white;
-    border: none;
-    height: 3.125rem; /* 50px */
-    width: 15.625rem; /* 250px */
-    font-weight: 300;
-    margin-top: 0.75rem; /* 12px */
+
+  .flex-col div {
+    font-size: 14px;
   }
-  
-  /* Responsive adjustments */
-  @media screen and (max-width: 768px) {
-    html {
-      font-size: 14px;
-    }
-  
-    body {
-      margin-top: 3.375rem; /* 54px */
-      margin-bottom: 2.8125rem; /* 45px */
-    }
-  
-    main .img-con {
-      height: 21.875rem; /* 350px */
-    }
-  
-    main .con-grid .center .desc {
-      max-width: 31.25rem; /* 500px */
-    }
+
+  .button {
+    width: 100%;
+    max-width: 250px;
+    height: 46px;
   }
-  
-  /* Mobile view adjustments */
-  @media screen and (max-width: 480px) {
-    html {
-      font-size: 12px;
-    }
-  
-    body {
-      margin-top: 2.25rem; /* 36px */
-      margin-bottom: 1.875rem; /* 30px */
-    }
-  
-    main .img-con {
-      height: 15.625rem; /* 250px */
-    }
-  
-    main .con-grid .center .desc {
-      max-width: 25rem; /* 400px */
-    }
-  
-    main .con-grid .center .desc h1 {
-      font-size: 1.5625rem; /* 25px */
-    }
-  
-    main .con-grid .center .desc .flex-col {
-      font-size: 0.75rem; /* 12px */
-      line-height: 1.25; /* 20px */
-    }
-  
-    main .con-grid .center .desc .btn {
-      height: 2.5rem; /* 40px */
-      width: 12.5rem; /* 200px */
-    }
+}
+
+/* ============================================
+   RESPONSIVE - SMALL MOBILE (320px - 480px)
+   ============================================ */
+@media screen and (max-width: 480px) {
+  main {
+    margin-bottom: 30px;
   }
-  
+
+  main .img-con {
+    height: 260px;
+  }
+
+  main .con-grid .center {
+    padding: 25px 18px;
+  }
+
+  main .con-grid .center .desc h1 {
+    font-size: 20px;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  main .con-grid .center .desc .flex-col {
+    font-size: 13px;
+    gap: 11px;
+    line-height: 1.6;
+  }
+
+  .flex-col div {
+    font-size: 13px;
+  }
+
+  .button {
+    width: 100%;
+    max-width: 100%;
+    height: 46px;
+    font-size: 12px;
+    letter-spacing: 0.1rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE - EXTRA SMALL MOBILE (< 360px)
+   ============================================ */
+@media screen and (max-width: 360px) {
+  main {
+    margin-bottom: 25px;
+  }
+
+  main .img-con {
+    height: 220px;
+  }
+
+  main .con-grid .center {
+    padding: 20px 15px;
+  }
+
+  main .con-grid .center .desc h1 {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+
+  main .con-grid .center .desc .flex-col {
+    font-size: 12px;
+    gap: 10px;
+    line-height: 1.5;
+  }
+
+  .flex-col div {
+    font-size: 12px;
+  }
+
+  .button {
+    height: 44px;
+    font-size: 11px;
+  }
+}
+
+/* ============================================
+   HORIZONTAL RULE STYLING
+   ============================================ */
+hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 40px 0;
+}
+
+@media screen and (max-width: 768px) {
+  hr {
+    margin: 30px 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  hr {
+    margin: 25px 0;
+  }
+}
+
+/* ============================================
+   LINK RESET
+   ============================================ */
+a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* ============================================
+   ACCESSIBILITY & TOUCH TARGETS
+   ============================================ */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices */
+  .button {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  main .img-con {
+    height: 300px;
+  }
+
+  .button {
+    display: none;
+  }
+}

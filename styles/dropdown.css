@@ -117,3 +117,89 @@ li{
   opacity: 1;
   pointer-events: all;
 }
+
+/* ============================================
+   MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+@media screen and (max-width: 1024px) {
+  /* Disable all hover effects on mobile */
+  .nav-concern-cont:hover + .concern-dropdown-cont,
+  .concern-dropdown-cont:hover,
+  .nav-ingredients-cont:hover + .concern-dropdown-cont {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Mobile dropdown styling */
+  .concern-dropdown-cont,
+  .ingredient-dropdown-cont {
+    position: static !important;
+    width: 100%;
+    height: auto !important;
+    box-shadow: none;
+    display: none;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 15px 20px !important;
+    z-index: 1 !important;
+    opacity: 1 !important;
+    top: auto !important;
+    left: auto !important;
+    transition: none !important;
+  }
+
+  /* Show dropdown when visible (controlled by JS) */
+  .concern-dropdown-cont[style*="display: block"],
+  .ingredient-dropdown-cont[style*="display: block"] {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+  }
+
+  .concern-dropdown,
+  .ingredient-dropdown {
+    position: static;
+    width: 100%;
+    padding: 0 !important;
+    flex-direction: column;
+    box-shadow: none;
+    gap: 0 !important;
+  }
+
+  .buy-by-concern,
+  .buy-by-ingredient {
+    width: 100%;
+    padding: 0;
+    margin: 0 0 15px 0 !important;
+  }
+
+  .buy-by-concern h1,
+  .buy-by-ingredient h1 {
+    font-size: 14px !important;
+    text-align: left !important;
+    margin-bottom: 10px !important;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .buy-by-concern li,
+  .buy-by-ingredient li {
+    padding: 8px 0;
+    font-size: 13px;
+    color: #555 !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Hide images section on mobile */
+  .favorites-cont {
+    display: none !important;
+  }
+
+  .dropdown-prod-cont,
+  .dropdown-ingredient-cont {
+    display: none !important;
+  }
+}

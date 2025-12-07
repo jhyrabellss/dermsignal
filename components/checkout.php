@@ -242,8 +242,7 @@ session_start();
                     mysqli_data_seek($result, 0);
                     while ($data = $result->fetch_assoc()) {
                         $origprice = $data['prod_price'] + 100;
-                        $proddiscount = $data['prod_discount'] / 100;
-                        $prodprice = $origprice - ($origprice * $proddiscount);
+                        $prodprice = $origprice;
                         $subtotal = $data["prod_qnty"] * $prodprice;
                         $total += $subtotal;
                         
@@ -296,8 +295,7 @@ session_start();
                     while ($data = $result->fetch_assoc()) {
                         $origprice = $data['prod_price'] + 100;
                         $proddiscount = $data['prod_discount'] / 100;
-                        $prodprice = $origprice - ($origprice * $proddiscount);
-                        $discprice = $data['prod_discount'];
+                        $prodprice = $origprice;
           ?>    
             <div class="checkout-item-details">
                 <div class="item-img-cont">
@@ -369,12 +367,11 @@ session_start();
         }
         
         // Calculate final totals
-        $onlineDisc = $total * 0.05; 
-        $grandTotal = $total - $onlineDisc - $voucherDiscount;
+        
+        $grandTotal = $total - $voucherDiscount;
         if ($grandTotal < 0) $grandTotal = 0;
         ?>
         
-        <div style="display: flex; justify-content:center; font-weight:bold; font-size:15px; margin-top: 15px;">Discount Applied!</div>
     </div>
     <div class="checkout-subtotal">
     <?php if(!empty($_SESSION["user_id"])){ 
@@ -388,11 +385,6 @@ session_start();
         <div class="all-quantity"> Subtotal • <?= $dataCount['CountItems'] ?> items</div>
     <?php }?>
         <div class="total-price"> ₱<?= number_format($total, 2) ?></div>
-    </div>
-
-    <div class="checkout-shipping">
-        <div> 5% Online Payment Discount </div>
-        <div> -₱<?= number_format($onlineDisc, 2) ?> </div>
     </div>
     
     <?php if ($voucherDiscount > 0) { ?>

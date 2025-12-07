@@ -634,7 +634,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="review-modal" id="reviewModal">
+    <div class="review-modal" id="readMoreModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
             <div class="modal-header">
@@ -744,8 +744,7 @@
                                 mysqli_data_seek($result, 0);
                                 while ($data = $result->fetch_assoc()) {
                                     $origprice = $data['prod_price'] + 100;
-                                    $proddiscount = $data['prod_discount'] / 100;
-                                    $prodprice = $origprice - ($origprice * $proddiscount);
+                                    $prodprice = $origprice;
                                     $subtotal = $data["prod_qnty"] * $prodprice;
                                     $total += $subtotal;
 
@@ -803,10 +802,9 @@
                                 mysqli_data_seek($result, 0);
                                 while ($data = $result->fetch_assoc()) {
                                     $origprice = $data['prod_price'] + 100;
-                                    $proddiscount = $data['prod_discount'] / 100;
-                                    $prodprice = $origprice - ($origprice * $proddiscount);
+                                    $prodprice = $origprice;
                                     $subtotal = $data["prod_qnty"] * $prodprice;
-                                    $discprice = $data['prod_discount'];
+                                    
                                 ?>
                                     <div class="item-cont-flex">
                                         <div class="item-img-cont">
@@ -817,9 +815,7 @@
                                             <div class="item-classification"><?= $data['prod-short-desc'] ?> </div>
                                             <div class="item-prices">
                                                 <div class="prices-cont">
-                                                    <div class="main-price"> <?= number_format($prodprice, 2) ?> </div>
-                                                    <div class="discounted-price"> ₱<?= $origprice ?> </div>
-                                                    <div class="discounted-price-percent"><?= $discprice ?>%</div>
+                                                    <div class="main-price"> ₱<?= number_format($prodprice, 2) ?> </div>
                                                 </div>
                                                 <div class="quantity-buttons">
                                                     <button class="minus-btn" data-item-id="<?= $data["prod_id"] ?>"> - </button>
@@ -919,10 +915,9 @@
                                 }
 
                                 // Recalculate totals with voucher discounts
-                                $onlineDisc = $total * 0.05;
-                                $grandTotal = $total - $onlineDisc - $voucherDiscount;
+                                $grandTotal = $total - $voucherDiscount;
                                 if ($grandTotal < 0) $grandTotal = 0;
-                                $savedAmount = $onlineDisc + $voucherDiscount;
+                                $savedAmount = $voucherDiscount;
                                 ?>
                             </div>
                         </div>
@@ -945,14 +940,18 @@
                                             <div>Order Total</div>
                                             <div>₱<?= number_format($total, 2) ?></div>
                                         </div>
-                                        <div class="shipping-discount">
+                                       <div class="shipping-discount">
                                             <div>Shipping</div>
-                                            <div> <span style="text-decoration: line-through; color: black;">₱40</span> Free
+                                            <div>
+                                                <?php 
+                                                $shippingFee = ($grandTotal >= 500) ? 0 : 50;
+                                                if ($shippingFee == 0) {
+                                                    echo '<span style="text-decoration: line-through; color: black;">₱50</span> Free';
+                                                } else {
+                                                    echo '<span style="text-decoration: none !important;"> ₱' . number_format($shippingFee, 2) . '</span>';
+                                                }
+                                                ?>
                                             </div>
-                                        </div>
-                                        <div class="online-payment-discount">
-                                            <div>5% online payment discount</div>
-                                            <div>-₱<?= number_format($onlineDisc, 2) ?></div>
                                         </div>
                                         <?php if ($voucherDiscount > 0) { ?>
                                             <div class="voucher-discount" style="color: white; font-weight: 500; padding: 10px 20px;
@@ -1231,7 +1230,7 @@
 
     <script>
         // Modal functionality
-        const modal = document.getElementById('reviewModal');
+        const modal = document.getElementById('readMoreModal');
         const modalClose = document.getElementById('modalClose');
         const readMoreBtns = document.querySelectorAll('.read-more-btn');
 

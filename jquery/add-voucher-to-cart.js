@@ -46,7 +46,7 @@ $(document).ready(function() {
                 button.html('<i class="fa-solid fa-spinner fa-spin"></i> Adding...');
                 
                 $.ajax({
-                    url: './backend/user/addVoucherToCart.php',
+                    url: '../backend/user/addVoucherToCart.php',
                     method: 'POST',
                     data: { 
                         voucherId: voucherId,
@@ -117,7 +117,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 // check url first to determine the correct path. If in index.php use ./backend/user/removeVoucherFromCart.php else use ../backend/user/removeVoucherFromCart.php
-                const urlPath = window.location.pathname.endsWith('index.php') ? './backend/user/removeVoucher.php' : '../backend/user/removeVoucher.php';
+                const urlPath = window.location.pathname.endsWith('index.php') ? '../backend/user/removeVoucher.php' : '../backend/user/removeVoucher.php';
                 
                 $.ajax({
                     url: urlPath,

@@ -5,21 +5,23 @@
       $query = "
           SELECT 
               COUNT(*) AS total_reviews, 
-              COUNT(DISTINCT ac_id) AS total_rated_accounts
+              AVG(rating) AS average_rating
           FROM tbl_item_reviews
           WHERE prod_id = $product_id
       ";
 
-      $review_result = $conn->query($query); // Use a different variable for the second query result
+      $review_result = $conn->query($query);
 
       if ($review_result && $review_result->num_rows > 0) {
           $review_row = $review_result->fetch_assoc();
           $total_reviews = $review_row['total_reviews'];
-          $total_rated_accounts = $review_row['total_rated_accounts'];
-          $average_rating = $total_rated_accounts > 0 ? round($total_reviews / $total_rated_accounts, 1) : 0;
+          $average_rating = $review_row['average_rating'] > 0 ? round($review_row['average_rating'], 1) : 0;
       } else {
-          echo "No reviews found for this product.<br>";
+          $total_reviews = 0;
+          $average_rating = 0;
       }
+  } else {
+      $total_reviews = 0;
+      $average_rating = 0;
   }
-     
 ?>

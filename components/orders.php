@@ -336,29 +336,29 @@ main {
 
 
         <?php
-        // Get delivered products grouped by order date
+        // Get current order products
         $query = "SELECT tc.*, tp.*, ts.status_name
         FROM tbl_cart tc
         JOIN tbl_products tp ON tc.prod_id = tp.prod_id
         JOIN tbl_status ts ON tc.status_id = ts.status_id
-        WHERE tc.account_id = ? AND tc.status_id IN (3, 4, 7)
+        WHERE tc.account_id = ? AND tc.status_id IN (2, 3, 4)
         ORDER BY tc.order_date DESC";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("i", $acc_id);
         $stmt->execute();   
         $result = $stmt->get_result();
 
-        // Get delivered vouchers grouped by order date  
+        // Get current order vouchers
         $queryVouchers = "SELECT cv.*, v.*, ts.status_name, 
             (SELECT MIN(tc.order_date) 
              FROM tbl_cart tc 
              WHERE tc.account_id = cv.account_id 
-             AND tc.status_id = 2 
+             AND tc.status_id IN (2, 3, 4)
              AND tc.order_date >= DATE(cv.added_date)) as order_date
         FROM tbl_cart_vouchers cv
         JOIN tbl_vouchers v ON cv.voucher_id = v.voucher_id
         JOIN tbl_status ts ON cv.status_id = ts.status_id
-        WHERE cv.account_id = ? AND cv.status_id = 2";
+        WHERE cv.account_id = ? AND cv.status_id IN (2, 3)";
         $stmtVouchers = $conn->prepare($queryVouchers);
         $stmtVouchers->bind_param("i", $acc_id);
         $stmtVouchers->execute();
@@ -398,7 +398,8 @@ main {
                 
                 // Calculate subtotal for this order date
                 foreach ($items as $item) {
-                    $subtotal += round($item["prod_qnty"] * $item["prod_price"], 2);
+                    $origprice = $item['prod_price'] + 100;
+                    $subtotal += round($item["prod_qnty"] * $origprice, 2);
                 }
 
                 // Calculate voucher discounts for this date
@@ -418,7 +419,8 @@ main {
                         $voucherSubtotal = 0;
                         foreach ($items as $item) {
                             if (in_array($item['prod_id'], $eligibleProductIds)) {
-                                $voucherSubtotal += round($item["prod_qnty"] * $item["prod_price"], 2);
+                                $origprice = $item['prod_price'] + 100;
+                                $voucherSubtotal += round($item["prod_qnty"] * $origprice, 2);
                             }
                         }
 
@@ -460,7 +462,8 @@ main {
                         </thead>
                         <tbody>
                             <?php foreach ($items as $data) {
-                                $itemSubtotal = round($data["prod_qnty"] * $data["prod_price"], 2);
+                                $origprice = $data['prod_price'] + 100;
+                                $itemSubtotal = round($data["prod_qnty"] * $origprice, 2);
                             ?>
                             <tr>
                                 <td>
@@ -469,7 +472,7 @@ main {
                                     </div>
                                 </td>
                                 <td class="product-name"><?php echo $data["prod_name"]; ?></td>
-                                <td>₱<?php echo number_format($data["prod_price"], 2); ?></td>
+                                <td>₱<?php echo number_format($origprice, 2); ?></td>
                                 <td><?php echo $data["prod_qnty"]; ?></td>
                                 <td>₱<?php echo number_format($itemSubtotal, 2); ?></td>
                                 <td><span class="status-badge"><?php echo $data["status_name"]; ?></span></td>
@@ -499,7 +502,8 @@ main {
                                     $voucherSubtotal = 0;
                                     foreach ($items as $item) {
                                         if (in_array($item['prod_id'], $eligibleProductIds)) {
-                                            $voucherSubtotal += round($item["prod_qnty"] * $item["prod_price"], 2);
+                                            $origprice = $item['prod_price'] + 100;
+                                            $voucherSubtotal += round($item["prod_qnty"] * $origprice, 2);
                                         }
                                     }
 
@@ -561,7 +565,7 @@ main {
                             <?php } ?>
                             <tr class="summary-total">
                                 <td colspan="4"></td>
-                                <td><strong>Total Paid:</strong></td>
+                                <td><strong>Total to Pay:</strong></td>
                                 <td><strong>₱<?php echo number_format($grandTotal, 2); ?></strong></td>
                             </tr>
                         </tbody>
