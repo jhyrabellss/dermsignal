@@ -14,7 +14,7 @@ $(document).ready(() => {
             console.log(prodId);  // Log the product ID
   
             $.ajax({
-                url: "../backend/user/addCart.php",
+                url: "./backend/user/addCart.php",
                 method: "POST",
                 data: { prodId },
                 success: function(response) {
