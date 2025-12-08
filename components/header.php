@@ -228,7 +228,7 @@ if (!isset($_SESSION)) {
                 openForm('myFormSignUp');
             });
         } else {
-            window.location.href = '../components/skin-assessment.php';
+            window.location.href = '../components/assessment.php';
         }
     });
 </script>
