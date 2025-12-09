@@ -42,7 +42,7 @@ if(isset($_POST["fName"]) && isset($_POST["lName"])
                         SET ac_password = ?
                         WHERE ac_id = ?";
                         $stmt = $conn->prepare($query);
-                        $stmt->bind_param("si", $hashPassword, $acc_id);
+                        $stmt->bind_param("si", $hashPassword, $ac_id);
                         $stmt->execute();
                     }else{
                         echo "invalid";

@@ -233,6 +233,7 @@ if ($current_status !== 'all') {
               status: newStatus
             },
             success: function(response) {
+              console.log(response);
               if (response === 'success') {
                 Swal.fire({
                   icon: 'success',
@@ -241,6 +242,7 @@ if ($current_status !== 'all') {
                   confirmButtonColor: 'rgb(39,153,137)'
                 }).then(() => location.reload());
               } else {
+                
                 Swal.fire({
                   icon: 'error',
                   title: 'Error',

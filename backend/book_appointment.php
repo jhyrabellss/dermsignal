@@ -86,6 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $payment_proof
     );
 
+
     if ($insert_stmt->execute()) {
         echo "success";
     } else {

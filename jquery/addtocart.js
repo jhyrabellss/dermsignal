@@ -1,54 +1,71 @@
 $(document).ready(() => {
-    // Remove any previously attached click handlers
     $(document).off("click", ".submit-cart");
   
-    // Add the click handler
     $(document).on("click", ".submit-cart", function() {
-        // Try to get userDetails from localStorage
         const userDetails = localStorage.getItem("userDetails");
   
-  
         if (userDetails) {
-            // Proceed with adding the product to the cart if user is logged in
-            const prodId = $(this).closest(".product-list-items").attr("data-prod-id");
-            console.log(prodId);  // Log the product ID
+            const prodId = $(this).closest(".product-items").attr("data-prod-id");
   
             $.ajax({
-                url: "./backend/user/addCart.php",
+                url: "../backend/user/addCart.php",
                 method: "POST",
                 data: { prodId },
+                dataType: "text",
                 success: function(response) {
-                    // Handle different server responses
+                    response = response.trim();
+                    
                     if (response === 'exceeds') {
                         Swal.fire({
-                            title: "Item already in cart!",
+                            icon: 'info',
+                            title: "Already in Cart",
                             text: "This item is already in your cart.",
+                            confirmButtonColor: 'rgb(39,153,137)'
                         });
                     } else if (response === 'success') {
                         Swal.fire({
+                            icon: 'success',
                             title: "Success",
                             text: "Item added to cart!",
+                            confirmButtonColor: 'rgb(39,153,137)'
                         }).then(() => {
                             location.reload();
                         });
                     } else if (response === 'stocks') {
                         Swal.fire({
+                            icon: 'warning',
                             title: "Insufficient Stocks",
-                            text: "The quantity you entered exceeds the available stocks.",
+                            text: "The quantity exceeds the available stocks.",
+                            confirmButtonColor: 'rgb(39,153,137)'
+                        });
+                    } else if (response === 'no_session') {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Session Expired',
+                            text: 'Please login again',
+                            confirmButtonColor: 'rgb(39,153,137)'
                         });
                     } else {
                         Swal.fire({
+                            icon: 'error',
                             title: "Error",
-                            text: "An error occurred while adding to cart.",
+                            text: "An error occurred: " + response,
+                            confirmButtonColor: 'rgb(39,153,137)'
                         });
                     }
                 },
-                error: function() {
-                    alert("Connection Error");
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", {status, error, response: xhr.responseText});
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Connection Error",
+                        text: "Failed to connect to server. Please try again.",
+                        confirmButtonColor: 'rgb(39,153,137)'
+                    });
                 }
             });
         } else {
-           Swal.fire({
+            Swal.fire({
                 icon: 'warning',
                 title: 'Please Login',
                 text: 'You need to be logged in to add items to your cart',
@@ -56,6 +73,4 @@ $(document).ready(() => {
             });
         }
     });
-  
-  });
-  
+});

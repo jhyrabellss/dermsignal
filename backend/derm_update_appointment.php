@@ -1,5 +1,5 @@
 <?php
-require_once("config/config.php");
+require_once "./config/config.php";
 session_start();
 
 if (!isset($_SESSION["derm_id"])) {
@@ -10,7 +10,17 @@ if (!isset($_SESSION["derm_id"])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['appointment_id']) && isset($_POST['status'])) {
     $appointment_id = intval($_POST['appointment_id']);
     $status = $_POST['status'];
-    $derm_id = $_SESSION["derm_id"];
+    $ac_id = $_SESSION["derm_id"];
+    
+    
+    $select_derm_id = "SELECT derm_id FROM tbl_dermatologists WHERE ac_id = ?";
+    $stmt_derm = $conn->prepare($select_derm_id);
+    $stmt_derm->bind_param("i", $ac_id);
+    $stmt_derm->execute();
+    $row = $stmt_derm->get_result();
+    $data = $row->fetch_assoc();
+    $derm_id = $data['derm_id'];
+
     
     // Validate status
     $valid_statuses = ['Pending', 'Confirmed', 'Completed', 'Cancelled'];
@@ -26,8 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['appointment_id']) && 
     $verify_stmt->execute();
     $verify_result = $verify_stmt->get_result();
     $verify_row = $verify_result->fetch_assoc();
+
     
-    if ($verify_row && $verify_row['derm_id'] == $derm_id) {
+    if ($verify_row['derm_id'] == $derm_id) {
         $update_query = "UPDATE tbl_appointments SET appointment_status = ? WHERE appointment_id = ?";
         $update_stmt = $conn->prepare($update_query);
         $update_stmt->bind_param("si", $status, $appointment_id);

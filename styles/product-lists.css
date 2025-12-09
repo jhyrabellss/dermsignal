@@ -19,7 +19,7 @@
 }
 
 .prod-img-cont{
-  height: 200px;
+  height: 200px !important;
 }
 
 .prod-img-cont img{
@@ -83,6 +83,12 @@ form{
 .background-active{
   background-color: var(--background-color) !important;
   color: white;
+}
+
+.product-list-items-cont{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr !important;
+  gap: 20px;
 }
 
 /* ============================================
@@ -454,6 +460,7 @@ form{
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  height: 150px !important;
 }
 
 .cart-button{
