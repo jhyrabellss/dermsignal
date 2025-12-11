@@ -10,7 +10,7 @@ if($voucher_result && $voucher_result->num_rows > 0) {
 ?>
 <div class="voucher-banner-container">
     <div class="voucher-banner-header">
-        <i class="fa-solid fa-ticket-simple" style="color: #4a9f20ff; font-size: 28px;"></i>
+        <i class="fa-solid fa-ticket-simple" style="color: rgb(28, 123, 110); font-size: 28px;"></i>
         <h2>Available Vouchers</h2>
     </div>
     
