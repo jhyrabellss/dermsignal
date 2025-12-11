@@ -46,7 +46,7 @@
                     <a href="../components/all-products.php"><p>Products</p></a>
                 </div>
         
-                <div class="learn">
+                <div class="learn" style="display: flex; flex-direction: column;">
                     <h5>Learn</h5>
                     <a href="../components/about.php"><p>About Us</p></a>
                     <a href="../components/blogs.php"><p>Blog</p></a>
