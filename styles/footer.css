@@ -4,7 +4,7 @@ footer {
   display: flex;
   padding: 0px 80px;
   justify-content: space-between;
-  flex-direction: column;
+  flex-direction: column !important;
   margin-bottom: 50px;
  
 }

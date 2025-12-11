@@ -310,7 +310,7 @@
     width: 100%;
     padding: 12px 20px;
     margin-top: 15px;
-    background: linear-gradient(135deg, #4a9f20ff 0%, #3a7f18 100%);
+    background: rgb(39, 153, 137);
     color: white;
     border: none;
     border-radius: 8px;
@@ -325,7 +325,7 @@
 }
 
 .add-voucher-to-cart:hover {
-    background: linear-gradient(135deg, #3a7f18 0%, #2a6f10 100%);
+    background: rgb(28, 123, 110);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(74, 159, 32, 0.3);
 }

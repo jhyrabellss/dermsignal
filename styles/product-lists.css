@@ -87,7 +87,7 @@ form{
 
 .product-list-items-cont{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr !important;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 20px;
 }
 

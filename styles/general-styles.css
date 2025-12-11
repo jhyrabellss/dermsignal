@@ -719,6 +719,10 @@ h3{
     transform: scale(1);  /* Reset scale when clicked */
 }
 
+.nav-login-account-icon i{
+    color: gray !important;
+}
+
 
 .order-status{
     display: flex;

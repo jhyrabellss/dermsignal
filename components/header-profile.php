@@ -154,7 +154,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <div class="nav-login-account-icon">
                 <?php if(!empty($_SESSION["user_id"])){ ?>
                     <div style="display: flex; gap: 10px; align-items:center;">
-                        <i class="fa-regular fa-user"></i>
+                        <i class="fa-regular fa-user" style="color: gray;"></i>
                         <div class="dropdown" id="dropdownMenu">
                             <a href="../components/profile.php"><div>Profile</div></a>
                             <a href="../components/orders.php"><div>Orders</div></a>

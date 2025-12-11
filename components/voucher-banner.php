@@ -11,7 +11,7 @@ if($voucher_result && $voucher_result->num_rows > 0) {
 <div class="voucher-banner-container">
     <div class="voucher-banner-header">
         <i class="fa-solid fa-ticket-simple" style="color: #4a9f20ff; font-size: 28px;"></i>
-        <h2>Available Vouchers - Physical Store Only</h2>
+        <h2>Available Vouchers</h2>
     </div>
     
     <div class="voucher-cards-wrapper">
@@ -174,7 +174,6 @@ if($voucher_result && $voucher_result->num_rows > 0) {
             <line x1="12" y1="16" x2="12" y2="12"/>
             <line x1="12" y1="8" x2="12.01" y2="8"/>
         </svg>
-        <span>Please present these voucher codes at our physical store during checkout to avail the discount.</span>
     </div>
 </div>
 <?php 

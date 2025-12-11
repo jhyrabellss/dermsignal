@@ -51,7 +51,7 @@
                     <a href="../components/about.php"><p>About Us</p></a>
                     <a href="../components/blogs.php"><p>Blog</p></a>
                 </div>
-                <div class="help">
+                <div class="help" style="display: flex; flex-direction: column;">
                     <h5>Help & Support</h5>
                     <a href="../components/faqs.php"><p>FAQs</p></a>
                     <a href="../components/terms-condition.php"><p>Terms & Conditions</p></a>

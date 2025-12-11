@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 05, 2025 at 03:41 PM
+-- Generation Time: Dec 11, 2025 at 03:46 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -48,11 +48,12 @@ INSERT INTO `tbl_account` (`ac_id`, `ac_username`, `ac_email`, `ac_password`, `r
 (5, 'kiko1', 'kiko@gmail.com', '$2y$10$d69zFFkiMBnrYJyVixN.ieoydzdc/bsOiH7Nppy1mdwFSmFyCsTwS', 1, 1),
 (6, 'admin', 'admin@gmail.com', '$2y$10$egNxXzs.VSGfoHHq23iaR.mUC5za/vs3UwOF2OvSHHtIPooXIxl1i', 2, 1),
 (8, 'jcdavid123', 'jcdavid123c@gmail.com', '$2y$10$D8ufRQ4.ZB64gtT7KfFjWOC26PZMrUHtEld3gY2ieW8lSHp4IkFe2', 2, 1),
-(12, 'jcdavid123c', 'jcdavid21@gmail.com', '$2y$10$eaOHu6gTMPtdkcJNnAD5MuaE7zkLxy0r4S2kT6ZPi5TC2DH.INlX2', 1, 1),
+(12, 'jcdavid123c', 'jcdavid21@gmail.com', '$2y$10$DSX78JZNyQmjoVkLzXIP8uYUy2N4GHC6ltLHA9qUkxaB8e8nz599q', 1, 1),
 (13, 'santos', 'santos@gmail.com', '$2y$10$OER6mLs7PZRQfbjur5zrheeuZOc0XlhEWwNFdPhgfZ/Em6Z/KO7gC', 3, 1),
 (14, 'admin1', 'admin1@gmail.com', '$2y$10$3txKbILRPnAT4tb0Q5mReeKgMLvHz1Jo4/z/7.rI.OQVeFHH5aOv6', 2, 1),
 (15, 'anareyes', 'anareyes@gmail.com', '$2y$10$CO.mcf6gniWC6VOIJtjmUeMFo25FxAPTLLuockG/ZPcnqg5Kt/M.a', 3, 1),
-(16, 'johncruz', 'johncruz@gmail.com', '$2y$10$pzh0g73BjAtXGgvVcc0qCOAT61KhH4AB3IOXu89NnRqCq4o8iLiF.', 3, 1);
+(16, 'johncruz', 'johncruz@gmail.com', '$2y$10$cC.SBXFCZi49g3KjwurEVOag68HJz22exjcNTU7kf1rfF3jRdjGui', 3, 1),
+(24, 'jcdavid', 'jcdavid213@gmail.com', '$2y$10$g/JQlN6f8pErh7RH8z8reuquzwq0fIZMs3Z/bSiHTYRZcmbW9LU7W', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -81,11 +82,12 @@ INSERT INTO `tbl_account_details` (`ac_id`, `first_name`, `middle_name`, `last_n
 (4, 'lelouch', 'hitler', 'luoda', 'Male', '', ''),
 (5, 'Kiko ', 'Miranda', 'Music', 'Male', '', ''),
 (6, 'Admin', 'Jhyra', 'Jhyra', 'Male', '', ''),
-(12, 'jc', '', 'david', NULL, NULL, NULL),
+(12, 'Jc pogi', '', 'david', NULL, '09565535401', 'None'),
 (13, 'maria', '', 'santos', 'Male', '', ''),
 (14, 'JC', '', 'david', 'Male', '09565535401', 'Wala'),
 (15, 'Ana', '', 'Reyes', 'Female', '09512847442', 'Quezon City'),
-(16, 'john', '', 'cruz', 'Male', '09565535401', 'Quezon City');
+(16, 'john', '', 'cruz', 'Male', '09565535401', 'Quezon City'),
+(24, 'Juancarlo', '', 'David', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -133,7 +135,7 @@ CREATE TABLE `tbl_appointments` (
 --
 
 INSERT INTO `tbl_appointments` (`appointment_id`, `ac_id`, `service_id`, `derm_id`, `appointment_date`, `appointment_time`, `appointment_status`, `notes`, `gcash_reference`, `downpayment_amount`, `payment_proof`, `payment_status`, `created_at`) VALUES
-(3, 12, 21, 1, '2025-11-13', '10:00:00', 'Confirmed', '', '2132313', 50.00, '690a113f4672f.jpeg', 'Verified', '2025-11-04 14:44:15');
+(3, 12, 21, 2, '2025-12-12', '10:00:00', 'Confirmed', '', '2132313', 50.00, '690a113f4672f.jpeg', 'Verified', '2025-11-04 14:44:15');
 
 -- --------------------------------------------------------
 
@@ -215,7 +217,41 @@ INSERT INTO `tbl_audit_log` (`log_user_id`, `log_username`, `log_user_type`, `lo
 (8, 'jcdavid123', '2', '2025-11-04 15:00:16'),
 (12, 'jcdavid123c', '1', '2025-11-04 15:00:26'),
 (12, 'jcdavid123c', '1', '2025-11-05 12:17:59'),
-(8, 'jcdavid123', '2', '2025-11-05 12:18:18');
+(8, 'jcdavid123', '2', '2025-11-05 12:18:18'),
+(24, 'jcdavid', '1', '2025-11-23 08:09:53'),
+(13, 'santos', '3', '2025-11-23 08:22:12'),
+(12, 'jcdavid123c', '1', '2025-11-23 08:38:39'),
+(8, 'jcdavid123', '2', '2025-11-23 08:38:51'),
+(13, 'santos', '3', '2025-11-23 11:32:41'),
+(8, 'jcdavid123', '2', '2025-11-23 11:33:23'),
+(12, 'jcdavid123c', '1', '2025-11-23 11:33:35'),
+(12, 'jcdavid123c', '1', '2025-11-23 11:36:56'),
+(12, 'jcdavid123c', '1', '2025-11-23 11:39:16'),
+(12, 'jcdavid123c', '1', '2025-11-23 11:39:28'),
+(12, 'jcdavid123c', '1', '2025-11-23 11:39:44'),
+(12, 'jcdavid123c', '1', '2025-11-23 11:40:12'),
+(12, 'jcdavid123c', '1', '2025-12-06 11:16:38'),
+(8, 'jcdavid123', '2', '2025-12-06 13:43:21'),
+(12, 'jcdavid123c', '1', '2025-12-06 13:43:50'),
+(12, 'jcdavid123c', '1', '2025-12-07 10:17:41'),
+(12, 'jcdavid123c', '1', '2025-12-07 10:23:13'),
+(8, 'jcdavid123', '2', '2025-12-07 10:23:31'),
+(12, 'jcdavid123c', '1', '2025-12-07 13:25:49'),
+(12, 'jcdavid123c', '1', '2025-12-08 08:35:57'),
+(12, 'jcdavid123c', '1', '2025-12-09 16:10:32'),
+(12, 'jcdavid123c', '1', '2025-12-09 16:11:07'),
+(12, 'jcdavid123c', '1', '2025-12-09 16:16:03'),
+(12, 'jcdavid123c', '1', '2025-12-09 16:16:37'),
+(12, 'jcdavid123c', '2', '2025-12-09 16:29:45'),
+(16, 'johncruz', '3', '2025-12-09 16:51:25'),
+(16, 'johncruz', '3', '2025-12-09 17:13:10'),
+(16, 'johncruz', '3', '2025-12-09 17:23:44'),
+(12, 'jcdavid123c', '1', '2025-12-10 13:01:50'),
+(8, 'jcdavid123', '2', '2025-12-10 13:02:05'),
+(8, 'jcdavid123', '2', '2025-12-11 12:24:17'),
+(12, 'jcdavid123c', '1', '2025-12-11 12:26:06'),
+(8, 'jcdavid123', '2', '2025-12-11 13:40:17'),
+(12, 'jcdavid123c', '1', '2025-12-11 13:40:45');
 
 -- --------------------------------------------------------
 
@@ -248,7 +284,12 @@ INSERT INTO `tbl_audit_trail` (`trail_user_id`, `trail_username`, `trail_activit
 (8, 'jcdavid123', 'Updated Product ID: 20', 'Admin', '2025-11-05 13:48:24'),
 (8, 'jcdavid123', 'Updated Product ID: 20', 'Admin', '2025-11-05 14:01:32'),
 (8, 'jcdavid123', 'Deactivated Account ID: 1', 'Admin', '2025-11-05 14:16:57'),
-(8, 'jcdavid123', 'Deactivated Account ID: 1', 'Admin', '2025-11-05 14:20:13');
+(8, 'jcdavid123', 'Deactivated Account ID: 1', 'Admin', '2025-11-05 14:20:13'),
+(8, 'jcdavid123', 'Updated Product ID: 15', 'Admin', '2025-11-23 09:24:15'),
+(8, 'jcdavid123', 'Updated Product ID: 15', 'Admin', '2025-11-23 09:24:30'),
+(8, 'jcdavid123', 'Updated Product ID: 15', 'Admin', '2025-11-23 09:39:48'),
+(8, 'jcdavid123', 'Updated Service ID: 1', 'Admin', '2025-11-23 09:47:57'),
+(8, 'jcdavid123', 'Updated Service ID: 30', 'Admin', '2025-11-23 10:16:44');
 
 -- --------------------------------------------------------
 
@@ -327,7 +368,12 @@ INSERT INTO `tbl_cart` (`item_id`, `prod_id`, `prod_qnty`, `order_date`, `status
 (14, 1, 1, '2025-10-21', 5, 12),
 (15, 3, 1, '2025-10-21', 5, 12),
 (17, 4, 1, '2025-11-05', 2, 12),
-(18, 1, 1, '2025-11-05', 2, 12);
+(18, 1, 1, '2025-11-05', 2, 12),
+(30, 1, 1, '2025-12-06', 3, 12),
+(31, 7, 1, '2025-12-06', 3, 12),
+(43, 4, 1, '2025-12-11', 3, 12),
+(44, 7, 1, '2025-12-11', 3, 12),
+(49, 10, 1, NULL, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -340,6 +386,7 @@ CREATE TABLE `tbl_cart_vouchers` (
   `voucher_id` int(11) NOT NULL,
   `account_id` int(11) NOT NULL,
   `added_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `order_date` date DEFAULT NULL,
   `status_id` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -347,8 +394,11 @@ CREATE TABLE `tbl_cart_vouchers` (
 -- Dumping data for table `tbl_cart_vouchers`
 --
 
-INSERT INTO `tbl_cart_vouchers` (`cart_voucher_id`, `voucher_id`, `account_id`, `added_date`, `status_id`) VALUES
-(4, 2, 12, '2025-10-21 06:16:42', 2);
+INSERT INTO `tbl_cart_vouchers` (`cart_voucher_id`, `voucher_id`, `account_id`, `added_date`, `order_date`, `status_id`) VALUES
+(4, 2, 12, '2025-10-21 06:16:42', '2025-11-05', 2),
+(7, 4, 12, '2025-12-06 14:14:12', '2025-12-06', 3),
+(9, 4, 12, '2025-12-06 15:42:29', '2025-12-06', 3),
+(14, 5, 12, '2025-12-11 13:51:03', NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -1246,7 +1296,11 @@ CREATE TABLE `tbl_page_reviews` (
 --
 
 INSERT INTO `tbl_page_reviews` (`review_id`, `account_id`, `review_title`, `rating`, `review_text`, `reviewer_image`, `is_verified`, `status`, `created_at`) VALUES
-(3, 12, 'Wow', 4.0, 'asdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaa', '6909e76001137.png', 0, 'approved', '2025-11-04 11:46:59');
+(3, 12, 'Wow', 4.0, 'asdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaaasdsadsaadsasaa', '6909e76001137.png', 0, 'approved', '2025-11-04 11:46:59'),
+(4, 12, 'None', 4.0, 'adasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdasadasdadadadadadasdasdadadadasdadasdasdasdasdasdas', '6909e76001137.png', 0, 'approved', '2025-11-23 07:07:36'),
+(5, 12, 'None', 3.0, 'asdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsa', '6909e76001137.png', 0, 'approved', '2025-11-23 07:33:16'),
+(6, 12, 'None', 3.0, 'asdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsa', '6909e76001137.png', 0, 'approved', '2025-11-23 07:33:24'),
+(7, 12, 'None', 3.0, 'asdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsaasdasdaasadasdsa', '6909e76001137.png', 0, 'approved', '2025-11-23 07:33:31');
 
 -- --------------------------------------------------------
 
@@ -1306,7 +1360,7 @@ INSERT INTO `tbl_products` (`prod_id`, `prod_name`, `prod_price`, `prod-short-de
 (12, '[Rx] TREVISO Isotretinoin 10mg (Box of 30s)', 1500, 'Clear Skin Treatment | Reduces Severe Acne', 'An established prescription acne medication that deactivates hyperactive oil glands: the center of acne pathology. Correct dosing and treatment protocols may give an 80% chance of cure. Ideal for patients who have recurring acne and do not respond to diff', 1, 4, 50, 20, 'prod-12-iso.webp', 'prod-12-iso-hover.webp'),
 (13, '[Rx] ACRESIL Clindamycin Capsule 300mg (28s)', 560, 'Bacterial Infection Treatment | Effective Antibiotic', '\r\n[Rx] ACRESIL Clindamycin 300mg (28s) is an antibiotic for treating bacterial infections, including skin, respiratory, and bone infections. Use as prescribed by your healthcare provider.', 1, 4, 50, 10, 'prod-13-acresil.jpg', 'prod-13-acre-hover.webp'),
 (14, '[Rx] Betamethasone Valerate 1mg/g 0.1% (w/w) Topical Cream 15g', 380, 'Inflammation Relief | Reduces Skin Redness & Itching', '[Rx] Betamethasone Valerate 0.1% Topical Cream (15g) is a corticosteroid used to relieve inflammation, redness, and itching associated with skin conditions like eczema and psoriasis. Apply as directed by your healthcare provider.', 4, 3, 50, 10, 'prod-14-beta.webp', 'prod-14-beta-hover.webp'),
-(15, '[Rx] PIDCLIN Doxycycline Capsule 100mg', 720, 'Broad-Spectrum Antibiotic | Treats Bacterial Infections', '[Rx] PIDCLIN Doxycycline 100mg Capsule is an antibiotic used to treat various bacterial infections, including respiratory, skin, and urinary tract infections. It also treats acne and certain sexually transmitted infections. Use as prescribed by your healt', 1, 4, 50, 10, 'prod-15-doxy.webp', 'prod-15-doxy-hover.webp'),
+(15, '[Rx] PIDCLIN Doxycycline Capsule 100mg', 720, 'Broad-Spectrum Antibiotic | Treats Bacterial Infections', '[Rx] PIDCLIN Doxycycline 100mg Capsule is an antibiotic used to treat various bacterial infections, including respiratory, skin, and urinary tract infections. It also treats acne and certain sexually transmitted infections. Use as prescribed by your healt', 1, 4, 49, 10, 'prod-15-doxy.webp', 'prod-15-doxy-hover.webp'),
 (16, 'BatongBakalHydrocloride', 200, '', '', 4, 2, 50, 0, '6757fddbe5dfb.jpeg', ''),
 (17, 'BatongBakalHydrocloride', 200, '', '', 2, 3, 50, 0, '675955629fb47.jpeg', '');
 
@@ -1426,7 +1480,10 @@ INSERT INTO `tbl_receipt` (`receipt_id`, `account_id`, `receipt_img`, `receipt_n
 (14, 12, '68f71942cd7e3.jpg', '3212313131313', 847, '2025-10-21'),
 (15, 12, '68f721e2d038c.png', '2134214213111', 252, '2025-10-21'),
 (16, 12, '68f7238750189.jpg', '3212313131313', 346, '2025-10-21'),
-(17, 12, '68f726e390fb8.png', '3212313131313', 336, '2025-10-21');
+(17, 12, '68f726e390fb8.png', '3212313131313', 336, '2025-10-21'),
+(18, 12, '69344ac2acf2e.jpeg', '3212313131313', 1333, '2025-12-06'),
+(19, 12, '693455faaf909.jpeg', '3214123231321', 890, '2025-12-06'),
+(20, 12, '693acc690fcc3.png', '3212313131313', 940, '2025-12-11');
 
 -- --------------------------------------------------------
 
@@ -1594,7 +1651,9 @@ CREATE TABLE `tbl_vouchers` (
 --
 
 INSERT INTO `tbl_vouchers` (`voucher_id`, `voucher_code`, `voucher_name`, `voucher_type`, `discount_type`, `discount_value`, `min_purchase`, `max_discount`, `start_date`, `end_date`, `usage_limit`, `used_count`, `total_revenue_generated`, `total_discount_given`, `target_items`, `promo_category`, `is_active`, `auto_apply`, `created_by`, `created_at`) VALUES
-(2, 'BOOSTEABE08', 'Boost Low Performers - Oct 2025', 'both', 'percentage', 25.00, 0.00, 0.00, '2025-10-15', '2025-11-20', 0, 1, 336.00, 120.00, '[{\"type\":\"product\",\"id\":\"1\",\"name\":\"Acne Refining Foaming Cleanser\"},{\"type\":\"product\",\"id\":\"2\",\"name\":\"Acne Refining Gel\"},{\"type\":\"product\",\"id\":\"3\",\"name\":\"Acne Refining Spot Corrector\"},{\"type\":\"product\",\"id\":\"4\",\"name\":\"Acne Refining Toner\"},{\"type\":\"product\",\"id\":\"5\",\"name\":\"Skin Renewal Foaming Cleanser\"}]', 'Special', 0, 1, 8, '2025-10-20 10:39:49');
+(2, 'BOOSTEABE08', 'Boost Low Performers - Oct 2025', 'both', 'percentage', 25.00, 0.00, 0.00, '2025-10-15', '2025-11-20', 0, 1, 336.00, 120.00, '[{\"type\":\"product\",\"id\":\"1\",\"name\":\"Acne Refining Foaming Cleanser\"},{\"type\":\"product\",\"id\":\"2\",\"name\":\"Acne Refining Gel\"},{\"type\":\"product\",\"id\":\"3\",\"name\":\"Acne Refining Spot Corrector\"},{\"type\":\"product\",\"id\":\"4\",\"name\":\"Acne Refining Toner\"},{\"type\":\"product\",\"id\":\"5\",\"name\":\"Skin Renewal Foaming Cleanser\"}]', 'Special', 0, 1, 8, '2025-10-20 10:39:49'),
+(4, 'BOOST5340A1', 'Boost Low Performers - Dec 2025', 'both', 'percentage', 25.00, 0.00, NULL, '2025-12-06', '2025-12-13', NULL, 2, 1800.60, 240.00, '[{\"type\":\"product\",\"id\":\"1\",\"name\":\"Acne Refining Foaming Cleanser\"},{\"type\":\"product\",\"id\":\"2\",\"name\":\"Acne Refining Gel\"},{\"type\":\"product\",\"id\":\"3\",\"name\":\"Acne Refining Spot Corrector\"},{\"type\":\"product\",\"id\":\"4\",\"name\":\"Acne Refining Toner\"},{\"type\":\"product\",\"id\":\"5\",\"name\":\"Skin Renewal Foaming Cleanser\"}]', 'Special', 1, 1, 8, '2025-12-06 13:43:31'),
+(5, 'DECEMBER2025', 'Voucher-1', 'product', 'percentage', 5.00, 500.00, 500.00, '2025-12-11', '2025-12-24', 10, 0, 0.00, 0.00, '', 'Flash Sale', 1, 1, 8, '2025-12-11 12:25:26');
 
 -- --------------------------------------------------------
 
@@ -1619,7 +1678,9 @@ CREATE TABLE `tbl_voucher_usage` (
 --
 
 INSERT INTO `tbl_voucher_usage` (`usage_id`, `voucher_id`, `account_id`, `order_type`, `order_id`, `discount_amount`, `original_amount`, `final_amount`, `used_date`) VALUES
-(1, 2, 12, 'product', 17, 120.00, 480.00, 336.00, '2025-10-21 06:23:31');
+(1, 2, 12, 'product', 17, 120.00, 480.00, 336.00, '2025-10-21 06:23:31'),
+(2, 4, 12, 'product', 18, 120.00, 1272.00, 1088.40, '2025-12-06 15:24:50'),
+(3, 4, 12, 'product', 19, 120.00, 876.00, 712.20, '2025-12-06 16:12:42');
 
 --
 -- Indexes for dumped tables
@@ -1676,7 +1737,8 @@ ALTER TABLE `tbl_cart`
 ALTER TABLE `tbl_cart_vouchers`
   ADD PRIMARY KEY (`cart_voucher_id`),
   ADD KEY `voucher_id` (`voucher_id`),
-  ADD KEY `account_id` (`account_id`);
+  ADD KEY `account_id` (`account_id`),
+  ADD KEY `idx_order_date` (`order_date`);
 
 --
 -- Indexes for table `tbl_concern`
@@ -1803,13 +1865,13 @@ ALTER TABLE `tbl_voucher_usage`
 -- AUTO_INCREMENT for table `tbl_account`
 --
 ALTER TABLE `tbl_account`
-  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `tbl_account_details`
 --
 ALTER TABLE `tbl_account_details`
-  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ac_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `tbl_ac_status`
@@ -1839,13 +1901,13 @@ ALTER TABLE `tbl_billing_details`
 -- AUTO_INCREMENT for table `tbl_cart`
 --
 ALTER TABLE `tbl_cart`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `tbl_cart_vouchers`
 --
 ALTER TABLE `tbl_cart_vouchers`
-  MODIFY `cart_voucher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cart_voucher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_concern`
@@ -1899,7 +1961,7 @@ ALTER TABLE `tbl_order_vouchers`
 -- AUTO_INCREMENT for table `tbl_page_reviews`
 --
 ALTER TABLE `tbl_page_reviews`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_products`
@@ -1929,7 +1991,7 @@ ALTER TABLE `tbl_ratings`
 -- AUTO_INCREMENT for table `tbl_receipt`
 --
 ALTER TABLE `tbl_receipt`
-  MODIFY `receipt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `receipt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_role`
@@ -1947,13 +2009,13 @@ ALTER TABLE `tbl_services`
 -- AUTO_INCREMENT for table `tbl_vouchers`
 --
 ALTER TABLE `tbl_vouchers`
-  MODIFY `voucher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `voucher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_voucher_usage`
 --
 ALTER TABLE `tbl_voucher_usage`
-  MODIFY `usage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `usage_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

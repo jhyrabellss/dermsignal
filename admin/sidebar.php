@@ -143,19 +143,6 @@
           </div>
           Manage Orders
         </a>
-        <a class="nav-link" href="claimedOrders.php">
-          <div class="sb-nav-link-icon">
-            <i class="fa-solid fa-clipboard-check"></i>
-          </div>
-          Delivered Orders
-        </a>
-
-        <a class="nav-link" href="cancelledOrders.php">
-          <div class="sb-nav-link-icon">
-            <i class="fa-solid fa-ban"></i>
-          </div>
-          Cancelled Orders
-        </a>
 
 
       </div>

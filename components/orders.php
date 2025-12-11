@@ -402,20 +402,32 @@ main {
                     $subtotal += round($item["prod_qnty"] * $origprice, 2);
                 }
 
-                // Calculate voucher discounts for this date
+                // Calculate voucher discounts for this date (same logic as cart.php)
                 if (isset($vouchersByDate[$orderDate])) {
                     foreach ($vouchersByDate[$orderDate] as $voucher) {
                         $targetItems = json_decode($voucher['target_items'], true);
                         $eligibleProductIds = [];
-
-                        if ($targetItems) {
-                            foreach ($targetItems as $item) {
-                                if ($item['type'] == 'product') {
-                                    $eligibleProductIds[] = $item['id'];
+                        
+                        // Check if voucher applies to all products (same logic as cart.php)
+                        $applyToAll = (empty($voucher['target_items']) || $voucher['target_items'] == '' || $voucher['target_items'] == '[]' || $targetItems === null || count($targetItems) == 0);
+                        
+                        if ($applyToAll) {
+                            // Apply to ALL products in cart
+                            foreach ($items as $item) {
+                                $eligibleProductIds[] = $item['prod_id'];
+                            }
+                        } else {
+                            // Extract eligible product IDs from target items
+                            if ($targetItems && is_array($targetItems)) {
+                                foreach ($targetItems as $item) {
+                                    if (isset($item['type']) && $item['type'] == 'product' && isset($item['id'])) {
+                                        $eligibleProductIds[] = intval($item['id']);
+                                    }
                                 }
                             }
                         }
-
+                        
+                        // Calculate subtotal for eligible items only
                         $voucherSubtotal = 0;
                         foreach ($items as $item) {
                             if (in_array($item['prod_id'], $eligibleProductIds)) {
@@ -423,24 +435,44 @@ main {
                                 $voucherSubtotal += round($item["prod_qnty"] * $origprice, 2);
                             }
                         }
-
-                        if ($voucher['discount_type'] == 'percentage') {
-                            $currentDiscount = ($voucherSubtotal * $voucher['discount_value']) / 100;
-                            if ($voucher['max_discount'] > 0 && $currentDiscount > $voucher['max_discount']) {
-                                $currentDiscount = $voucher['max_discount'];
-                            }
-                        } else {
-                            $currentDiscount = $voucher['discount_value'];
+                        
+                       // Calculate discount based on eligible items only
+                    $currentDiscount = 0;
+                    if ($voucher['discount_type'] == 'percentage') {
+                        $currentDiscount = ($voucherSubtotal * $voucher['discount_value']) / 100;
+                        if ($voucher['max_discount'] > 0 && $currentDiscount > $voucher['max_discount']) {
+                            $currentDiscount = $voucher['max_discount'];
                         }
+                    } else {
+                        // Fixed amount discount (min of discount value or voucher subtotal)
+                        $currentDiscount = min($voucher['discount_value'], $voucherSubtotal);
+                    }
 
-                        $meetsMinimum = ($subtotal >= $voucher['min_purchase']);
-                        if ($meetsMinimum) {
+                    // Check minimum purchase requirement
+                    $meetsMinimum = ($subtotal >= $voucher['min_purchase']);
+                        
+                        if ($meetsMinimum && $voucherSubtotal > 0) {
                             $voucherDiscount += $currentDiscount;
                         }
                     }
                 }
 
-                $grandTotal = $subtotal - $voucherDiscount;
+                // Calculate shipping fee (same logic as cart.php)
+                $shippingFee = 50; // Default shipping fee
+
+                // Calculate grand total BEFORE shipping to check if free shipping applies
+                $grandTotalBeforeShipping = $subtotal - $voucherDiscount;
+                if ($grandTotalBeforeShipping < 0) {
+                    $grandTotalBeforeShipping = 0;
+                }
+
+                // Apply free shipping if total before shipping is >= 500 (same logic as cart.php)
+                if ($grandTotalBeforeShipping >= 500) {
+                    $shippingFee = 0;
+                }
+
+                // Calculate final grand total (WITH shipping fee)
+                $grandTotal = $grandTotalBeforeShipping + $shippingFee;
                 if ($grandTotal < 0) $grandTotal = 0;
         ?>
                 <div class="order-group">
@@ -490,15 +522,27 @@ main {
                                 <?php foreach ($vouchersByDate[$orderDate] as $voucher) {
                                     $targetItems = json_decode($voucher['target_items'], true);
                                     $eligibleProductIds = [];
-
-                                    if ($targetItems) {
-                                        foreach ($targetItems as $item) {
-                                            if ($item['type'] == 'product') {
-                                                $eligibleProductIds[] = $item['id'];
+                                    
+                                    // Check if voucher applies to all products (same logic as cart.php)
+                                    $applyToAll = (empty($voucher['target_items']) || $voucher['target_items'] == '' || $voucher['target_items'] == '[]' || $targetItems === null || count($targetItems) == 0);
+                                    
+                                    if ($applyToAll) {
+                                        // Apply to ALL products in cart
+                                        foreach ($items as $item) {
+                                            $eligibleProductIds[] = $item['prod_id'];
+                                        }
+                                    } else {
+                                        // Extract eligible product IDs from target items
+                                        if ($targetItems && is_array($targetItems)) {
+                                            foreach ($targetItems as $item) {
+                                                if (isset($item['type']) && $item['type'] == 'product' && isset($item['id'])) {
+                                                    $eligibleProductIds[] = intval($item['id']);
+                                                }
                                             }
                                         }
                                     }
-
+                                    
+                                    // Calculate subtotal for eligible items only
                                     $voucherSubtotal = 0;
                                     foreach ($items as $item) {
                                         if (in_array($item['prod_id'], $eligibleProductIds)) {
@@ -506,17 +550,27 @@ main {
                                             $voucherSubtotal += round($item["prod_qnty"] * $origprice, 2);
                                         }
                                     }
-
+                                    
+                                    // Calculate discount based on eligible items only
+                                    $currentDiscount = 0;
                                     if ($voucher['discount_type'] == 'percentage') {
                                         $currentDiscount = ($voucherSubtotal * $voucher['discount_value']) / 100;
                                         if ($voucher['max_discount'] > 0 && $currentDiscount > $voucher['max_discount']) {
                                             $currentDiscount = $voucher['max_discount'];
                                         }
                                     } else {
-                                        $currentDiscount = $voucher['discount_value'];
+                                        // Fixed amount discount (min of discount value or voucher subtotal)
+                                        $currentDiscount = min($voucher['discount_value'], $voucherSubtotal);
                                     }
-
+                                    
+                                    // Check minimum purchase requirement
                                     $meetsMinimum = ($subtotal >= $voucher['min_purchase']);
+                                    
+                                    // Only show discount if minimum is met AND there are eligible items
+                                    $displayDiscount = 0;
+                                    if ($meetsMinimum && $voucherSubtotal > 0) {
+                                        $displayDiscount = $currentDiscount;
+                                    }
                                 ?>
                                 <tr class="voucher-row">
                                     <td>
@@ -531,16 +585,31 @@ main {
                                     <td>
                                         <?php if ($voucher['discount_type'] == 'percentage') { ?>
                                             <?php echo intval($voucher['discount_value']); ?>% OFF
+                                            <?php if ($voucher['max_discount'] > 0) { ?>
+                                                <div style="font-size: 11px; color: #6c757d;">(Max: ₱<?php echo number_format($voucher['max_discount'], 2); ?>)</div>
+                                            <?php } ?>
                                         <?php } else { ?>
                                             ₱<?php echo number_format($voucher['discount_value'], 2); ?> OFF
+                                        <?php } ?>
+                                        <?php if ($voucher['min_purchase'] > 0) { ?>
+                                            <div style="font-size: 11px; color: #6c757d;">Min: ₱<?php echo number_format($voucher['min_purchase'], 2); ?></div>
                                         <?php } ?>
                                     </td>
                                     <td>1</td>
                                     <td class="discount-text">
-                                        <?php if ($meetsMinimum) { ?>
-                                            -₱<?php echo number_format($currentDiscount, 2); ?>
+                                        <?php if ($displayDiscount > 0) { ?>
+                                            -₱<?php echo number_format($displayDiscount, 2); ?>
                                         <?php } else { ?>
                                             ₱0.00
+                                            <?php if (!$meetsMinimum && $voucher['min_purchase'] > 0) { ?>
+                                                <div style="font-size: 11px; color: #856404;">
+                                                    <i class="fa-solid fa-exclamation-triangle"></i> Min not met
+                                                </div>
+                                            <?php } elseif ($voucherSubtotal == 0) { ?>
+                                                <div style="font-size: 11px; color: #856404;">
+                                                    <i class="fa-solid fa-exclamation-triangle"></i> No eligible items
+                                                </div>
+                                            <?php } ?>
                                         <?php } ?>
                                     </td>
                                     <td><span class="status-badge"><?php echo $voucher["status_name"]; ?></span></td>
@@ -563,9 +632,20 @@ main {
                                 <td class="discount-text"><strong>-₱<?php echo number_format($voucherDiscount, 2); ?></strong></td>
                             </tr>
                             <?php } ?>
+                            <tr class="summary-row">
+                                <td colspan="4"></td>
+                                <td><strong>Shipping Fee:</strong></td>
+                                <td>
+                                    <?php if ($shippingFee == 0) { ?>
+                                        <span style="text-decoration: line-through; color: #6c757d;">₱50</span> Free
+                                    <?php } else { ?>
+                                        ₱<?php echo number_format($shippingFee, 2); ?>
+                                    <?php } ?>
+                                </td>
+                            </tr>
                             <tr class="summary-total">
                                 <td colspan="4"></td>
-                                <td><strong>Total to Pay:</strong></td>
+                                <td><strong>Total Paid:</strong></td>
                                 <td><strong>₱<?php echo number_format($grandTotal, 2); ?></strong></td>
                             </tr>
                         </tbody>

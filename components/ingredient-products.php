@@ -31,10 +31,10 @@
     <title><?= $ingredients_name?> Products </title>
 </head>
 <body>
-<?php include "../components/header.php" ?>
+<?php include "header.php" ?>
 
 <div class="individual-prod-main-cont">
-    <a href="../index.html">
+    <a href="./index.php">
         <div id="main-title">Home > <?= htmlspecialchars($ingredients_name) ?></div>
     </a>
       <h3 id="ingredient-title"><?= htmlspecialchars($ingredients_name) ?> Products</h3>
@@ -52,60 +52,110 @@
 
       <div class="product-list-items-cont">
         <?php 
-          $sort = isset($_GET['sort']) ? $_GET['sort'] : 'high';
-          $order = $sort == 'low' ? 'ASC' : 'DESC';
+  $sort = isset($_GET['sort']) ? $_GET['sort'] : 'high';
+  $order = $sort == 'low' ? 'ASC' : 'DESC';
 
-          if (isset($_GET['ingredients_id'])) {
-            $ingredients_id = intval($_GET['ingredients_id']);
-          } else {
-              die("Error: 'ingredients_id' is not provided in the URL.");
+  if (isset($_GET['ingredients_id'])) {
+    $ingredients_id = intval($_GET['ingredients_id']);
+  } else {
+      die("Error: 'ingredients_id' is not provided in the URL.");
+  }
+
+  // Fetch all active vouchers once
+  $voucher_sql = "SELECT * FROM tbl_vouchers 
+                  WHERE is_active = 1 
+                  AND (voucher_type = 'product' OR voucher_type = 'both')
+                  AND CURDATE() BETWEEN start_date AND end_date";
+  $voucher_result = mysqli_query($conn, $voucher_sql);
+
+  // Store vouchers in an array for reuse
+  $active_vouchers = [];
+  if ($voucher_result && mysqli_num_rows($voucher_result) > 0) {
+      while ($voucher = mysqli_fetch_assoc($voucher_result)) {
+          $active_vouchers[] = $voucher;
+      }
+  }
+
+  $sql = "SELECT tbl_products.*
+  FROM tbl_products
+  JOIN tbl_ingredients ON tbl_products.ingredients_id = tbl_ingredients.ingredients_id
+  WHERE tbl_ingredients.ingredients_id = ? ORDER BY prod_price $order";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $ingredients_id);
+  $stmt->execute();
+  $result =  $stmt->get_result();
+  
+  if($result->num_rows){
+    while($data = $result->fetch_assoc()){
+      $origprice = $data['prod_price'];
+      $prodprice = $origprice; // Default: no discount
+      $discprice = 0;
+      $voucher_applied = false;
+
+      // Check if product is eligible for any voucher
+      foreach ($active_vouchers as $voucher) {
+          $target_items = json_decode($voucher['target_items'], true);
+          if ($target_items) {
+              foreach ($target_items as $item) {
+                  if ($item['type'] == 'product' && $item['id'] == $data['prod_id']) {
+                      // Apply discount
+                      if ($voucher['discount_type'] == 'percentage') {
+                          $discount_amount = $origprice * ($voucher['discount_value'] / 100);
+                          // Check max_discount limit
+                          if ($voucher['max_discount'] > 0 && $discount_amount > $voucher['max_discount']) {
+                              $discount_amount = $voucher['max_discount'];
+                          }
+                          $prodprice = $origprice - $discount_amount;
+                          $discprice = $voucher['discount_value'];
+                      } else {
+                          // Fixed discount
+                          $discount_amount = $voucher['discount_value'];
+                          $prodprice = max(0, $origprice - $discount_amount);
+                          $discprice = round(($discount_amount / $origprice) * 100, 0);
+                      }
+                      $voucher_applied = true;
+                      break 2; // Exit both loops
+                  }
+              }
           }
-
-          $sql = "SELECT tbl_products.*
-          FROM tbl_products
-          JOIN tbl_ingredients ON tbl_products.ingredients_id = tbl_ingredients.ingredients_id
-          WHERE tbl_ingredients.ingredients_id = ? ORDER BY prod_price $order";
-          $stmt = $conn->prepare($sql);
-          $stmt->bind_param("i", $ingredients_id);
-          $stmt->execute();
-          $result =  $stmt->get_result();
-          if($result->num_rows){
-            while($data = $result->fetch_assoc()){
-            $origprice = $data['prod_price'] + 100; // Adjusted original price
-            $proddiscount = $data['prod_discount'] / 100;
-            $prodprice = $origprice - ($origprice * $proddiscount); // Calculate discounted price
-            $discprice = $data['prod_discount']; // Convert to percentage for display  
-            include "../components/reviews-ratings.php"
-        ?>  
-        <div class="product-list-items" data-prod-id="<?= $data['prod_id']?>">
-            <div class="product-items img-con-click" data-item-id="<?= $data['prod_id']?>">
-            <div>
-              <div class="prod-img-cont">
-                  <img src="../images/products/<?= $data['prod_img']; ?>" alt="img" >
-                  <img src="./images/products-hover/<?php echo $data['prod_hover_img']; ?>" class="hovered-image">
-              </div>
-              <div class="details-cont">
-                  <div class="prod-name"><?= $data['prod_name']; ?></div>
-                  <div class="prod-description"><?=$data['prod-short-desc']; ?></div>
-                  <div class="prod-rating-cont">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
-                          <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"/>
-                      </svg> 
-                      <div>4.8</div>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16"><path id="verified_" data-name="verified " d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff"></path></svg>
-                      <div><?= $total_reviews?> reviews</div>                     
-                  </div>
-                  <div class="discount-cont">
-                      <div id="item-price">₱<?= $prodprice?> </div>
-                      <div id="original-price">₱<?= $origprice?> </div>
-                      <div id="percentage-off"><?= $discprice?>% off</div>
-                  </div>
-              </div>
-              <button class="cart-button submit-cart">Add to Cart</button>
+      }
+      
+      // REMOVED THE PRODUCT-SPECIFIC DISCOUNT CHECK
+      // Discounts now ONLY come from vouchers
+      
+      include "../components/reviews-ratings.php"
+?>  
+<div class="product-list-items">
+    <div class="product-items" data-prod-id="<?= $data['prod_id']?>">
+        <div class="img-con-click" data-item-id="<?= $data['prod_id']?>">
+          <div class="prod-img-cont">
+              <img src="../images/products/<?= $data['prod_img']; ?>" alt="img" >
+              <img src="../images/products-hover/<?= $data['prod_hover_img']; ?>" class="hovered-image">
+          </div>
+        </div>
+        <div class="details-cont">
+            <div class="prod-name"><?= $data['prod_name']; ?></div>
+            <div class="prod-description"><?= $data['prod-short-desc']; ?></div>
+            <div class="prod-rating-cont">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12.294" height="11.367" viewBox="0 0 12.294 11.367">
+                    <path id="star" d="M8.147,11.135l3.8,2.232L10.937,9.161l3.356-2.83-4.42-.365L8.147,2,6.42,5.966,2,6.331l3.356,2.83L4.348,13.367Z" transform="translate(-2 -2)" fill="#ffc300"/>
+                </svg> 
+                <div><?= $average_rating > 0 ? number_format($average_rating, 1) : 'No rating' ?></div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16"><path id="verified_" data-name="verified " d="M15.865,8.534,14.216,6.665l.23-2.472-2.439-.549L10.73,1.5l-2.3.978L6.135,1.5,4.858,3.637,2.419,4.18l.23,2.479L1,8.534,2.649,10.4l-.23,2.479,2.439.549,1.277,2.137,2.3-.985,2.3.978,1.277-2.137,2.439-.549-.23-2.472ZM7.142,11.7,4.574,9.144l1-.991L7.142,9.713l3.953-3.932,1,.991Z" transform="translate(-1 -1.5)" fill="#0082ff"></path></svg>
+                <div><?= $total_reviews?> reviews</div>                     
             </div>
+            <div class="discount-cont">
+                <div id="item-price">₱<?= number_format($prodprice, 2)?> </div>
+                <?php if ($voucher_applied && $discprice > 0) { ?>
+                    <div id="original-price">₱<?= number_format($origprice, 2)?> </div>
+                    <div id="percentage-off"><?= number_format($discprice, 0)?>% off</div>
+                <?php } ?>
             </div>
         </div>
-          <?php } } ?>
+        <button class="cart-button submit-cart">Add to Cart</button>
+    </div>
+</div>
+<?php } } ?>
 
         <div class="image-assessment"></div>
     </div> 
@@ -123,10 +173,16 @@
 
 <script src="../jquery/addtocart.js"></script>
 <script>
-    $('.img-con-click').click(function() {
-        var itemId = $(this).data("item-id");
-        const url = `../components/individual-product.php?item=${itemId}`;
-        window.location.href = url;
+    $(document).ready(function() {
+        // Product click handler
+        $('.img-con-click').click(function(e) {
+            // Prevent the click from triggering when clicking the Add to Cart button
+            if (!$(e.target).closest('.submit-cart').length) {
+                var itemId = $(this).data("item-id");
+                const url = `./components/individual-product.php?item=${itemId}`;
+                window.location.href = url;
+            }
+        });
     });
 </script>
 </body>

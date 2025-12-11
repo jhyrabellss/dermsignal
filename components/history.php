@@ -444,7 +444,7 @@ main {
                 <div class="order-group">
                     <div class="order-date-header">
                         <i class="fa-solid fa-calendar"></i>
-                        <h2>Delivered on <?php echo $dateFormatted; ?></h2>
+                        <h2>Ordered on <?php echo $dateFormatted; ?></h2>
                     </div>
 
                     <table class="styled-table">
