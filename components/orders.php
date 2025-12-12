@@ -19,9 +19,6 @@ if (empty($_SESSION["user_id"])) {
     <link rel="stylesheet" href="../styles/cart.css">
     <link rel="stylesheet" href="../styles/footer.css">
     <script src="../jquery/jquery.js"></script>
-
-
-    
     <style>
         * {
             margin: 0;

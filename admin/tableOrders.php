@@ -880,9 +880,6 @@ $status_filter = isset($_GET['status']) ? intval($_GET['status']) : 'all';
                               $shippingFee = 0;
                             }
 
-
-                            
-
                             $grandTotal = $grandTotalBeforeShipping + $shippingFee;
                             if ($grandTotal < 0) $grandTotal = 0;
                             ?>
