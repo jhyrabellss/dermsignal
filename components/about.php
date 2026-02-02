@@ -19,14 +19,15 @@
         border: none;
         color: whitesmoke;
         transition: all 1s;
-        letter-spacing: 0.125rem; /* 2px */
-        font-size: 0.8125rem; /* 13px */
+        letter-spacing: 1px;
+        font-size: 16.5px; 
         color: white;
         border: none;
         height: 3.125rem; /* 50px */
         width: 250px ; /* 250px */
-        font-weight: 300;
+        font-weight: 500;
         margin-top: 0.75rem; 
+        border-radius: 7px;
         }
 
         .button:hover{
@@ -45,6 +46,18 @@
         .flex-col div{
             font-size: 14px;
         }
+        
+        .desc h1{
+            font-weight: 500;
+            font-size: 30px;
+        }
+
+        .flex-col div{
+            margin-top: 10px;
+            font-size: 16px;
+            color: rgb(134, 133, 133);
+            font-weight: 400;
+        }
 
     </style>
 </head>
@@ -58,7 +71,7 @@
             </div>
             <div class="center">
                 <div class="desc">
-                    <h1 style="text-transform: uppercase;">Filipino Skincare Made for You</h1>
+                    <h1 style="text-transform: uppercase; font-size: 33px; font-weight: 600;">Filipino Skincare Made for You</h1>
                     <div class="flex-col">
                         <div>
                             DERMSIGNAL is a Philippine-based skincare brand founded by a board-certified dermatologist with a passion for helping Filipinos achieve healthy, radiant skin. We believe in the power of using high-quality ingredients formulated specifically for Filipino skin types and concerns.
@@ -75,7 +88,7 @@
             </div>
             <div class="center">
                 <div class="desc">
-                    <h1 style="text-transform: uppercase;" >Made by Filipinos, for Filipinos</h1>
+                    <h1 style="text-transform: uppercase; font-size: 33px; font-weight: 600;" >Made by Filipinos, for Filipinos</h1>
                     <div class="flex-col">
                         <div>
                             We understand that Filipino skin has unique needs. That's why we develop our products with Filipino skin in mind, using ingredients and formulations proven to be effective for our climate and concerns.
@@ -95,7 +108,7 @@
             </div>
             <div class="center">
                 <div class="desc">
-                    <h1>OUR PRODUCTS</h1>
+                    <h1 style="text-transform: uppercase; font-size: 33px; font-weight: 600;">OUR PRODUCTS</h1>
                     <div class="flex-col">
                         <div>
                             At DERMSIGNAL, we offer a comprehensive range of skincare products designed to address a variety of concerns, from acne and dryness to hyperpigmentation and aging. We use only the highest quality ingredients and formulate our products to be gentle yet effective. 
@@ -119,7 +132,7 @@
             </div>
             <div class="center">
                 <div class="desc">
-                    <h1>SKIN ASSESSMENT</h1>
+                    <h1 style="text-transform: uppercase; font-size: 33px; font-weight: 600;">SKIN ASSESSMENT</h1>
                     <div class="flex-col">
                         <div>
                             Looking for personalized skincare advice? Take our Skin Assessment Test to get tailored recommendations! Receive expert guidance on creating a customized skincare routine that addresses your unique needs and concerns.
@@ -140,7 +153,7 @@
             </div>
             <div class="center">
                 <div class="desc">
-                    <h1 style="text-transform: uppercase;">Affordable Skincare that Exceeds Expectations</h1>
+                    <h1 style="text-transform: uppercase; font-size: 33px; font-weight: 600;">Affordable Skincare that <br> Exceeds Expectations</h1>
                     <div class="flex-col">
                         <div>
                             We believe that everyone deserves access to high-quality skincare. That's why we offer our products at competitive prices, without compromising on quality or effectiveness. With DERMSIGNAL, you can achieve healthy, beautiful skin without breaking the bank.

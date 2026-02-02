@@ -279,6 +279,8 @@ $account_details = $details_result->fetch_assoc();
 
     .mt-4 {
       margin-top: 24px;
+      font-size: 32px;
+      margin-bottom: 50px;
     }
 
     .mb-3 {

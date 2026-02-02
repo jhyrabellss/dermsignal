@@ -28,7 +28,8 @@ $user_id = $_SESSION["user_id"];
 <?php include "./header.php" ?>
 
 <div class="appointments-container">
-    <h1>My Appointments</h1>
+    <h1 style="font-weight: 500;">My Appointments</h1>
+    <br>
     
     <div class="appointments-filter">
         <button class="filter-btn active" data-status="all">All</button>
@@ -136,6 +137,7 @@ $user_id = $_SESSION["user_id"];
         } else {
             echo '<div class="no-appointments">
                     <p>You have no appointments yet.</p>
+                    <br><br>
                     <a href="services.php" class="btn-book-now">Book Your First Appointment</a>
                   </div>';
         }

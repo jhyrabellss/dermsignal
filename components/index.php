@@ -220,15 +220,15 @@
 
             <div class="mySlides fade">
                 <img src="../images/banner/banner-1.png" style="width:100%">
-                <a href="./about.php"><button class="btn1">About Us</button></a>
+                <!--<a href="./about.php"><button class="btn1">About Us</button></a>-->
             </div>
             <div class="mySlides fade">
                 <img src="../images/banner/banner-2.png" style="width:100%">
-                <a href="./all-products.php"><button class="btn2">Shop Now</button></a>
+                <!--<a href="./all-products.php"><button class="btn2">Shop Now</button></a>-->
             </div>
             <div class="mySlides fade">
                 <img src="../images/banner/banner-3.png" style="width:100%">
-                <a href="./all-products.php"><button class="btn3">Shop Now</button></a>
+                <!--<a href="./all-products.php"><button class="btn3">Shop Now</button></a>-->
             </div>
 
 
@@ -248,7 +248,7 @@
     </div>
 
 
-
+<br>
     <?php include "./voucher-banner.php" ?>
 
     <div class="products-cont swiper">
@@ -371,14 +371,14 @@
     </div>
 
 
-    <div>
+    <!--<div>
         <div class="homepage-cont" style="margin: 30px 0px 30px 0px !important;">
             <img src="../images/banner/skin-assesment-banner.png" alt="">
             <a href="./assessment.php"><button>Skin Assessment Test</button></a>
         </div>
-    </div>
+    </div>-->
 
-    <div class="products-cont swiper">
+    <!--<div class="products-cont swiper">
         <div class="wrapper">
             <div class="product-list-items swiper-wrapper">
                 <?php
@@ -483,10 +483,10 @@
             <div class="swiper-button-next"></div>
         </div>
     </div>
+<br><br><br>-->
+<br><br><br>
 
-
-
-    <div class="claims-main-cont">
+    <!--<div class="claims-main-cont">
         <div class="claims-cont">
             <div class="claims-img-cont">
                 <img src="../images/icons/derm-tested.webp" alt="">
@@ -548,6 +548,7 @@
             </div>
         </div>
     </div>
+-->
 
     <div class="additional-detail-cont">
 
@@ -1023,7 +1024,7 @@
                                             <div>Order Total</div>
                                             <div>₱<?= number_format($total, 2) ?></div>
                                         </div>
-                                       <div class="shipping-discount">
+                                       <!--<div class="shipping-discount">
                                             <div>Shipping</div>
                                             <div>
                                                 <?php 
@@ -1035,7 +1036,7 @@
                                                 }
                                                 ?>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <?php if ($voucherDiscount > 0) { ?>
                                             <div class="voucher-discount" style="color: white; font-weight: 500; padding: 10px 20px;
                                     font-size: 18px; border-top: 1px dashed #dee2e6;">
@@ -1047,10 +1048,10 @@
                                             <div>Grand Total</div>
                                             <div>₱<?= number_format($grandTotal, 2) ?></div>
                                         </div>
-                                        <div class="secure-payment">
+                                        <!--<div class="secure-payment">
                                             <img src="../images/icons/icon-cart-safe-pay.png" alt="">
                                             <div>Safe and Secure Payment, Easy Return</div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>

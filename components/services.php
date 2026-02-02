@@ -25,9 +25,12 @@ $service_group = isset($_GET['service_group']) ? $_GET['service_group'] : 'all';
 <?php include "./slideshow.php" ?>
 
 <div class="individual-prod-main-cont">
+<!--
     <a href="../index.php">
         <div id="main-title">Home/Services</div>
     </a>
+
+-->
     
     <div class="category-cont">
         <?php

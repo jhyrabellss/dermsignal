@@ -26,9 +26,6 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'high'; // Default to 'high' if s
 <?php include "./slideshow.php" ?>
 
 <div class="individual-prod-main-cont">
-    <a href="../index.php">
-        <div id="main-title">Home/Shop</div>
-    </a>
       <div class="category-cont">
       <?php
           $current_concern_id = isset($_GET['concern_id']) ? intval($_GET['concern_id']) : 0; // Get current concern_id
@@ -183,46 +180,6 @@ $sort = isset($_GET['sort']) ? $_GET['sort'] : 'high'; // Default to 'high' if s
     include "footer.php"
   ?>
   
-<!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
-<!--<script>
-  $(document).ready(function() {
-    // Function to load products based on selected category and sort
-    function loadProducts(categoryId, sort) {
-      $.ajax({
-        url: 'yourpage.php', // PHP file that handles the AJAX request
-        type: 'GET',
-        data: {
-          concern_id: categoryId,
-          sort: sort
-        },
-        success: function(response) {
-          $('#product-list').html(response); // Update the product list
-        }
-      });
-    }
-
-    // When a category button is clicked
-    $('.category-button').click(function() {
-      var categoryId = $(this).data('concern-id');
-      var sort = $('#sort').val(); // Get the selected sort value
-      loadProducts(categoryId, sort); // Load products via AJAX
-    });
-
-    // When the sort dropdown is changed
-    $('#sort').change(function() {
-      var sort = $(this).val();
-      var categoryId = $('.category-button.active').data('concern-id') || 0; // Get the active category
-      loadProducts(categoryId, sort); // Load products via AJAX
-    });
-
-    // Optionally, highlight the active category button
-    $('.category-button').click(function() {
-      $('.category-button').removeClass('active');
-      $(this).addClass('active');
-    });
-  });
-</script>-->
-
 <script src="/scripts/product-lists.js"></script>
 <script src="../jquery/addtocart.js"></script>
 <script>

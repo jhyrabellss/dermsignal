@@ -29,19 +29,14 @@ if (!isset($_SESSION)) {
                 <div class="concern-dropdown">
                     <div class="buy-by-concern">
                         <h1>Shop By Concern</h1>
-                        <a href="../components/concern-prod.php?concern_id=1">
-                            <li >Acne</li>
-                        </a>
-                        <a href="../components/concern-prod.php?concern_id=2">
-                            <li>Acne Scars</li>
-                        </a>
-                        <a href="../components/concern-prod.php?concern_id=3" >
-                            <li>Open Pores</li>
-                        </a>
-                        <a href="../components/concern-prod.php?concern_id=4">
-                            <li>Pigmentation</li>
-                        </a>
-                    </div> 
+                        <ul class="concern-list">
+                            <li><a href="../components/concern-prod.php?concern_id=1">Acne</a></li>
+                            <li><a href="../components/concern-prod.php?concern_id=2">Acne Scars</a></li>
+                            <li><a href="../components/concern-prod.php?concern_id=3">Open Pores</a></li>
+                            <li><a href="../components/concern-prod.php?concern_id=4">Pigmentation</a></li>
+                        </ul>
+                    </div>
+
                     <div class="favorites-cont">
                         <h1>
                             Customer Favorites
@@ -81,22 +76,16 @@ if (!isset($_SESSION)) {
                 <div class="ingredient-dropdown concern-dropdown">
                     <div class="buy-by-ingredient buy-by-concern">
                         <h1>Ingredients</h1>
-                        <a href="../components/ingredient-products.php?ingredients_id=1">
-                            <li class="specific-ingredient">Salicylic Acid</li>
-                        </a>
-                        <a href="../components/ingredient-products.php?ingredients_id=2">
-                            <li class="specific-ingredient">Niacinamide</li>
-                        </a>
-                        <a href="../components/ingredient-products.php?ingredients_id=3">
-                            <li class="specific-ingredient">Glycolic Acid</li>
-                        </a>
-                        <a href="../components/ingredient-products.php?ingredients_id=4">
-                            <li class="specific-ingredient">Retinol</li>
-                        </a>
-                        <a href="../components/ingredient-products.php?ingredients_id=5">
-                            <li class="specific-ingredient">Vitamin C</li>
-                        </a>
-            </div> 
+
+                        <ul class="ingredient-list">
+                            <li><a href="../components/ingredient-products.php?ingredients_id=1">Salicylic Acid</a></li>
+                            <li><a href="../components/ingredient-products.php?ingredients_id=2">Niacinamide</a></li>
+                            <li><a href="../components/ingredient-products.php?ingredients_id=3">Glycolic Acid</a></li>
+                            <li><a href="../components/ingredient-products.php?ingredients_id=4">Retinol</a></li>
+                            <li><a href="../components/ingredient-products.php?ingredients_id=5">Vitamin C</a></li>
+                        </ul>
+                    </div>
+    
                     <div class="favorites-cont">
                         <h1>
                             Customer Favorites
@@ -123,7 +112,6 @@ if (!isset($_SESSION)) {
                 </div>
              </div>
             
-             
             <div class="nav-allprod-cont">
                 <a href="./all-products.php">All Product</a>
             </div>

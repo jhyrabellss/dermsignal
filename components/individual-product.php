@@ -206,9 +206,9 @@ if ($voucher_result && mysqli_num_rows($voucher_result) > 0) {
         </div>
         <button class="cart-button submit-cart " data-prod-id="<?= $product['prod_id'] ?>">Add to Cart</button>
       </div>
-      <div class="product-info">
+      <!--<div class="product-info">
         <img src="../images/icons/icon-indiv-prod.png" alt="">
-      </div>
+      </div>-->
     </div>
   </div>
 

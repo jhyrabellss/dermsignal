@@ -315,7 +315,8 @@
             </div>
           
 
-          <h2 class="faq-title">Frequently Asked Questions</h2>
+        <!--
+        <h2 class="faq-title">Frequently Asked Questions</h2>
           <p class="faq-subtitle">Find answers to common questions about our skin assessment and products</p>
           <div class="faqs-main-cont">
               <div class="faqs-cont">
@@ -370,7 +371,9 @@
               </div>
           </div>
 
-        </div>    
+        </div>     
+        
+        -->   
 
         <div class="main-cart-cont" id="main-cart-cont">
           <div class="cart-cont" id="cart-cont">
