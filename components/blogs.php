@@ -37,7 +37,7 @@
 <body>
 <?php include "../components/header.php" ?>
     <div class="blogs">
-        <h1 class="head1">DermSignal Blog</h1>
+        <!--<h1 class="head1">DermSignal Blog</h1>-->
     </div>
     
     <div class="center-blog">

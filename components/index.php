@@ -205,8 +205,184 @@
         .review-header-section .center {
             font-weight: 700;
             color: #333;
-            margin-left: calc()
+            margin-left: calc();
         }
+
+     
+.concerns-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px; /* closer together */
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.concern-card {
+  text-align: center;
+}
+
+.concern-card img {
+  width: 170px;   /* bigger */
+  height: 170px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #f3f7f6;
+  padding: 6px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.concern-card img:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 26px rgba(39, 153, 137, 0.28);
+}
+
+.concern-card p {
+  margin-top: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #2f2f2f;
+}
+
+@media (max-width: 768px) {
+  .concerns-container {
+    gap: 20px;
+  }
+
+  .concern-card img {
+    width: 135px;
+    height: 135px;
+  }
+}
+
+@media (max-width: 480px) {
+  .concern-card img {
+    width: 115px;
+    height: 115px;
+  }
+
+  .concern-card p {
+    font-size: 15px;
+  }
+}
+
+/* Default (desktop & tablet) */
+.concerns-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 60px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.concern-card {
+  text-align: center;
+}
+
+.concern-card img {
+  width: 170px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #f3f7f6;
+  padding: 6px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.concern-card p {
+  margin-top: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #2f2f2f;
+}
+
+/* ===============================
+   SKINCARE CONCERNS
+================================ */
+
+/* Desktop */
+.concerns-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 19px;
+  padding: 60px 20px;
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+.concern-card {
+  text-align: center;
+}
+
+.concern-card img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #f3f7f6;
+  padding: 6px;
+}
+
+.concern-card p {
+  margin-top: 14px;
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(33, 133, 120, 1);
+}
+
+
+@media (max-width: 1024px) {
+  .concerns-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .concern-card img {
+    width: 145px;
+    height: 145px;
+  }
+}
+
+@media (max-width: 600px) {
+  .concerns-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .concern-card img {
+    width: 125px;
+    height: 125px;
+  }
+
+  .concern-card p {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 380px) {
+  .concern-card img {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .concerns-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+
+  .concern-card img {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+.title-review{
+    font-size: 25px;
+    color: rgba(33, 133, 120, 1);
+
+}
     </style>
 </head>
 
@@ -219,7 +395,7 @@
         <div class="slideshow-container">
 
             <div class="mySlides fade">
-                <img src="../images/banner/banner-1.png" style="width:100%">
+                <img src="..\images\banner\banner-1.png" style="width:100%">
                 <!--<a href="./about.php"><button class="btn1">About Us</button></a>-->
             </div>
             <div class="mySlides fade">
@@ -246,6 +422,35 @@
 
         </div>
     </div>
+    <br><br>
+
+<!-- Skincare Concerns Section -->
+<div class="concerns-container">
+  <div class="concern-card">
+    <a href="../components/concern-prod.php?concern_id=1">
+      <img src="..\images\services\690d560ce2695.png" alt="Acne">
+      <p>Acne</p>
+    </a>
+  </div>
+  <div class="concern-card">
+    <a href="../components/concern-prod.php?concern_id=2">
+      <img src="..\images\services\690d556552b37.png" alt="Acne Marks">
+      <p>Acne Marks</p>
+    </a>
+  </div>
+  <div class="concern-card">
+    <a href="../components/concern-prod.php?concern_id=3">
+      <img src="..\images\services\690d56671984f.png" alt="Open Pores">
+      <p>Open Pores</p>
+    </a>
+  </div>
+  <div class="concern-card">
+    <a href="../components/concern-prod.php?concern_id=4">
+      <img src="..\images\services\690d560ce2695.png" alt="Pigmentation">
+      <p>Pigmentation</p>
+    </a>
+  </div>
+</div>
 
 
 <br>
