@@ -215,11 +215,11 @@ $low_services = $conn->query($low_services_query);
       <main>
         <div class="container-fluid px-4">
           <h1 class="mt-4"><i class="fas fa-ticket"></i> Voucher & Promo Management</h1>
-          <ol class="breadcrumb mb-4">
+          <!--<ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
             <li class="breadcrumb-item active">Vouchers</li>
-          </ol>
-
+          </ol>-->
+<br>
           <!-- AI Suggestions -->
           <div class="row">
             <div class="col-12">

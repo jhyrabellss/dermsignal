@@ -17,6 +17,7 @@ $service_group = isset($_GET['service_group']) ? $_GET['service_group'] : 'all';
     <link rel="stylesheet" href="../styles/product-lists.css">
     <link rel="stylesheet" href="../styles/appointment-modal.css">
     <title>Our Services</title>
+    
 </head>
 <body>
   

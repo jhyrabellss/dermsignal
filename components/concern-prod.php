@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="../styles/prod-ingredients.css">
     <script src="../scripts/jquery.js"></script>
     <style>
-     
+        
     </style>
     <title><?=$concern_name ?> Product</title>
 </head>

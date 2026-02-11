@@ -19,7 +19,7 @@
         <div><input type="text" placeholder="Middle Name" name="mname" id="mname" required></div>
         <div><input type="text" placeholder="Last Name" name="lname" id="lname" required></div>
         <div><input type="text" placeholder="Username" name="username" id="username" required></div>
-        <!--<div><input type="email" placeholder="Email" name="email" id="email" required></div>-->
+        <div><input type="email" placeholder="Email" name="email" id="email" required></div>
         <div><input type="password" placeholder="Password" name="password" id="password" required></div>
         <div><input type="password" placeholder="Confirm Password" name="password" id="confirmPass" style="margin-top: 10px;"></div>
         <div class="log-in-btn"><button type="submit" class="button">Sign up</button></div>
