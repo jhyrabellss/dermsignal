@@ -208,3 +208,18 @@
 #paymentProof:hover {
     border-color: rgb(39,153,137);
 }
+
+
+.service-image {
+  width: 100%;
+  height: 220px;   /* set a consistent height */
+  overflow: hidden; /* crop anything outside */
+}
+
+.service-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fills container neatly */
+  display: block;    /* removes inline gaps */
+}
+

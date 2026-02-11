@@ -43,8 +43,6 @@
   transition: transform 0.4s ease;
 }
 
-
-
 .blog-cont h1{
   text-align: left;
   color: gray;
@@ -54,6 +52,8 @@
 p{
   color: rgb(164, 162, 162);
 }
+
+
 
 .blog-cont a{
   text-decoration: none;
@@ -144,4 +144,8 @@ p{
     .blog-cont p {
         font-size: 12px;
     }
+}
+
+.desc {
+  color: rgb(79, 78, 78);
 }

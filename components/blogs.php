@@ -28,7 +28,9 @@
             margin-bottom: 60px;
         }
 
-       
+       .desc {
+  color: rgb(79, 78, 78);
+}
         
     </style>
    
@@ -37,17 +39,18 @@
 <body>
 <?php include "../components/header.php" ?>
     <div class="blogs">
-        <h1 class="head1">DermSignal Blog</h1>
+        <!--<h1 class="head1">DermSignal Blog</h1>-->
     </div>
     
     <div class="center-blog">
         <div class="blog-cont">
-            <img href="/components/blogs/blog-one.html" src="../images/blog/blog-1-big.webp" alt="" class="blog-1">
-            <p>MARCH 1, 2024</p>
-            <h1>7 Acne Myths Debunked</h1>
-            <p class="desc">Research shows that nearly 98% of the general public harbors at least one erroneous belief about acne's causes and remedies. Find out common myths that might be making your acne worse, and what to actually do. Check-out this beginner guide made with the Filipino skin in mind.</p>
+            <img src="..\images\blog\close-up-woman-with-acne-posing.jpg" alt="" class="blog-1">
+            <p>January 5, 2026</p>
+            <h1>Acne - Myths, Misconceptions and You</h1>
+            <p class="desc">Research shows that nearly 98% of the general public harbors at least one erroneous belief about acne's causes and remedies. This extends to individuals directly affected, with studies reporting that over 80% of acne patients subscribe to at least one common myth.</p>
             <a href="./blog-1.php">Read more</a>
         </div>
+
         <div class="blog-cont">
             <img src="../images/blog/acne-teenage-girl-applying-acne-medication-her-face-front-mirror-care-problem-skin.webp" alt="" class="blog-1">
             <p>FEBRUARY 26, 2024</p>

@@ -46,8 +46,7 @@ p{
 .blog-header-txt p{
     margin-bottom: 18px;
     padding-right: 50px;
-    border-right-style: solid;
-    border-width: 1px;
+   
 }
 
 .soc-icons{
@@ -121,8 +120,7 @@ p{
 .blog-header-txt p{
     margin-bottom: 18px;
     padding-right: 50px;
-    border-right-style: solid;
-    border-width: 1px;
+
 }
 
 .soc-icons{
@@ -183,6 +181,13 @@ li{
     width: 100%;
     padding-top: 20px;
 }
+li{
+    margin-left: 40px;
+}
+p{
+    color: black; 
+}
+
 
     </style>
 </head>
@@ -191,17 +196,15 @@ li{
     <div class="center">
         <div class="main-blog">
             <div class="blog-1">
-                <h1 class="title" style="text-align: left;">7 Acne Myths Debunked</h1>
+                <h1 class="title" style="text-align: left;">Acne - Myths, Misconceptions and You</h1>
                 <div class="blog-header-txt">
-                    <p>March 1, 2024</p>
-                    <div class="soc-icons">
+                    <p>January 5, 2026</p>
+                    <!--<div class="soc-icons">
                         <img src="../images/icons/icon-fb.png" alt="">
                         <img src="../images/icons/icon-mail.png" alt="">
-                    </div>
+                    </div>-->
                 </div> 
-                    <div class="main-blog-img">
-                        <img src="/images/blog/blog-1-big.webp" alt="">
-                    </div>
+                    
             </div>
             <div class="blog-info-1">
                 <div class="blog-text">
@@ -238,13 +241,6 @@ li{
                     <li><strong>Increased inflammation and scarring:</strong>I Popping acne can push debris deeper into the skin, leading to more inflammation, redness, and potential scarring. This inflammation can worsen the original pimple and cause new breakouts. Pimple popping impedes proper healing, thereby increasing the risk of more scarring.</li>
                     <li><strong>Risk of infection:</strong> Popping a pimple can introduce bacteria from your fingers, increasing infection risk and potentially leading to painful cysts, nodules, and even cellulitis or deeper skin infection. Due to facial blood vessel connections to the brain, infections in the danger triangle may travel to your brain and can lead to serious complications like meningitis, sepsis, and in rare cases, blood clots</li>
                 </ol>
-                <div class="link-1-img">
-                    <img src="/images/blog/Danger_triangle_of_the_face_diagram_480x480.jpg" alt="">
-                    <p class="italic">Diagram of the Danger Triangle of the Face</p>
-                </div>
-
-                <br>
-                <br>
 
                 <p>Individuals wanting to prevent whitehead or blackheads (comedones) from becoming full blown acne lesions can consider safer methods for extracting comedones, including:</p>
 
@@ -253,14 +249,13 @@ li{
                 <ol>
                     <li><strong>Professional extraction:</strong>Dermatologists or qualified aestheticians use sterile tools and techniques to safely remove comedones. In dermatology, comedones are considered as nidus or centers of inflammation. Removing comedones safely can lead to faster resolution of acne.</li>
                     <li><strong>Chemical exfoliants and sebum regulators: </strong> Products containing salicylic acid can gently penetrate pores, breaking down the skin plug and facilitating expulsion of debris. Potassium azeloyl diglycinate (PAD) can help regulate sebum secretion, reducing comedone formation over time.</li>                
-                    <img style="width: 65%;" src="/images/blog/skin-plug_480x480.webp" alt="">
+                
                     <li><strong>Retinoids:</strong>  Topical retinoids like Tretinoin and Retinol increases cellular turnover, pushing out deep seated comedones, helping to expel comedones over time. Pretreatment with an acid toner and retinoid loosens up comedones making them easier to extract. Retinoids help follicle skin to develop normally, preventing them from sticking to each other and this prevents clogging of pores, reducing comedone formation in the long term.</li>
                 </ol>
 
                 <h2 id="link-2">
                     Acne and Age - Just a teenage thing?
                 </h2>
-                <img src="/images/blog/AdobeStock_488470424.webp" alt="">
                 <p>For many teenagers, the transition from childhood can come with a new challenge: acne. But why is this skin condition so prevalent during puberty? Studies point to a confluence of factors:</p>
                 <br>
 
@@ -277,9 +272,7 @@ li{
                 <p>Build up your anti-acne skincare slowly by introducing products containing Salicylic acid, Azelaic acid, and Retinol one at a time every two weeks. If self-care measures do not suffice, consult a dermatologist for prescription medications like oral retinoids (Isotretinoin) and antibiotics (Doxycycline).</p> <br>
             
                 <h2 id="link-3">Diet and Acne - Do foods make acne worse?</h2>
-
-                <img src="/images/blog/fruit-vegetables-vs-sweets-fast-food-top-view-flat-lay-orange-background.webp" alt="">
-                <br><br>
+             
                 <p>The growing field of research on the brain-gut-skin axis suggests a potential connection of diet and acne.</p> <br>
                 <p> <strong>The Gut Connection: </strong>It is possible that a complex network exists, connecting the gut microbiome, immune system, and nervous system, potentially influencing skin health. Studies suggest that psychological stress or mental health conditions and unhealthy diet lead to imbalanced gut microbiome and gut permeability, contributing to systemic inflammation that impacts inflammatory conditions like acne.</p> <br>
                 <p><strong>Potential Food Culprits:</strong>  While individual responses vary, some studies associate high glycemic index foods (white bread, sugary drinks) with increased acne risk due to their impact on blood sugar and insulin levels. Dairy products, particularly skim milk, may contain insulin-like growth factors (IGFs), specifically IGF-1 and IGF-2 which can trigger acne in hypersensitive individuals.</p> <br>
@@ -291,8 +284,6 @@ li{
                 <p>Acne is primarily caused by hormonal fluctuations, clogged pores, excess oil production, bacteria, inflammation, not dirt on your face. There is no scientific basis for linking acne to poor hygiene and assuming that people with acne have poor hygiene is harmful considering the mental health struggle that people with acne go through.</p><br>
                 <p>While it is true that accumulation of debris and perspiration can increase the risk of acne eruptions, to say that poor hygiene is the cause of acne distracts us from the true enemy. The true culprit in acne are the hyperactive sebaceous glands which produce excess sebum that flood and clog the pores, creating the perfect environment for acne-causing bacteria and fungus to thrive and cause inflammation.</p><br>
                 <h3>So, what does good skincare for acne-prone skin look like?</h3> <br>
-
-                <img src="/images/blog/washing.webp" alt=""> <br><br>
 
                 <p>
                     <strong>Gentle active cleansing:</strong> accumulated sebum on the skin’s surface may deactivate some active ingredients. Choose a mild wash or soap with an active ingredient to jumpstart acne treatment early while removing excess sebum.
@@ -309,7 +300,6 @@ li{
                 </p>
 
                 <h2 id="link-5">Acne and Stress - A Complex Interplay</h2>
-                <img src="/images/blog/stress.webp" alt=""> <br>
                 <p>While more studies are required to establish a direct causal relationship between stress and acne, they do reveal a complex interplay that can impact both the onset and severity of acne.</p>
                 <br>
                 <p><strong>Stress and Hormones:</strong> Studies suggest that stress triggers the release of hormones like cortisol, which can stimulate oil production and increase inflammation in the skin, potentially creating an environment conducive to acne development.</p>
@@ -326,7 +316,6 @@ li{
                 </ul>
 
                 <h2 id="link-6">Spot treating Acne - Toothpaste and Stickers?</h2>
-                <img src="/images/blog/stickers.webp" alt="">
                 <p>Spot treatments can play a valuable role in managing acne, particularly inflammatory breakouts. Studies showcase their effectiveness under specific conditions:</p><br>
                 <p><strong>Targeted Action:</strong> Ingredients like salicylic acid, Potassium azeloyl diglycinate, and retinoids as spot treatments can specifically target inflamed blemishes.</p> <br>
                 <p><strong>Anti-inflammatory Power:</strong> Salicylic acid, Potassium azeloyl diglycinate, and retinoids possess anti-inflammatory properties, soothing redness and reducing swelling.</p><br>
@@ -336,7 +325,6 @@ li{
                 <p>Acne patches are hydrocolloid dressings applied directly to pimples to absorb excess oil and promote healing. Newer versions come with Salicylic acid to provide more antiacne effects, however the occlusive effects of patches can increase absorption of the acid thereby also increasing risk of irritation. Improper use, especially on broken skin, can increase the risk of infection, including cellulitis which is a deeper and more widespread skin tissue infection. If you experience any irritation, redness, warmth, swelling, pain or tenderness beyond the intended effect, discontinue use of acne patches and consult a dermatologist immediately.</p>
 
                 <h2 id="link-7">Acne and Makeup - Is it making it worse, or hiding it safely?</h2> 
-                <img src="/images/blog/makeuo.webp" alt=""> <br> <br>
                 <p>Studies reveal that makeup does not inherently cause acne but can worsen existing breakouts under certain conditions:</p>
                 <br>
                 <ul>
