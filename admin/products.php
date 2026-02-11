@@ -100,6 +100,10 @@ require_once("../backend/config/config.php");
                           <button type="button" class="btn btn-primary" id="<?php echo $data["prod_id"] ?>" data-bs-toggle="modal" data-bs-target="#residenceAccountDetails<?php echo $data["prod_id"] ?>" data-bs-whatever="@getbootstrap">
                             <i class="fa-solid fa-pen-to-square" style="color: #fcfcfc;"></i>
                           </button>
+
+                          <button type="button" class="btn btn-danger delete-btn" id="<?php echo $data["prod_id"] ?>">
+                                    <i class="fa-solid fa-trash" style="color: #fcfcfc;"></i>
+                          </button>
                         </td>
                       </tr>
                       <div class="modal fade" id="residenceAccountDetails<?php echo $data["prod_id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -199,6 +203,75 @@ require_once("../backend/config/config.php");
         order: [
           [0, 'desc']
         ],
+      });
+    });
+  </script>
+  <script>
+    // Handle product delete with confirmation and AJAX
+    $(document).on('click', '.delete-btn', function(e) {
+      e.preventDefault();
+      var btn = $(this);
+      var prodId = btn.attr('id') || btn.closest('.product-row').data('prod-id');
+      var prodName = btn.closest('.product-row').data('prod-name') || 'this product';
+
+      Swal.fire({
+        title: 'Delete product?',
+        text: 'Are you sure you want to delete "' + prodName + '"? This action cannot be undone.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Prompt for admin password
+          Swal.fire({
+            title: 'Enter Admin Password',
+            text: 'Please enter your password to confirm deletion',
+            icon: 'info',
+            input: 'password',
+            inputPlaceholder: 'Enter your password',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Confirm Delete',
+            cancelButtonText: 'Cancel',
+            inputValidator: (value) => {
+              if (!value) {
+                return 'Password is required';
+              }
+            }
+          }).then((passwordResult) => {
+            if (passwordResult.isConfirmed) {
+              btn.prop('disabled', true);
+              $.ajax({
+                url: '../backend/admin/delete_product.php',
+                type: 'POST',
+                dataType: 'json',
+                data: { prod_id: prodId, password: passwordResult.value },
+                success: function(res) {
+                  if (res && res.status === 'success') {
+                    Swal.fire('Deleted!', 'Product has been deleted.', 'success');
+                    var table = $('#residenceAccounts').DataTable();
+                    table.row(btn.closest('tr')).remove().draw();
+                  } else {
+                    var errorMsg = 'Failed to delete product';
+                    if (res && res.message === 'invalid_password') {
+                      errorMsg = 'Invalid password. Please try again.';
+                    } else if (res && res.message) {
+                      errorMsg = res.message;
+                    }
+                    Swal.fire('Error', errorMsg, 'error');
+                    btn.prop('disabled', false);
+                  }
+                },
+                error: function() {
+                  Swal.fire('Error', 'Server error while deleting product', 'error');
+                  btn.prop('disabled', false);
+                }
+              });
+            }
+          });
+        }
       });
     });
   </script>

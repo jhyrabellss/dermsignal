@@ -86,7 +86,7 @@ require_once("../backend/config/config.php");
 
                                   <button type="button" class="btn btn-danger delete-btn" id="<?php echo $data["service_id"] ?>">
                                     <i class="fa-solid fa-trash" style="color: #fcfcfc;"></i>
-                                </button>
+                                  </button>
                               </td>
                           </tr>
                             <div class="modal fade" id="residenceAccountDetails<?php echo $data["service_id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,6 +160,7 @@ require_once("../backend/config/config.php");
   <?php require_once("./verifyPassword.php"); ?>
     <script>
     $('.delete-btn').on('click', function() {
+      var serviceId = this.id;
 
             Swal.fire({
               title: 'Are you sure?',
@@ -171,35 +172,61 @@ require_once("../backend/config/config.php");
               confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
               if (result.isConfirmed) {
-                $.ajax({
-                    url: '../backend/admin/delete_service.php',
-                    type: 'POST',
-                    data: { service_id: this.id },
-                    success: function(response) {
-                        if (response.trim() === 'success') {
-                        Swal.fire(
-                            'Deleted!',
-                            'The service has been deleted.',
-                            'success'
-                        ).then(() => {
-                            location.reload();
-                        });
-                        } else {
-                        Swal.fire(
-                            'Error!',
-                            'There was an error deleting the service.',
-                            'error'
-                        );
-                        }
-                    },
-                    error: function() {
-                        Swal.fire(
-                        'Error!',
-                        'There was an error processing your request.',
-                        'error'
-                        );
+                // Prompt for admin password
+                Swal.fire({
+                  title: 'Enter Admin Password',
+                  text: 'Please enter your password to confirm deletion',
+                  icon: 'info',
+                  input: 'password',
+                  inputPlaceholder: 'Enter your password',
+                  showCancelButton: true,
+                  confirmButtonColor: '#d33',
+                  confirmButtonText: 'Confirm Delete',
+                  cancelButtonText: 'Cancel',
+                  inputValidator: (value) => {
+                    if (!value) {
+                      return 'Password is required';
                     }
-                })
+                  }
+                }).then((passwordResult) => {
+                  if (passwordResult.isConfirmed) {
+                    $.ajax({
+                        url: '../backend/admin/delete_service.php',
+                        type: 'POST',
+                        data: { service_id: serviceId, password: passwordResult.value },
+                        success: function(response) {
+                            if (response.trim() === 'success') {
+                            Swal.fire(
+                                'Deleted!',
+                                'The service has been deleted.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
+                            } else if (response.trim() === 'error_invalid_password') {
+                            Swal.fire(
+                                'Error!',
+                                'Invalid password. Please try again.',
+                                'error'
+                            );
+                            } else {
+                            Swal.fire(
+                                'Error!',
+                                'There was an error deleting the service.',
+                                'error'
+                            );
+                            }
+                        },
+                        error: function() {
+                            Swal.fire(
+                            'Error!',
+                            'There was an error processing your request.',
+                            'error'
+                            );
+                        }
+                    })
+                  }
+                });
               }
             });
           });

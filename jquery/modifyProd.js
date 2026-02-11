@@ -13,6 +13,11 @@ $(document).ready(()=>{
 
     // Listen for password verification success
     $(document).on('passwordVerified', async function(event, data){
+        // Don't process if this is a delete operation
+        if (data && data.isDelete) {
+            return;
+        }
+        
         const prodId = data.dataId;
         const sourceModalId = data.sourceModal;
         const sourceModal = $('#' + sourceModalId);
@@ -32,6 +37,7 @@ $(document).ready(()=>{
             formData.append('prod_price', prod_price);
             formData.append('stocks', stocks);
             formData.append('prod_description', prod_description);
+            formData.append('admin_password', data.admin_password);
             if(prod_image){
                 formData.append('prod_image', prod_image);
             }
@@ -59,6 +65,11 @@ $(document).ready(()=>{
                         Swal.fire({
                             title: "Invalid Stocks",
                             text: "You cannot reduce the stocks",
+                        })
+                    }else if(response === 'error_invalid_password'){
+                        Swal.fire({
+                            title: "Invalid Password",
+                            text: "The password you entered is incorrect.",
                         })
                     }else{
                         Swal.fire({

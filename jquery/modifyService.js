@@ -27,6 +27,11 @@ $(document).ready(function(){
 
     // Listen for password verification success
     $(document).on('passwordVerified', async function(event, data){
+        // Don't process if this is a delete operation
+        if (data && data.isDelete) {
+            return;
+        }
+        
         const service_id = data.dataId;
         const sourceModalId = data.sourceModal;
         const sourceModal = $('#' + sourceModalId);
@@ -45,6 +50,7 @@ $(document).ready(function(){
         formData.append('service_price', service_price);
         formData.append('procedure_benefits', procedure_benefits);
         formData.append('sessions', sessions);
+        formData.append('admin_password', data.admin_password);
         
         // Only append image if one was selected
         if(updatedImage){
@@ -73,6 +79,12 @@ $(document).ready(function(){
                         title: "Invalid Sessions",
                         text: "You cannot reduce the sessions",
                         icon: "warning"
+                    })
+                }else if(response === 'error_invalid_password'){
+                    Swal.fire({
+                        title: "Invalid Password",
+                        text: "The password you entered is incorrect.",
+                        icon: "error"
                     })
                 }else{
                     Swal.fire({
