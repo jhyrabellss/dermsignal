@@ -10,19 +10,20 @@
     <link rel="stylesheet" href="../styles/login-signup-popup.css">
     <link rel="stylesheet" href="../styles/footer.css">
 
-    <title>Smart Skincare: Creating a Routine for Clearer Skin</title>
+    <title>The Cycle: Managing Hormonal Jawline Acne</title>
 
     <style>
-        p { font-size: 14px; }
+        p { font-size: 14px; color: #000; }
+        .title { font-size: 20px; }
         h1 { font-size: 20px; }
         .main-blog { max-width: 900px; }
         .blog-1 h1 { font-size: 22px; font-weight: 600; margin-bottom: 15px; }
         .blog-header-txt { display: flex; }
-        .blog-header-txt p { margin-bottom: 18px; padding-right: 50px; border-right: solid 1px; }
+        .blog-header-txt p { margin-bottom: 18px; padding-right: 50px; }
         .soc-icons { margin-left: 50px; }
         .soc-icons img { height: 18px; width: 18px; margin-right: 8px; }
         .main-blog-img img { height: 700px; object-fit: cover; }
-        .head-text { margin-top: 50px; margin-bottom: 40px; }
+        .head-text { margin-top: 50px; margin-bottom: 40px; font-size: 40px;}
         a { cursor: pointer; text-decoration: underline; font-size: 14px; }
         h2 { font-size: 30px; font-weight: 700; margin-top: 30px; margin-bottom: 40px; }
         li { font-size: 14px; }
@@ -37,30 +38,32 @@
 <div class="center" style="margin-bottom: 50px;">
     <div class="main-blog">
         <div class="blog-1">
-            <h1 style="text-align: left;">Smart Skincare: Creating a Routine for Clearer Skin</h1>
+            <h1 class="title" style="text-align: left;">The Cycle: Managing Hormonal Jawline Acne</h1>
             <div class="blog-header-txt">
                 <p>February 26, 2024</p>
-                <div class="soc-icons">
+                <!--<div class="soc-icons">
                     <a href="https://www.facebook.com/"><img src="../images/icons/icon-fb.png" alt=""></a>
                     <a href="https://mail.google.com/"><img src="../images/icons/icon-mail.png" alt=""></a>
-                </div>
+                </div>-->
             </div> 
-            <div class="main-blog-img">
+            <!--<div class="main-blog-img">
                 <img src="images\testimonials\690d556552b37.png" alt="">
-            </div>
+            </div>-->
         </div>
 
         <div class="blog-info-1">
             <div class="blog-text">
-                <h1 class="head-text">Step-by-Step Routine for Acne-Prone Skin</h1> 
+                <h1 class="head-text" style="text-align:left;">Managing Hormonal Breakouts</h1> 
                 <p>
-                    Clear skin isn’t about using the strongest products—it’s about building a routine that works with your skin, not against it. 
-                    <br><br>
-                    Many people make the mistake of overloading their skin with treatments, which can cause dryness and irritation. A balanced approach with gentle cleansing, targeted treatment, and hydration is far more effective in the long run.
+                    If you notice deep, cystic bumps along your jawline and chin that flare up like clockwork every month, you are likely dealing with hormonal acne. 
+                    Unlike surface-level whiteheads caused by external dirt, hormonal breakouts are driven by internal fluctuations in androgens which increase sebum 
+                    viscosity. This "thick" oil becomes trapped deep within the pore. Traditional spot treatments often fail because they only dry out the surface. 
+                    We discuss a multi-pronged approach: using anti-inflammatory ingredients like Niacinamide to calm the site, and BHA to keep the pore lining clear, 
+                    alongside lifestyle adjustments to manage the systemic triggers of adult acne. 
                 </p>
             </div>
         </div> <br>
-
+        <!--
         <p>
             Strong actives like benzoyl peroxide or retinoids can help, but they should be introduced slowly. 
             <strong>Rule of thumb:</strong> start simple, then add products one at a time so you can track how your skin reacts.
@@ -100,9 +103,10 @@
             Start with the basics: a gentle cleanser, a treatment suited to your skin type, a lightweight moisturizer, and daily sunscreen. 
             <br><br>
             Add new products gradually, and listen to your skin. With patience and consistency, you’ll find the routine that helps you achieve clearer, healthier skin.
-        </p>
+        </p>-->
     </div>
 </div>
+
 
 <hr>
 
